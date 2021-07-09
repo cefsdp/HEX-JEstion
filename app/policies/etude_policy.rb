@@ -2,10 +2,15 @@ class EtudePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
+      raise
     end
   end
 
   def show?
-    true
+    user.email == "cefsdp@gmail.com"
+  end
+
+  def update?
+    user.email == "cefsdp@gmail.com"
   end
 end

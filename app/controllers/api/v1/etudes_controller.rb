@@ -1,6 +1,6 @@
 # app/controllers/api/v1/etudes_controller.rb
 class Api::V1::EtudesController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User, except: %i[index show]
+  acts_as_token_authentication_handler_for User, except: %i[index]
   before_action :set_etude, only: %i[show update]
 
   def index
@@ -8,6 +8,7 @@ class Api::V1::EtudesController < Api::V1::BaseController
   end
 
   def show
+    authorize @etude
   end
 
   def update
