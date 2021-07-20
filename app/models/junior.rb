@@ -1,0 +1,2 @@
+class Junior < ApplicationRecord
+end

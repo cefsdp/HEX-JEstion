@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_215929) do
+ActiveRecord::Schema.define(version: 2021_07_20_205108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "etudes", force: :cascade do |t|
-    t.string "reference"
+  create_table "juniors", force: :cascade do |t|
+    t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "CodeJE"
   end
 
   create_table "users", force: :cascade do |t|
@@ -30,9 +31,13 @@ ActiveRecord::Schema.define(version: 2021_06_30_215929) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "authentication_token", limit: 30
+    t.boolean "admin", default: false
+    t.bigint "junior_id", null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["junior_id"], name: "index_users_on_junior_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "users", "juniors"
 end

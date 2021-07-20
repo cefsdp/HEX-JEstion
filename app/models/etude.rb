@@ -1,2 +1,0 @@
-class Etude < ApplicationRecord
-end
