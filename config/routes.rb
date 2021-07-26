@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   root to: 'pages#home'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   #APP 
-
+  resources :juniors do 
+  end
 
   #API V1
   namespace :api, defaults: { format: :json } do

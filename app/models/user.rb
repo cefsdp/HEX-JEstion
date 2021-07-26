@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   acts_as_token_authenticatable
+
+  belongs_to :junior
 end
