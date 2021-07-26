@@ -10,9 +10,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    @user = User.new(email: config_signup_params[:email], password: config_signup_params[:password],
+                     password_confirmation: config_signup_params[:password_confirmation],
+                     junior: Junior.find_by(codeje: config_signup_params['junior']))
+    @user.save
+    sign_in_and_redirect(@user, event: :authentication)
+    # raise
+  end
 
   # GET /resource/edit
   # def edit
@@ -42,8 +47,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:junior])
+  #   raise
   # end
+
+  def config_signup_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :junior)
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

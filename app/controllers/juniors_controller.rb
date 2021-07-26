@@ -51,6 +51,6 @@ class JuniorsController < ApplicationController
   private
 
   def junior_params
-    params.require(:junior).permit(:nom, :CodeJE)
+    params.require(:junior).permit(:nom, :codeje)
   end
 end
