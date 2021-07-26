@@ -1,0 +1,2 @@
+class JuniorsController < ApplicationController
+end
