@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   #APP 
-
+  resources :juniors do 
+  end
 
   #API V1
   namespace :api, defaults: { format: :json } do

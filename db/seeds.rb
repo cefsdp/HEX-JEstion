@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+junior = Junior.create(nom: "AdminTests", CodeJE: 'ATJE')
+user = User.create(email: "cefsdp@gmail.com", password: "77262683", junior_id: junior.id, admin: true)
