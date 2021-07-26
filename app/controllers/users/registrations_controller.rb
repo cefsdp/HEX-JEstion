@@ -16,7 +16,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
                      junior: Junior.find_by(codeje: config_signup_params['junior']))
     @user.save
     sign_in_and_redirect(@user, event: :authentication)
-    # raise
   end
 
   # GET /resource/edit
