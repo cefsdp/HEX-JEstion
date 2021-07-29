@@ -4,7 +4,7 @@ class JuniorsController < ApplicationController
   end
 
   def show
-    @junior = Junior.find(:id)
+    @junior = Junior.find(params[:id])
     authorize @junior
   end
 
