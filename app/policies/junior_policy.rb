@@ -14,7 +14,7 @@ class JuniorPolicy < ApplicationPolicy
   end
 
   def create?
-    current_user.admin == true
+    user.admin == true
   end
 
   def edit?
@@ -22,6 +22,6 @@ class JuniorPolicy < ApplicationPolicy
   end
 
   def update?
-    current_user.admin == true
+    user.admin == true
   end
 end
