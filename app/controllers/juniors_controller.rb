@@ -17,6 +17,9 @@ class JuniorsController < ApplicationController
     @junior = Junior.new(junior_params)
     authorize @junior
     if @junior.save
+      @user = User.new(email: "admin@#{@junior.nom}.fr", password: "adminadmin", password_confirmation: "adminadmin",
+                       junior_id: @junior.id, admin: false)
+      @user.save
       flash[:success] = "Junior successfully created"
       redirect_to @junior
     else
@@ -28,7 +31,7 @@ class JuniorsController < ApplicationController
   def update
     @junior = Junior.find(params[:id])
     authorize @junior
-    if @junior.update_attributes(junior_params)
+    if @junior.update(junior_params)
       flash[:success] = "Junior was successfully updated"
       redirect_to @junior
     else
