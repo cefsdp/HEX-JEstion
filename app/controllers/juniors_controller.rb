@@ -28,6 +28,11 @@ class JuniorsController < ApplicationController
     end
   end
 
+  def edit
+    @junior = Junior.find(params[:id])
+    authorize @junior
+  end
+
   def update
     @junior = Junior.find(params[:id])
     authorize @junior
@@ -54,6 +59,6 @@ class JuniorsController < ApplicationController
   private
 
   def junior_params
-    params.require(:junior).permit(:nom, :codeje)
+    params.require(:junior).permit(:nom, :codeje, :logo)
   end
 end
