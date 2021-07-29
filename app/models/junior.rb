@@ -3,4 +3,6 @@ class Junior < ApplicationRecord
   validates_uniqueness_of :codeje, on: :create, message: "Ce code ne peut être utilisé"
 
   has_many :users, dependent: :destroy
+
+  has_one_attached :logo
 end
