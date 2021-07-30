@@ -1,5 +1,9 @@
-<%= @membrerequests.each do |membrerequest| %>
+<% @membrerequests.each do |membrerequest| %>
     <%= membrerequest.user.email %>
-    <%= link_to "Accept Member request", membre_request_path(membrerequest, membre_request: { status: 'approved' }), method: 'patch' %>
-    <%= link_to "Reject Member request", membre_request_path(membrerequest, membre_request: { status: 'rejected' }), method: 'patch' %>
+    <% if membrerequest.status == 'pending' %>
+        <%= link_to "Accept Member request", junior_membre_request_path(membrerequest.junior.id, membrerequest, membre_request: { status: 'approved' }), method: 'patch' %>
+        <%= link_to "Reject Member request", junior_membre_request_path(membrerequest.junior.id, membrerequest, membre_request: { status: 'rejected' }), method: 'patch' %>
+    <% else %>
+        <%= membrerequest.status %>
+    <% end %>
 <% end %>
