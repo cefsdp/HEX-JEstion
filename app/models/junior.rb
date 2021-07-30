@@ -5,4 +5,6 @@ class Junior < ApplicationRecord
   has_many :users, dependent: :destroy
 
   has_one_attached :logo
+
+  has_one :configuration
 end
