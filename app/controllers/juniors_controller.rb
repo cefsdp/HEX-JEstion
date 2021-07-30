@@ -20,6 +20,7 @@ class JuniorsController < ApplicationController
       @user = User.new(email: "admin@#{@junior.nom}.fr", password: "adminadmin", password_confirmation: "adminadmin",
                        junior_id: @junior.id, admin: false)
       @user.save
+      @configuration = Configuration.create(junior_id: @junior.id)
       flash[:success] = "Junior successfully created"
       redirect_to @junior
     else
