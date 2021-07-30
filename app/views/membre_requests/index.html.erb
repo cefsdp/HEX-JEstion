@@ -1,0 +1,5 @@
+<%= @membrerequests.each do |membrerequest| %>
+    <%= membrerequest.user.email %>
+    <%= link_to "Accept Member request", membre_request_path(membrerequest, membre_request: { status: 'approved' }), method: 'patch' %>
+    <%= link_to "Reject Member request", membre_request_path(membrerequest, membre_request: { status: 'rejected' }), method: 'patch' %>
+<% end %>

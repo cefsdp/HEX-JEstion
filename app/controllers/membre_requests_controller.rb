@@ -1,4 +1,6 @@
 class MembreRequestsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @membrerequests = policy_scope(MembreRequest)
   end

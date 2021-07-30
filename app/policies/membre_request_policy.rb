@@ -1,10 +1,12 @@
-class MembreRequestsPolicy < ApplicationPolicy
+class MembreRequestPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.admin?
         scope.all
       elsif user.membre.admin?
-        scope.where(junior: user.junior)
+        scope.where(junior_id: user.junior.id)
+      else
+        scope.all
       end
     end
   end

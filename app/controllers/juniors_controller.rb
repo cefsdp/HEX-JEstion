@@ -1,4 +1,6 @@
 class JuniorsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @juniors = policy_scope(Junior)
   end
