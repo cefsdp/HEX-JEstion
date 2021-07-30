@@ -10,5 +10,9 @@
 junior = Junior.create(nom: "AdminTests", codeje: 'ATJE')
 configuration = Configuration.create(junior_id: junior.id)
 
-# User also created on Junior>Create
+# Default admin user
 user = User.create(email: "cefsdp@gmail.com", password: "77262683", junior_id: junior.id, admin: true)
+
+# User also created on Junior>Create
+membre_request = MembreRequest.create(junior_id: junior.id, user_id: user.id, status: 'approved')
+membre = Membre.create(membre_request_id: membre_request.id, admin:true)
