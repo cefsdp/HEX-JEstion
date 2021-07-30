@@ -26,6 +26,6 @@ class MembreRequestsPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin == true
+    user.membre.admin == true
   end
 end
