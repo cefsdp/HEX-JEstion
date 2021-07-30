@@ -1,0 +1,16 @@
+
+<div>
+    <%= link_to new_junior_path do %>
+        Créer une Nouvelle Junior
+    <% end %>
+</div>
+
+<br> <br>
+
+<div>
+    <% @juniors.each do |junior| %>
+        <%= link_to junior_path(junior) do %>
+            <%= junior.nom %> - <%= junior.codeje %>
+        <% end %>
+    <% end %>
+</div>

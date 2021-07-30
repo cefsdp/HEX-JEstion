@@ -1,0 +1,6 @@
+<%= simple_form_for [@junior] do |f| %>
+    <%= f.input :nom, label: "Nom de la JE :" %>
+    <%= f.input :codeje, label: "CodeJE :" %>
+    <%= f.input :logo, as: :file %>
+    <%= f.submit "Créer la Junior" %>
+<% end %>
