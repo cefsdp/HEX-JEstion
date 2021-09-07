@@ -1,35 +1,21 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <%= link_to "#", class: "navbar-brand" do %>
-    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
-    <% end %>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <% if user_signed_in? %>
-        <li class="nav-item active">
-          <%= link_to "Home", "#", class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Messages", "#", class: "nav-link" %>
-        </li>
-        <li class="nav-item dropdown">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "Action", "#", class: "dropdown-item" %>
-            <%= link_to "Another action", "#", class: "dropdown-item" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-          </div>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-        </li>
-      <% end %>
-    </ul>
+<div class='main'>
+  <div class='navbar'>
+    <div class='nav_background'>
+      <div class='logo'> <%= image_tag 'logo_hex', style: 'height:auto;width:4vw;'%> </div>
+      <div class='nav_items'>
+        <div class='nav_item'><i class="fas fa-project-diagram"></i></div>
+        <div class='nav_item'><i class="fas fa-users"></i></div>
+        <div class='nav_item'><i class="fas fa-user-tie"></i></div>
+        <div class='nav_item'><i class="fas fa-chart-bar"></i></div>
+        <div class='nav_item'><i class="fas fa-money-bill-wave"></i></div>
+        <div class='nav_item'><i class="fas fa-ticket-alt"></i></div>
+        <div class='nav_item'><i class="fas fa-cog"></i></div>
+        <div class='nav_item'><i class=""></i></div>
+      </div>
+      <div class="user">
+          <div class='profile'><i class="fas fa-user"></i></div>
+          <div class="logout"><%= link_to destroy_user_session_path, method: :delete do %><i class="fas fa-sign-out-alt"></i><% end %></div>
+      </div>
+    </div>
   </div>
 </div>

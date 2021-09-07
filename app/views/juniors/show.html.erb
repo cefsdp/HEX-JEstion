@@ -1,6 +1,0 @@
-<%= @junior.nom %> - <%= @junior.codeje %>
-<% if @junior.logo.attached? %>
-    <%= image_tag @junior.logo.representation(resize_to_limit: [100, 100]) %>
-<% else %>
-    <%= image_tag 'logo_hex.png', style: 'height:100px;width:100px;'  %>
-<%end%>

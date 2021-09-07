@@ -1,0 +1,135 @@
+.login_bg {
+  height: 100%;
+  width: 100%;
+  background-image: image-url("login_bg.jpg");
+  background-size: cover;
+}
+
+.login_bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.mainLoginDiv {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  .loginDiv {
+    width: 40%;
+    height: 85%;
+    border-radius: 10px;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 255, 1) 33%,
+      rgba(49, 49, 255, 1) 61%
+    );
+    .login {
+      padding: 10% 5%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      .titre {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        .Text {
+          font-size: 28px;
+          color: white;
+          font-weight: 400;
+          margin-top: 10%;
+        }
+      }
+      .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        .form_line {
+          margin: 0% 5%;
+          margin-top: 5%;
+          width: 100%;
+          border: solid white;
+          border-width: 0px 0px 1px 0px;
+          display: flex;
+          align-items: center;
+          color: white;
+          input:-webkit-autofill,
+          input:-webkit-autofill:hover,
+          input:-webkit-autofill:focus,
+          input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0px 1000px #0000ff inset !important;
+            -webkit-text-fill-color: white;
+          }
+          .icone {
+            color: #ffffff;
+            font-size: 16px;
+            padding: 2%;
+          }
+          .form_input {
+            background-color: transparent;
+            color: #ffffff;
+            border: none;
+            flex-grow: 1;
+          }
+          .form-group {
+            margin-bottom: 0rem !important;
+          }
+        }
+      }
+      .form_txt {
+        color: white;
+        margin: 0% 5%;
+        margin-top: 5%;
+        width: 100%;
+      }
+      .form_btn {
+        width: 25%;
+        min-width: 120px;
+        margin: 0% 5%;
+        margin-top: 5%;
+        background-color: white;
+        color: #000000;
+        border: none;
+        border-radius: 25px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+    }
+    .links {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      color: white;
+      font-weight: 100;
+      font-size: 12px;
+      .separator {
+        padding: 0% 1%;
+      }
+      .link {
+        text-decoration: none;
+        :any-link {
+          text-decoration: none;
+          color: white;
+        }
+        :hover {
+          color: black;
+        }
+      }
+    }
+  }
+}
