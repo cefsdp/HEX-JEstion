@@ -1,28 +1,66 @@
-<h2>Sign up</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :junior,
-                required: true,
-                autofocus: true %>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<div class="login_bg">
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+    <div class="mainLoginDiv">
+      <div class="loginDiv">
+        <div class="login">
+          <div class="titre">
+            <div class="logoDiv">
+              <%= render 'components/logo' %>
+            </div>
+            <div class="Text">
+              CREER UN COMPTE
+            </div>
+          </div>
+          <div class="form">
+            <div class="form_line">
+              <div class="icone"><i class="fas fa-user"></i></div>
+              <%= f.input :email,
+                          required: true,
+                          label: false,
+                          autofocus: true,
+                          input_html: { autocomplete: "email", class: 'form_input' } %>
+            </div>
+            <div class="form_line">
+              <div class="icone"><i class="fas fa-key"></i></div>
+              <%= f.input :password,
+                          required: true,
+                          label: false, 
+                          hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                          input_html: { autocomplete: "new-password", class: 'form_input' }%>
+            </div>
+            <div class="form_line">
+              <div class="icone"><i class="fas fa-key"></i></div>
+              <%= f.input :password_confirmation,
+                          required: true,
+                          label: false, 
+                          input_html: { autocomplete: "new-password", class: 'form_input' }%>
+            </div>
+            <div class="form_txt">
+              <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+            </div>
+            <div class="form_btn">
+              <%= f.button :submit, "Sign up" %>
+            </div>
+          </div>
+          <div class="links">
+            <div class="link">
+              <%- if controller_name != 'sessions' %>
+                <%= link_to "Log in", new_session_path(resource_name) %><br />
+              <% end %>
+              <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                <%= link_to "Inscription", new_registration_path(resource_name) %>
+              <% end %>
+            </div>
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <div class="separator"> | </div>
+              <div class="link">
+                  <%= link_to "Mot de passe oublié ?", new_password_path(resource_name) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
