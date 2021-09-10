@@ -5,8 +5,6 @@ class MembreRequestPolicy < ApplicationPolicy
         scope.all
       elsif user.membre.admin?
         scope.where(junior_id: user.junior.id, status: 'pending')
-      else
-        scope.all
       end
     end
   end

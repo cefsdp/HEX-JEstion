@@ -15,19 +15,40 @@
       align-items: center;
       padding: 2vh 0%;
       .nav_items {
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         .nav_item {
           color: #ffffff;
           margin: 1vh 0vw;
+          a {
+            color: #f7f0f0;
+          }
         }
       }
-      .logo {
-        height: auto;
-        width: 4vw;
-        color: #ffffff;
+      .active {
+        display: flex;
+      }
+      .nav_header {
+        .logo {
+          height: auto;
+          width: 4vw;
+          color: #ffffff;
+        }
+        .profiles {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-around;
+          .profile {
+            font-size: 10px;
+            color: #ffffff;
+          }
+          .active {
+            color: #ffba09;
+          }
+        }
       }
       .user {
         width: 100%;
@@ -46,5 +67,8 @@
         }
       }
     }
+  }
+  .content {
+    flex-grow: 1;
   }
 }
