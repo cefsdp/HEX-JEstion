@@ -50,3 +50,5 @@ end
 
 # http://localhost:3000/api/v1/sessions?session%5Bemail%5D=cefsdp%40gmail.com&session%5Bpassword%5D=77262683
 # http://localhost:3000/api/v1/sessions?email%5D=cefsdp%40gmail.com&session%5Bpassword%5D=77262683
+# url_for api_v1_session_url(session: { email: user.mail, pass: user.password })
+# url_for api_v1_session_url(email: user.mail, pass: user.password)

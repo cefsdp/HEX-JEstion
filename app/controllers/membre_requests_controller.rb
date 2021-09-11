@@ -10,7 +10,8 @@ class MembreRequestsController < ApplicationController
   end
 
   def create
-    @membrerequest = MembreRequest.new(membrerequest_params)
+    @membrerequest = MembreRequest.new(junior: Junior.find(membrerequest_params[:junior]),
+                                       user: User.find(membrerequest_params[:user]))
     @membrerequest.status = 'pending'
     authorize @membrerequest
     if @membrerequest.save

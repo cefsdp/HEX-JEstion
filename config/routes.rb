@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   #APP 
   resources :juniors do 
     resources :membre_requests
+    resources :membres
   end
 
   #API V1
@@ -13,6 +14,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :etudes, only: [ :index, :show, :update ]
       get '/sessions', to: 'sessions#index', as: 'session'
+      get '/userparams', to: 'userparams#index', as: 'userparam'
+      get '/userparams/:id', to: 'userparams#update'
     end
   end
 end

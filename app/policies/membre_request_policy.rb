@@ -3,10 +3,8 @@ class MembreRequestPolicy < ApplicationPolicy
     def resolve
       if user.admin?
         scope.all
-      elsif user.membre.admin?
+      elsif user.membre.nil? == false
         scope.where(junior_id: user.junior.id, status: 'pending')
-      else
-        scope.all
       end
     end
   end
