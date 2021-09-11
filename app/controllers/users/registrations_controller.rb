@@ -16,6 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
                      password_confirmation: config_signup_params[:password_confirmation],
                      junior: Junior.find_by(codeje: config_signup_params['junior']))
     @user.save
+    @userparam = Userparam.create(user: @user.id)
     sign_in_and_redirect(@user, event: :authentication)
   end
 
@@ -52,7 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   def config_signup_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :junior)
+    params.require(:user).permit(:email, :password, :password_confirmation, :junior, :remember_me)
   end
 
   # If you have extra params to permit, append them to the sanitizer.

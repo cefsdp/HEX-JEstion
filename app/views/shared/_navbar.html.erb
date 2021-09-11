@@ -8,17 +8,20 @@
       <div class="profiles">
         <% if current_user.membre.nil? == false %>
           <div class="profile"><i class="fas fa-user"></i></div>
-          <div class="profile active"><i class="fas fa-user-tie"></i></div>
+          <div class="profile"><i class="fas fa-user-tie"></i></div>
         <% end %>
         <%# Profile Selector - Admin %>
         <% if current_user.admin? %><div class="profile"><i class="fas fa-user-cog"></i></div><% end %>
       </div>
     </div>
     <%# Navbar - User %>
-    <div class='nav_items active'>
+    <div class='nav_items'>
+      <% if current_user.membre_request.nil? %><div class='nav_item'><%= link_to junior_membre_requests_path(current_user.junior.id, membre_request: { junior: current_user.junior_id, user: current_user.id }), method: 'post' do %><i class="fas fa-user-plus"></i><% end %></div><% end %>
+      <% if current_user.membre_request.nil? == false && current_user.membre_request.status == 'pending' %><div class='nav_item'><i class="fas fa-user-clock"></i></div><% end %>
+      
     </div>
     <%# Navbar - Membre %>
-    <div class='nav_items active'>
+    <div class='nav_items'>
       <div class='nav_item'><i class="fas fa-project-diagram"></i></div>
       <div class='nav_item'><i class="fas fa-users"></i></div>
       <div class='nav_item'>
@@ -30,7 +33,7 @@
       <div class='nav_item'><i class=""></i></div>
     </div>
     <%# Navbar - Admin %>
-    <div class='nav_items active'>
+    <div class='nav_items'>
     </div>
     <div class="user">
         <div class='profile'><i class="fas fa-user-circle"></i></div>
@@ -38,3 +41,5 @@
     </div>
   </div>
 </div>
+
+

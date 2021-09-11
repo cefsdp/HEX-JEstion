@@ -36,8 +36,12 @@
                           label: false, 
                           input_html: { autocomplete: "new-password", class: 'form_input' }%>
             </div>
-            <div class="form_txt">
-              <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+            <div class="form_line">
+              <div class="icone"><i class="fas fa-building"></i></div>
+              <%= f.input :junior,
+                          required: true,
+                          label: false, 
+                          input_html: { class: 'form_input' } %>
             </div>
             <div class="form_btn">
               <%= f.button :submit, "Sign up" %>

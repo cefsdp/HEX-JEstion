@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_202351) do
+ActiveRecord::Schema.define(version: 2021_09_11_203603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(version: 2021_07_30_202351) do
     t.index ["membre_request_id"], name: "index_membres_on_membre_request_id"
   end
 
+  create_table "userparams", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "navbar_active", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_userparams_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -98,5 +106,6 @@ ActiveRecord::Schema.define(version: 2021_07_30_202351) do
   add_foreign_key "membre_requests", "juniors"
   add_foreign_key "membre_requests", "users"
   add_foreign_key "membres", "membre_requests"
+  add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end
