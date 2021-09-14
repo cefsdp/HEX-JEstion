@@ -22,6 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user
-    cookies[:token] = current_user.authentication_token || 'guest'
+    current_user ? cookies[:token] = current_user.authentication_token : cookies[:token] = 'guest'
   end
 end
