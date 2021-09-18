@@ -13,10 +13,10 @@
   </head>
 
   <body>
-    <div class='main'>
+    <div class='page_main options'>
       <%= render 'shared/navbar' if !@no_navbar %>
       <%= render 'shared/flashes' %>
-      <div class="content">
+      <div class="page_content">
         <%= yield %>
       </div>
     </div>

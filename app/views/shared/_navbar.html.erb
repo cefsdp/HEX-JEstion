@@ -14,18 +14,18 @@
         <% if current_user.admin? %><div class="profile"><i class="fas fa-user-cog"></i></div><% end %>
       </div>
     </div>
+
+
     <%# Navbar - User %>
     <div class='nav_items'>
       <% if current_user.membre_request.nil? %><div class='nav_item'><%= link_to junior_membre_requests_path(current_user.junior.id, membre_request: { junior: current_user.junior_id, user: current_user.id }), method: 'post' do %><i class="fas fa-user-plus"></i><% end %></div><% end %>
       <% if current_user.membre_request.nil? == false && current_user.membre_request.status == 'pending' %><div class='nav_item'><i class="fas fa-user-clock"></i></div><% end %>
-      
     </div>
     <%# Navbar - Membre %>
     <div class='nav_items'>
       <div class='nav_item'><i class="fas fa-project-diagram"></i></div>
       <div class='nav_item'><i class="fas fa-users"></i></div>
-      <div class='nav_item'>
-        <%= link_to junior_membres_path( params[:junior_id].nil? ? params[:id] : params[:junior_id]) do %><i class="fas fa-user-tie"></i><% end %></div>
+      <div class='nav_item'><%= link_to junior_membres_path(current_user.junior_id) do %><i class="fas fa-user-tie"></i><% end %></div>
       <div class='nav_item'><i class="fas fa-chart-bar"></i></div>
       <div class='nav_item'><i class="fas fa-money-bill-wave"></i></div>
       <div class='nav_item'><i class="fas fa-question-circle"></i></div>
@@ -36,7 +36,7 @@
     <div class='nav_items'>
     </div>
     <div class="user">
-        <div class='profile'><i class="fas fa-user-circle"></i></div>
+        <div class='profile'><%= link_to edit_user_registration_path do %> <i class="fas fa-user-circle"></i><% end %></div>
         <div class="logout"><%= link_to destroy_user_session_path, method: :delete do %><i class="fas fa-sign-out-alt"></i><% end %></div>
     </div>
   </div>

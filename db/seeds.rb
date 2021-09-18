@@ -13,6 +13,7 @@ configuration = Configuration.create(junior_id: junior.id)
 # Default admin user
 user = User.create(email: "cefsdp@gmail.com", password: "77262683", junior_id: junior.id, admin: true)
 userparam = Userparam.create(user: user)
+adherent = Adherent.create(user: user, prenom: 'Charles-Emmanuel', nom: 'Foussé Savoye de Puineuf')
 
 # User also created on Junior>Create
 membre_request = MembreRequest.create(junior_id: junior.id, user_id: user.id, status: 'approved')

@@ -16,14 +16,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
                      password_confirmation: config_signup_params[:password_confirmation],
                      junior: Junior.find_by(codeje: config_signup_params['junior']))
     @user.save
-    @userparam = Userparam.create(user: @user.id)
+    @userparam = Userparam.create(user: @user)
+    @adherent = Adherent.create(user: @user)
     sign_in_and_redirect(@user, event: :authentication)
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    @junior = current_user.junior
+    @user = current_user
+    @adherent = current_user.adherent
+    super
+  end
 
   # PUT /resource
   # def update

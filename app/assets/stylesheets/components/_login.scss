@@ -47,7 +47,7 @@
         justify-items: center;
         .Text {
           font-size: 28px;
-          color: white;
+          color: var(--blanc);
           font-weight: 400;
           margin-top: 10%;
         }
@@ -62,26 +62,26 @@
           margin: 0% 5%;
           margin-top: 5%;
           width: 100%;
-          border: solid white;
+          border: solid var(--blanc);
           border-width: 0px 0px 1px 0px;
           display: flex;
           align-items: center;
-          color: white;
+          color: var(--blanc);
           input:-webkit-autofill,
           input:-webkit-autofill:hover,
           input:-webkit-autofill:focus,
           input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0px 1000px #0000ff inset !important;
-            -webkit-text-fill-color: white;
+            -webkit-box-shadow: 0 0 0px 1000px var(--bleu-hex) inset !important;
+            -webkit-text-fill-color: var(--blanc);
           }
           .icone {
-            color: #ffffff;
+            color: var(--blanc);
             font-size: 16px;
             padding: 2%;
           }
           .form_input {
             background-color: transparent;
-            color: #ffffff;
+            color: var(--blanc);
             border: none;
             flex-grow: 1;
           }
@@ -91,7 +91,7 @@
         }
       }
       .form_txt {
-        color: white;
+        color: var(--blanc);
         margin: 0% 5%;
         margin-top: 5%;
         width: 100%;
@@ -101,8 +101,8 @@
         min-width: 120px;
         margin: 0% 5%;
         margin-top: 5%;
-        background-color: white;
-        color: #000000;
+        background-color: var(--blanc);
+        color: var(--noir);
         border: none;
         border-radius: 25px;
         display: flex;
@@ -114,7 +114,7 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      color: white;
+      color: var(--blanc);
       font-weight: 100;
       font-size: 12px;
       .separator {
@@ -124,10 +124,10 @@
         text-decoration: none;
         :any-link {
           text-decoration: none;
-          color: white;
+          color: var(--blanc);
         }
         :hover {
-          color: black;
+          color: var(--noir);
         }
       }
     }
