@@ -29,7 +29,7 @@
       <div class='nav_item'><i class="fas fa-chart-bar"></i></div>
       <div class='nav_item'><i class="fas fa-money-bill-wave"></i></div>
       <div class='nav_item'><i class="fas fa-question-circle"></i></div>
-      <div class='nav_item'><i class="fas fa-cog"></i></div>
+      <div class='nav_item'><%= link_to edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id) do %><i class="fas fa-cog"></i><% end %></div>
       <div class='nav_item'><i class=""></i></div>
     </div>
     <%# Navbar - Admin %>

@@ -2,8 +2,9 @@ class AdherentsController < ApplicationController
     before_action :authenticate_user!
 
     def edit
-        @adherent = Adherent.find(params[:adherent_id])
-        authorize @adherent
+      @adherent = Adherent.find(params[:adherent_id])
+      @junior = @adherent.user.junior
+      authorize @adherent
     end
 
     def update

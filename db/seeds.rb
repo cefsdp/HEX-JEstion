@@ -8,7 +8,7 @@
 
 
 junior = Junior.create(nom: "AdminTests", codeje: 'ATJE')
-configuration = Configuration.create(junior_id: junior.id)
+configuration = JuniorConfiguration.create(junior_id: junior.id)
 
 # Default admin user
 user = User.create(email: "cefsdp@gmail.com", password: "77262683", junior_id: junior.id, admin: true)

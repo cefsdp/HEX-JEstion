@@ -24,8 +24,8 @@
             <%= f.input :ville, required: true, autofocus: true, label: 'Ville' %>
           </div>
           <div class="input">
-            <%= f.input :niveau_etude, autofocus: true, label: "Niveau d'étude", collection: @junior.configuration.niveau_etude, :label_method => lambda { |niveau_etude| niveau_etude.each do |niveau| "#{niveau}" end } %>
-            <%= f.input :specialisation_etude, autofocus: true, label: 'Spécialisation', collection: @junior.configuration.specialisation_etude, :label_method => lambda { |specialisation_etude| specialisation_etude.each do |spe| "#{spe}" end } %>
+            <%= f.input :niveau_etude, autofocus: true, label: "Niveau d'étude", collection: @junior.junior_configuration.niveau_etude, :label_method => lambda { |niveau_etude| "#{niveau_etude}" } %>
+            <%= f.input :specialisation_etude, autofocus: true, label: 'Spécialisation', collection: @junior.junior_configuration.specialisation_etude, :label_method => lambda { |spe| "#{spe}" } %>
             <%= f.input :annee_diplome, autofocus: true, label: 'Année de diplôme', hint: "Par exemple : 2021" %>
           </div>
         </div>
