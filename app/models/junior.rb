@@ -6,7 +6,5 @@ class Junior < ApplicationRecord
   has_many :membre_requests, dependent: :destroy
   has_many :membres, dependent: :destroy
 
-  has_one_attached :logo
-
-  has_one :configuration
+  has_one :junior_configuration
 end

@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   resources :juniors do 
     resources :membre_requests
     resources :membres
+    resources :junior_configurations
+    resources :user do
+      resources :adherents
+    end
   end
 
   #API V1

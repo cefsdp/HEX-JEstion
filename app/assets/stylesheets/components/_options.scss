@@ -1,0 +1,20 @@
+.options {
+  --bleu-hex: #0000ff;
+  --jaune-hex: #ffba09;
+  --blanc: #ffffff;
+  --blanc-fond: #f7f4f4;
+  --noir: #000000;
+  --hover-blue: #035ac1;
+  --vert: #1edd88;
+  --font-primaire-hex: "Poppins", sans-serif;
+  --margin-left-content: 4vw;
+  --width-navbar: 4vw;
+  --height-navbar: 100vh;
+}
+
+a {
+  color: var(--blanc-fond);
+  :hover {
+    color: var(--hover-blue);
+  }
+}

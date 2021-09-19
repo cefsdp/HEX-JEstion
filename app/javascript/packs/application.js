@@ -21,6 +21,8 @@ ActiveStorage.start()
 // External imports
 import "bootstrap";
 import { initNavSelector } from "../components/nav_selector"
+import { initMenuSelector } from "../components/menu_selector"
+import { initArrayInput } from "../components/array_input"
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
@@ -29,4 +31,6 @@ document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   // initSelect2();
   initNavSelector();
+  initMenuSelector();
+  initArrayInput();
 });

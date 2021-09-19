@@ -1,0 +1,25 @@
+<%= simple_form_for [@junior, @configuration] do |f| %>
+    <%= f.error_notification %>
+    <div class="formulaire">
+        <div class="array_forms">
+            <div class='array_input'>
+                <div class="label">Niveau d'étude</div>
+                <div class="inputs"><%= f.input :niveau_etude, as: :array, label: false %></div>
+                
+            </div>
+            <div class="btn array_input_btn" name="junior_configuration[niveau_etude][]" id="add_new_input">Ajouter une entrée</div>
+        </div>
+        <div class="array_forms">
+            <div class='array_input'>
+                <div class="label">Spécialisation d'étude</div>
+                <div class="inputs"><%= f.input :specialisation_etude, as: :array, label: false  %></div>
+            </div>
+            <div class="btn array_input_btn" name="junior_configuration[specialisation_etude][]" id="add_new_input">Ajouter une entrée</div>
+        </div>
+    </div>
+
+    <div class="button">
+        <%= f.button :submit, "Enregistrer" %>
+    </div>
+    <% end %>
+</div>

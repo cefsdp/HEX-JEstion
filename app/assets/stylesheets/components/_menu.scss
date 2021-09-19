@@ -1,0 +1,39 @@
+.menu {
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    .tab {
+      border: 1px solid var(--blanc);
+      background-color: var(--bleu-hex);
+      color: var(--blanc);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: "Poppins", sans-serif;
+      width: 200px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .tab:hover {
+      background-color: var(--hover-blue);
+      color: var(--blanc-fond);
+      cursor: pointer;
+    }
+    .active {
+      color: var(--jaune-hex);
+    }
+    .active:hover {
+      color: var(--jaune-hex);
+      cursor: pointer;
+    }
+  }
+  .contents {
+    .content {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+  }
+}
