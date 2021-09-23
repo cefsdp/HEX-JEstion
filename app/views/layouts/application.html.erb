@@ -13,12 +13,24 @@
   </head>
 
   <body>
+  <% if !@no_navbar %>
     <div class='page_main options'>
-      <%= render 'shared/navbar' if !@no_navbar %>
+      <%= render 'shared/navbar' %>
       <%= render 'shared/flashes' %>
       <div class="page_content">
         <%= yield %>
       </div>
     </div>
+
+  <% else %>
+  <% # If No Navbar %>
+    <div class='options'>
+      <%= render 'shared/flashes' %>
+      <div class="">
+        <%= yield %>
+      </div>
+    </div>
+  <% end %>
+
   </body>
 </html>
