@@ -1,0 +1,18 @@
+<%= simple_form_for [@junior, @user, @adherent] do |f| %>
+    <%= f.error_notification %>
+    <div class="formulaire">
+        <div class="input">
+            <%= f.input :prenom, required: true, autofocus: true, label: 'Prénom' %>
+        </div>
+        <div class="input">
+        </div>
+        <div class="input">
+        </div>
+        <div class="input">
+        </div>
+    </div>
+
+    <div class="button">
+        <%= f.button :submit, "Creer" %>
+    </div>
+<% end %>
