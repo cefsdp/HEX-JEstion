@@ -37,7 +37,20 @@
     </div>
 
     <% # Documents %>
-    <div class="content">Documents</div>
+    <div class="content">
+      <div class="modal_buttons">
+          <% @documents.each_with_index do |document, index| %>
+              <div class="modal-button" id="edit_adherent_document_<%= index %>">
+                  <div class='modal_button_each_content'> 
+                      <%= document.nom %>
+                  </div>
+              </div>
+          <% end %>
+        <div class="modal-button modal-button2" id="add_new_document_adherent">
+            Ajouter un document
+        </div>
+      </div>
+    </div>
 
     <% # Email et Mot de Passe %>
     <div class="content">
@@ -87,4 +100,38 @@
       <%= link_to registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, style: 'color:var(--bleu-hex);' do %>Supprimer mon compte<% end %>
     </div>
   </div>
+</div>
+
+
+
+<div class="hex_modal" id="add_new_document_adherent">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_new_document_adherent">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+          <%= simple_form_for [@junior, @user, @adherent, @document] do |f| %>
+            <%= f.error_notification %>
+            <div class="formulaire">
+                <div class="input">
+                  <%= f.input :nom, required: true, value_method: :nom, collection: @junior.junior_configuration.config_doc_adherents, :label_method => lambda { |document| "#{document.nom}" }  %>
+                  <%= f.input :date_debut_validite, as: :date, html5: true %>
+                </div>
+                <div class="input">
+                  <%= f.file_field :document, required: true  %>
+                </div>
+                <div class="input">
+                </div>
+                <div class="input">
+                </div>
+            </div>
+
+            <div class="button">
+                <%= f.button :submit, "Ajouter le document" %>
+            </div>
+          <% end %>
+        </div>
+    </div>
 </div>

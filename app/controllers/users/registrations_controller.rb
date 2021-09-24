@@ -26,6 +26,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @junior = current_user.junior
     @user = current_user
     @adherent = current_user.adherent
+    @document = DocumentAdherent.new
+    @documents = DocumentAdherent.where(adherent_id: @adherent.id)
     super
   end
 
