@@ -35,6 +35,28 @@
 
     <% # Menu 2 %>
     <div class="content">
+        <%= simple_form_for [@junior, @configuration, @configDocAdherent] do |f| %>
+            <%= f.error_notification %>
+            <div class="formulaire">
+                <div class="input">
+                    <%= f.input :nom, required: true, label: 'Nom du document' %>
+                </div>
+                <div class="label">Durée de validite</div>
+                <div class="input">
+                    <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
+                    <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
+                </div>
+                <div class="input">
+                    <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
+                    <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
+
+                </div>
+            </div>
+
+            <div class="button">
+                <%= f.button :submit, "Ajouter le document" %>
+            </div>
+        <% end %>
     </div>
 
     <% # Menu 3 %>

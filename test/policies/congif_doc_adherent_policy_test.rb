@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CongifDocAdherentPolicyTest < ActiveSupport::TestCase
+class ConfigDocAdherentPolicyTest < ActiveSupport::TestCase
   def test_scope
   end
 

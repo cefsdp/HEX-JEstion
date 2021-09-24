@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_09_23_123847) do
   end
 
   create_table "config_doc_adherents", force: :cascade do |t|
-    t.bigint "junior_configurations_id", null: false
+    t.bigint "junior_configuration_id", null: false
     t.string "nom"
     t.boolean "obligatoire"
     t.string "duree_validite"
@@ -68,11 +68,11 @@ ActiveRecord::Schema.define(version: 2021_09_23_123847) do
     t.boolean "archive"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["junior_configurations_id"], name: "index_config_doc_adherents_on_junior_configurations_id"
+    t.index ["junior_configuration_id"], name: "index_config_doc_adherents_on_junior_configuration_id"
   end
 
   create_table "document_adherents", force: :cascade do |t|
-    t.bigint "adherents_id", null: false
+    t.bigint "adherent_id", null: false
     t.string "nom"
     t.boolean "obligatoire"
     t.string "duree"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2021_09_23_123847) do
     t.boolean "archive"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["adherents_id"], name: "index_document_adherents_on_adherents_id"
+    t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
   end
 
   create_table "junior_configurations", force: :cascade do |t|
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 2021_09_23_123847) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adherents", "users"
-  add_foreign_key "config_doc_adherents", "junior_configurations", column: "junior_configurations_id"
-  add_foreign_key "document_adherents", "adherents", column: "adherents_id"
+  add_foreign_key "config_doc_adherents", "junior_configurations"
+  add_foreign_key "document_adherents", "adherents"
   add_foreign_key "junior_configurations", "juniors"
   add_foreign_key "membre_requests", "juniors"
   add_foreign_key "membre_requests", "users"

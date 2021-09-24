@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CongifDocAdherentsControllerTest < ActionDispatch::IntegrationTest
+class ConfigDocAdherentsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
