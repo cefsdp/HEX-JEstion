@@ -4,7 +4,8 @@ class JuniorConfigurationsController < ApplicationController
   def edit
     @junior = Junior.find(params[:junior_id])
     @configuration = JuniorConfiguration.find(params[:id])
-    @configDocAdherent = ConfigDocAdherent.new
+    @newConfigDocAdherent = ConfigDocAdherent.new
+    @configDocAdherents = @configuration.config_doc_adherents
     authorize @configuration
   end
 

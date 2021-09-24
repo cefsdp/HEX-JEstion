@@ -9,7 +9,18 @@ class ConfigDocAdherentsController < ApplicationController
       flash[:success] = "Object successfully created"
       redirect_to edit_junior_junior_configuration_path(junior_id_params, junior_config_id_params)
     else
-      raise
+      flash[:error] = "Something went wrong"
+      redirect_to edit_junior_junior_configuration_path(junior_id_params, junior_config_id_params)
+    end
+  end
+
+  def update
+    @configDocAdherent = ConfigDocAdherent.find_by(junior_configuration_id: junior_config_id_params)
+    authorize @configDocAdherent
+    if @configDocAdherent.update(configdocadherent_params)
+      flash[:success] = "Object was successfully updated"
+      redirect_to edit_junior_junior_configuration_path(junior_id_params, junior_config_id_params)
+    else
       flash[:error] = "Something went wrong"
       redirect_to edit_junior_junior_configuration_path(junior_id_params, junior_config_id_params)
     end

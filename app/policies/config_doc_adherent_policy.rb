@@ -9,7 +9,7 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
     if user.admin == true
       # Admin JEstion
       return true
-    elsif user.membre.nil? 
+    elsif user.membre.nil?
       if user == adherent.user
         # Adherent
         return false
@@ -25,5 +25,9 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
         return false
       end
     end
+  end
+
+  def update?
+    create?
   end
 end

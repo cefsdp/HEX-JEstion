@@ -33,30 +33,21 @@
         <% end %>    
     </div>
 
-    <% # Menu 2 %>
+    <% # Documents d'Adhesion %>
     <div class="content">
-        <%= simple_form_for [@junior, @configuration, @configDocAdherent] do |f| %>
-            <%= f.error_notification %>
-            <div class="formulaire">
-                <div class="input">
-                    <%= f.input :nom, required: true, label: 'Nom du document' %>
+        <div class="modal_buttons">
+            <% @configDocAdherents.each_with_index do |configDocAdherent, index| %>
+                <div class="modal-button" id="edit_adherent_document_<%= index %>">
+                    <div class='modal_button_each_content'> 
+                        <%= configDocAdherent.nom %>
+                    </div>
                 </div>
-                <div class="label">Durée de validite</div>
-                <div class="input">
-                    <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
-                    <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
-                </div>
-                <div class="input">
-                    <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
-                    <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
-
-                </div>
+            <% end %>
+        
+            <div class="modal-button modal-button2" id="add_adherent_document">
+                Ajouter un document d'adhésion
             </div>
-
-            <div class="button">
-                <%= f.button :submit, "Ajouter le document" %>
-            </div>
-        <% end %>
+        </div>
     </div>
 
     <% # Menu 3 %>
@@ -68,3 +59,71 @@
     </div>
   </div>
 </div>
+
+<div class="hex_modal" id="add_adherent_document">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_adherent_document">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @configuration, @newConfigDocAdherent] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom du document' %>
+                    </div>
+                    <div class="label">Durée de validite</div>
+                    <div class="input">
+                        <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
+                        <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
+                    </div>
+                    <div class="input">
+                        <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
+                        <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <%= f.button :submit, "Ajouter le document" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% @configDocAdherents.each_with_index do |configDocAdherent, index_modal| %>
+    <div class="hex_modal" id="edit_adherent_document_<%= index_modal %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_adherent_document_<%= index_modal %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, configDocAdherent] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du document' %>
+                        </div>
+                        <div class="label">Durée de validite</div>
+                        <div class="input">
+                            <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
+                            <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
+                        </div>
+                        <div class="input">
+                            <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
+                            <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+
+                    <div class="button">
+                        <%= f.button :submit, "Ajouter le document" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
