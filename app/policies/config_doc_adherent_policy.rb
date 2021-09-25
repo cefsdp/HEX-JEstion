@@ -1,15 +1,15 @@
-class JuniorConfigurationPolicy < ApplicationPolicy
+class ConfigDocAdherentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
     end
   end
 
-  def edit?
+  def create?
     if user.admin == true
       # Admin JEstion
       return true
-    elsif user.membre.nil? 
+    elsif user.membre.nil?
       if user == adherent.user
         # Adherent
         return false
@@ -28,6 +28,6 @@ class JuniorConfigurationPolicy < ApplicationPolicy
   end
 
   def update?
-    edit?
+    create?
   end
 end

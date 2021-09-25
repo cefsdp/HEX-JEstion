@@ -7,4 +7,5 @@ class Junior < ApplicationRecord
   has_many :membres, dependent: :destroy
 
   has_one :junior_configuration
+  has_many :config_doc_adherents, through: :junior_configuration
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_18_194416) do
+ActiveRecord::Schema.define(version: 2021_09_23_123847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,31 @@ ActiveRecord::Schema.define(version: 2021_09_18_194416) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "specialisation_etude"
     t.index ["user_id"], name: "index_adherents_on_user_id"
+  end
+
+  create_table "config_doc_adherents", force: :cascade do |t|
+    t.bigint "junior_configuration_id", null: false
+    t.string "nom"
+    t.boolean "obligatoire"
+    t.string "duree_validite"
+    t.string "format_duree_validite"
+    t.boolean "archive"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_configuration_id"], name: "index_config_doc_adherents_on_junior_configuration_id"
+  end
+
+  create_table "document_adherents", force: :cascade do |t|
+    t.bigint "adherent_id", null: false
+    t.string "nom"
+    t.boolean "obligatoire"
+    t.string "duree"
+    t.string "format_duree"
+    t.boolean "validite"
+    t.boolean "archive"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
   end
 
   create_table "junior_configurations", force: :cascade do |t|
@@ -121,6 +146,8 @@ ActiveRecord::Schema.define(version: 2021_09_18_194416) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adherents", "users"
+  add_foreign_key "config_doc_adherents", "junior_configurations"
+  add_foreign_key "document_adherents", "adherents"
   add_foreign_key "junior_configurations", "juniors"
   add_foreign_key "membre_requests", "juniors"
   add_foreign_key "membre_requests", "users"

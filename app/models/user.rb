@@ -12,4 +12,5 @@ class User < ApplicationRecord
   has_one :userparam, dependent: :destroy
   has_one :membre, through: :membre_request
   has_one :adherent, dependent: :destroy
+  has_one :document_adherent, through: :adherent
 end
