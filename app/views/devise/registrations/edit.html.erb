@@ -38,16 +38,42 @@
 
     <% # Documents %>
     <div class="content">
-      <div class="modal_buttons">
-          <% @documents.each_with_index do |document, index| %>
-              <div class="modal-button" id="edit_adherent_document_<%= index %>">
-                  <div class='modal_button_each_content'> 
-                      <%= document.nom %>
-                  </div>
-              </div>
+
+      <div class="titre2">Dossier Adherent</div>
+        <div class="titre3">Documents obligatoires</div>
+          <% @document_obligatoires.each do |doc_obli| %>
+            <%= doc_obli.nom %>
           <% end %>
-        <div class="modal-button modal-button2" id="add_new_document_adherent">
-            Ajouter un document
+        
+        <div class="titre3">Autres documents</div>
+
+      <div class="titre2">Archivage des documents</div>
+      <div class="tableau">
+        <div class="modal-button modal-button2" id="add_new_document_adherent">Ajouter un document</div>
+        <div class="tabl_header">
+          <div class="colonne"> Nom du document</div>
+          <div class="colonne"> Début de validité</div>
+          <div class="colonne"> Début de fin de validité</div>
+          <div class="colonne"> Contrôle</div>
+        </div>     
+        <div class="modal_buttons tabl_contenu">
+            <% @documents.each_with_index do |document, index| %>
+                <div class="modal-button ligne" id="edit_adherent_document_<%= index %>">
+                  <div class="colonne"> <%= document.nom %></div>
+                  <div class="colonne"> <%= document.date_debut_validite %></div>
+                  <div class="colonne"> <%= document.date_fin_validite %></div>
+                  <div class="colonne"> 
+                    <% case document.validite %>
+                    <% when 'pending' %>
+                      <div>En attente de validation</div> 
+                    <% when 'valid' %> 
+                      <div>Document valide</div>
+                    <% when 'invalid' %>
+                      <div><%= document.validite %></div>
+                    <% end %>
+                  </div>
+                </div>
+            <% end %>
         </div>
       </div>
     </div>
@@ -135,3 +161,37 @@
         </div>
     </div>
 </div>
+
+<% @documents.each_with_index do |document, index| %>
+  <div class="hex_modal" id="edit_adherent_document_<%= index %>">
+      <div class="background">
+          <div class="header">
+              <div class="modal-close" id="edit_adherent_document_<%= index %>">
+                  <i class="fas fa-times"></i>
+              </div>
+          </div>
+          <div class="content">
+            <%= simple_form_for [@junior, @user, @adherent, document] do |f| %>
+              <%= f.error_notification %>
+              <div class="formulaire">
+                  <div class="input">
+                    <%= f.input :nom, required: true, value_method: :nom, collection: @junior.junior_configuration.config_doc_adherents, :label_method => lambda { |document| "#{document.nom}" }  %>
+                    <%= f.input :date_debut_validite, as: :date, html5: true %>
+                  </div>
+                  <div class="input">
+                    <%= f.file_field :document, required: true  %>
+                  </div>
+                  <div class="input">
+                  </div>
+                  <div class="input">
+                  </div>
+              </div>
+
+              <div class="button">
+                  <%= f.button :submit, "Ajouter le document" %>
+              </div>
+            <% end %>
+          </div>
+      </div>
+  </div>
+<% end %>
