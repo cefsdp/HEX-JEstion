@@ -6,7 +6,7 @@ class CreateDocumentAdherents < ActiveRecord::Migration[6.1]
       t.boolean :obligatoire
       t.string :duree
       t.string :format_duree
-      t.boolean :validite
+      t.string :validite
       t.boolean :archive
 
       t.timestamps

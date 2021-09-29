@@ -1,0 +1,52 @@
+.tableau {
+  width: 100%;
+  margin-top: 1%;
+  .tabl_header {
+    width: 100%;
+    background-color: var(--bleu-hex);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    .colonne {
+      flex: 1 1 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blanc-fond);
+    }
+  }
+  .tabl_contenu {
+    margin-top: 0;
+    width: 100%;
+    background-color: var(--blanc-fond);
+    display: flex;
+    flex-direction: column;
+    .ligne {
+      width: 100%;
+      margin-top: 1%;
+      background-color: var(--blanc-fond);
+      border-bottom: 2px solid var(--jaune-hex);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      .colonne {
+        flex: 1 1 0;
+        font-size: 12px;
+        font-weight: 700;
+      }
+    }
+  }
+  .tabl_footer {
+    width: 100%;
+    background-color: var(--bleu-hex);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    .colonne {
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+}
