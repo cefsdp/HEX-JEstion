@@ -7,6 +7,7 @@
   --hover-blue: #035ac1;
   --bleu-hex-33-opacity: rgba(0, 0, 255, 0.33);
   --vert: #1edd88;
+  --rouge: #e20025;
   --font-primaire-hex: "Poppins", sans-serif;
   --margin-left-content: 4vw;
   --width-navbar: 4vw;
@@ -19,4 +20,13 @@ a {
   :hover {
     color: var(--hover-blue);
   }
+}
+
+.version_jestion {
+  position: fixed;
+  top: 1%;
+  right: 1%;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--jaune-hex);
 }
