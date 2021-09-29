@@ -47,9 +47,7 @@ const initNavSelector = () => {
         if (window.location.host == 'localhost:3000') {
             url = '/api/v1/userparams?authentication_token=' + token;
         } else {
-            var url = new URL(window.location.host + '/api/v1/userparams?');
-            var param = {'authentication_token': token};
-            url.search = new URLSearchParams(param).toString();
+            var url = new URL(window.location.host + '/api/v1/userparams?authentication_token=' + token);
         }
         var data = fetch(url).then((response) => response.json()).then((json) => {
             return json;
