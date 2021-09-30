@@ -60,7 +60,7 @@ const initNavSelector = () => {
 
     function updateUserparam(userparam, user_token, new_navbar_active) {
         return userparam.then((usparam) => {
-            url = '/api/v1/userparams/' + usparam.id + '?authentication_token=' + user_token + '&navbar_active=' + new_navbar_active;
+            var url = '/api/v1/userparams/' + usparam.id + '?authentication_token=' + user_token + '&navbar_active=' + new_navbar_active;
             var data = fetch(url)
                 .then(response => response.json())
                 .then((data) => {
