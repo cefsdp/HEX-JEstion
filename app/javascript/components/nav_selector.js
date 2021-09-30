@@ -44,12 +44,7 @@ const initNavSelector = () => {
     }
 
     function getUserparam(token) {
-        if (window.location.host == 'localhost:3000') {
-            url = '/api/v1/userparams?authentication_token=' + token;
-        } else {
-            var url = '/api/v1/userparams?authentication_token=' + token;
-            console.log(token)
-        }
+        var url = '/api/v1/userparams?authentication_token=' + token;
         var data = fetch(url).then((response) => response.json()).then((json) => {
             return json;
         }).catch((error) => {
