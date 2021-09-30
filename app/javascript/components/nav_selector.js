@@ -60,17 +60,11 @@ const initNavSelector = () => {
 
     function updateUserparam(userparam, user_token, new_navbar_active) {
         return userparam.then((usparam) => {
-            if (window.location.host == 'localhost:3000') {
-                url = '/api/v1/userparams/' + usparam.id + '?authentication_token=' + user_token + '&navbar_active=' + new_navbar_active;
-            } else {
-                var url = new URL(window.location.host + '/api/v1/userparams/' + data.id + '?');
-                var param = {'authentication_token': user_token, 'navbar_active': new_navbar_active};
-                url.search = new URLSearchParams(param).toString();
-            }
+            url = '/api/v1/userparams/' + usparam.id + '?authentication_token=' + user_token + '&navbar_active=' + new_navbar_active;
             var data = fetch(url)
                 .then(response => response.json())
                 .then((data) => {
-                console.log(data.hits); // Look at local_names.default
+                console.log(data.hits);
                 });
         });
     }
