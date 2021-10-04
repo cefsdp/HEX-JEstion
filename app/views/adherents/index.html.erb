@@ -1,0 +1,17 @@
+<div class="tableau">
+        <div class="tabl_header">
+            <div class="colonne"> Nom</div>
+            <div class="colonne"> Prénom</div>
+            <div class="colonne"> Validité du Dossier</div>
+        </div>  
+        <div class="tabl_contenu">   
+            <% @adherents.each_with_index do |adherent, index| %>
+                <div class="ligne">
+                    <div class="colonne"> <%= adherent.nom %></div>
+                    <div class="colonne"> <%= adherent.prenom %></div>
+                    <div class="colonne"> Validité </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@ class AdherentPolicy < ApplicationPolicy
   def edit?
     if user.admin == true
       return true
-    elsif user.membre.nil? 
+    elsif user.membre.nil?
       if user == adherent.user
         return true
       else
