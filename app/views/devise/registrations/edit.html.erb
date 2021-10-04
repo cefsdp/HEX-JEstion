@@ -37,17 +37,30 @@
     </div>
 
     <% # Documents %>
-    <div class="content">
-
-      <div class="titre2">Dossier Adherent</div>
-        <div class="titre3">Documents obligatoires</div>
-          <% @document_obligatoires.each do |doc_obli| %>
-            <%= doc_obli.nom %>
+    <div class="content margin_top_3">
+      <div class="inline_list">
+        <% @document_obligatoires.each_with_index do |doc_obli, index| %>
+          <% if !@documents.where(nom: doc_obli.nom, validite: 'pending').empty? %>
+            <div class="inline_list_item">
+              <div class="attente"><%= doc_obli.nom %></div>
+            </div>
+          <% elsif !@documents.where(nom: doc_obli.nom, validite: 'valid').empty? %>
+            <div class="inline_list_item">
+              <div class="valide"><%= doc_obli.nom %></div>
+            </div>
+          <% elsif !@documents.where(nom: doc_obli.nom, validite: 'invalid').empty? %>
+            <div class="inline_list_item">
+              <div class="invalide"><%= doc_obli.nom %></div>
+            </div>
+          <% elsif !@documents.where(nom: doc_obli.nom).empty? %>
+            <div class="inline_list_item">
+              <div class="aucun"><%= doc_obli.nom %></div>
+            </div>
           <% end %>
-        
-        <div class="titre3">Autres documents</div>
+        <% end %>
+      </div>
+      <% # raise%>
 
-      <div class="titre2">Archivage des documents</div>
       <div class="tableau">
         <div class="modal-button modal-button2" id="add_new_document_adherent">Ajouter un document</div>
         <div class="tabl_header">
@@ -60,8 +73,8 @@
             <% @documents.each_with_index do |document, index| %>
                 <div class="modal-button ligne" id="edit_adherent_document_<%= index %>">
                   <div class="colonne"> <%= document.nom %></div>
-                  <div class="colonne"> <%= document.date_debut_validite %></div>
-                  <div class="colonne"> <%= document.date_fin_validite %></div>
+                  <div class="colonne"> <%= document.date_debut_validite.strftime("%d-%m-%Y") %></div>
+                  <div class="colonne"> <%= document.date_fin_validite.strftime("%d-%m-%Y") %></div>
                   <div class="colonne"> 
                     <% case document.validite %>
                     <% when 'pending' %>

@@ -1,0 +1,33 @@
+.inline_list {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  gap: 1%;
+  .inline_list_item {
+    width: 9%;
+    .valide {
+      display: flex;
+      justify-content: center;
+      border: 2px solid var(--vert);
+      color: var(--vert);
+    }
+    .invalide {
+      display: flex;
+      justify-content: center;
+      border: 2px solid var(--rouge);
+      color: var(--rouge);
+    }
+    .attente {
+      display: flex;
+      justify-content: center;
+      border: 2px solid var(--jaune-hex);
+      color: var(--jaune-hex);
+    }
+    .aucun {
+      display: flex;
+      justify-content: center;
+      border: 2px solid var(--jaune-hex);
+      color: var(--noir);
+    }
+  }
+}
