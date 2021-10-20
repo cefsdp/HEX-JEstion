@@ -3,6 +3,22 @@ class AdherentsController < ApplicationController
 
   def index
     @adherents = policy_scope(Adherent)
+    @adherents.each do |adherent|
+      AdherentSingleUpdateFileStatusJob.perform_later adherent
+    end
+  end
+
+  def show
+    @adherent = Adherent.find(params[:id])
+    authorize @adherent
+    @junior = current_user.junior
+    @user = current_user
+    @document = DocumentAdherent.new
+    @documents = DocumentAdherent.where(adherent_id: @adherent.id).order(
+      "nom ASC", "date_fin_validite DESC"
+    )
+    @configuration_id = JuniorConfiguration.find_by(junior_id: @junior.id)
+    @document_obligatoires = ConfigDocAdherent.where(junior_configuration_id: @configuration_id, obligatoire: true)
   end
 
   def edit

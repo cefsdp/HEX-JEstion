@@ -1,6 +1,7 @@
 .options {
   --bleu-hex: #0000ff;
   --jaune-hex: #ffba09;
+  --jaune: #ffba09;
   --blanc: #ffffff;
   --blanc-fond: #f7f4f4;
   --noir: #000000;
@@ -9,6 +10,7 @@
   --vert: #1edd88;
   --rouge: #e20025;
   --font-primaire-hex: "Poppins", sans-serif;
+  --font-secondaire-hex: "Open Sans", sans-serif;
   --margin-left-content: 4vw;
   --width-navbar: 4vw;
   --height-navbar: 100vh;
@@ -19,6 +21,7 @@ a {
   color: var(--blanc-fond);
   :hover {
     color: var(--hover-blue);
+    text-decoration: none;
   }
 }
 
@@ -32,5 +35,5 @@ a {
   right: 1%;
   font-size: 10px;
   font-weight: 600;
-  color: var(--jaune-hex);
+  color: #ffba09;
 }

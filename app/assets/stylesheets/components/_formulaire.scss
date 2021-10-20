@@ -79,7 +79,8 @@
   }
 }
 .button {
-  input {
+  input,
+  button {
     width: auto;
     height: auto;
     background-color: var(--bleu-hex);
@@ -88,5 +89,14 @@
   }
   .btn:hover {
     color: var(--jaune-hex) !important;
+  }
+  .vert {
+    background-color: var(--vert);
+  }
+  .rouge {
+    background-color: var(--rouge);
+  }
+  .jaune {
+    background-color: var(--jaune);
   }
 }

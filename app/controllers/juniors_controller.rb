@@ -8,8 +8,7 @@ class JuniorsController < ApplicationController
   def show
     @junior = Junior.find(params[:id])
     authorize @junior
-    file_status = check_adherent_document_validity
-    raise
+    AdherentSingleUpdateFileStatusJob.perform_now current_user.adherent
   end
 
   def new
@@ -65,39 +64,5 @@ class JuniorsController < ApplicationController
 
   def junior_params
     params.require(:junior).permit(:nom, :codeje, :logo)
-  end
-
-  def check_adherent_document_validity
-    necessary_documents = ConfigDocAdherent.where(junior_configuration_id: JuniorConfiguration.where(junior_id: current_user.junior))
-    adherent_documents = DocumentAdherent.where(adherent_id: current_user.adherent.id, validite: ['valid', 'pending'])
-    file_status = nil
-    necessary_documents.each do |nec_doc|
-      if adherent_documents.where(nom: nec_doc.nom).empty?
-        return file_status = 'invalid'
-      else
-        adherent_documents.where(nom: nec_doc.nom).each do |doc|
-          case doc.validite
-          when 'valid'
-            case file_status
-            when nil
-              file_status = 'valid'
-            when 'valid'
-              file_status = 'valid'
-            when 'pending'
-              file_status = 'pending'
-            when 'invalid'
-              file_status = 'invalid'
-            end
-          when 'pending'
-            if [nil, 'valid', 'pending'].include?(file_status)
-              file_status = 'pending'
-            elsif file_status == 'invalid'
-              file_status = 'invalid'
-            end
-          end
-        end
-      end
-    end
-    return file_status
   end
 end

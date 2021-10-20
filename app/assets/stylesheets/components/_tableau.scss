@@ -2,34 +2,49 @@
   width: 100%;
   margin-top: 1%;
   .tabl_header {
-    width: 100%;
-    background-color: var(--bleu-hex);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    .colonne {
-      flex: 1 1 0;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--blanc-fond);
+    .header_row {
+      width: 100%;
+      background-color: var(--bleu-hex);
+      .colonne {
+        flex: 1 1 0;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--blanc-fond);
+      }
+    }
+    .header_search {
+      .search_row {
+        border-bottom: 2px solid var(--jaune-hex);
+        input {
+          width: 100%;
+          background-color: var(--blanc-fond);
+          border: none;
+          font-size: 12px;
+          color: var(--noir);
+          font-family: var(--font-secondaire-hex);
+          font-weight: 600;
+        }
+        ::placeholder {
+          font-size: 12px;
+        }
+        :focus-visible {
+          outline: none;
+        }
+      }
     }
   }
   .tabl_contenu {
     margin-top: 0;
     width: 100%;
     background-color: var(--blanc-fond);
-    display: flex;
-    flex-direction: column;
+    display: table-row-group;
     .ligne {
+      cursor: pointer;
+      height: auto;
       width: 100%;
       margin-top: 1%;
       background-color: var(--blanc-fond);
       border-bottom: 2px solid var(--jaune-hex);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-around;
       .colonne {
         flex: 1 1 0;
         font-size: 12px;
@@ -49,4 +64,13 @@
       font-weight: 700;
     }
   }
+}
+.pending {
+  color: var(--jaune-hex);
+}
+.valid {
+  color: var(--vert);
+}
+.invalid {
+  color: var(--rouge);
 }

@@ -23,14 +23,15 @@
     </div>
     <%# Navbar - Membre %>
     <div class='nav_items'>
+      <div class='nav_item'><%= link_to junior_path(current_user.junior_id) do %><i class="fas fa-home"></i><% end %></div>
+      <div class='nav_item'><i class="fas fa-briefcase"></i></div>
       <div class='nav_item'><i class="fas fa-project-diagram"></i></div>
-      <div class='nav_item'><i class="fas fa-users"></i></div>
+      <div class='nav_item'><%= link_to junior_adherents_path(current_user.junior_id) do %><i class="fas fa-users"></i><% end %></div>
       <div class='nav_item'><%= link_to junior_membres_path(current_user.junior_id) do %><i class="fas fa-user-tie"></i><% end %></div>
       <div class='nav_item'><i class="fas fa-chart-bar"></i></div>
-      <div class='nav_item'><i class="fas fa-money-bill-wave"></i></div>
+      <div class='nav_item'><i class="fas fa-file-invoice-dollar"></i></div>
       <div class='nav_item'><i class="fas fa-question-circle"></i></div>
       <div class='nav_item'><%= link_to edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id) do %><i class="fas fa-cog"></i><% end %></div>
-      <div class='nav_item'><i class=""></i></div>
     </div>
     <%# Navbar - Admin %>
     <div class='nav_items'>

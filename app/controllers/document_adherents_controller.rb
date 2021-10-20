@@ -34,10 +34,10 @@ class DocumentAdherentsController < ApplicationController
                                 archive: false,
                                 date_debut_validite: @adherentDocumentParams[:date_debut_validite],
                                 date_fin_validite: calcul_date_fin_validite(@documentAdherent),
-                                validite: @adherentDocumentParams[:validite],
+                                validite: document_adherent_validite_params,
                                 document: @adherentDocumentParams[:document])
       flash[:success] = "Object was successfully updated"
-      redirect_to @documentAdherent
+      redirect_to junior_adherent_path(@user.junior, @user.adherent)
     else
       flash[:error] = "Something went wrong"
       render 'edit'
@@ -50,6 +50,10 @@ class DocumentAdherentsController < ApplicationController
     params.require(:document_adherent).permit(:nom, :obligatoire, :date_debut_validite, :validite, :archive, :document)
     # validite: pending, valid, invalid
     # Controle Date Validite : .where('date_fin_validite > ?', DateTime.now)
+  end
+
+  def document_adherent_validite_params
+    params[:validite_document_adherent].nil? ? @adherentDocumentParams[:validite] : params[:validite_document_adherent]
   end
 
   def calcul_date_fin_validite(document_adh)

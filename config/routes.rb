@@ -27,4 +27,11 @@ Rails.application.routes.draw do
       get '/userparams/:id', to: 'userparams#update'
     end
   end
+
+  # Sidekiq
+  require "sidekiq/web"
+  authenticate :user, ->(user) { user.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
+
