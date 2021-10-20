@@ -1,2 +1,23 @@
-<%= @membres %>
-<%= @requests %>
+<div class="menu">
+  <div class="tabs">
+    <div class="tab active">Membres</div>
+    <div class="tab">Demandes en Attente</div>
+    <div class="tab">Demandes Acceptées</div>
+  </div>
+  <div class="contents">
+    <% # Menu 1 %>
+    <div class="content active"> 
+        <%= @membres %>     
+    </div>
+
+    <% # Menu 2 %>
+    <div class="content">
+        <%= @requests %>
+    </div>
+
+    <% # Menu 3 %>
+    <div class="content">
+    </div>
+
+  </div>
+</div>
