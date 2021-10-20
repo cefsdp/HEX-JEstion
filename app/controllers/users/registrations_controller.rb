@@ -27,7 +27,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = current_user
     @adherent = current_user.adherent
     @document = DocumentAdherent.new
-    @documents = DocumentAdherent.where(adherent_id: @adherent.id)
+    @documents = DocumentAdherent.where(adherent_id: @adherent.id).order(
+      "nom ASC", "date_fin_validite DESC"
+    )
     @configuration_id = JuniorConfiguration.find_by(junior_id: @junior.id)
     @document_obligatoires = ConfigDocAdherent.where(junior_configuration_id: @configuration_id, obligatoire: true)
     super

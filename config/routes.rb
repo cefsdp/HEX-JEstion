@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :juniors do 
     resources :membre_requests
     resources :membres
+    resources :adherents
     resources :junior_configurations do
       resources :config_doc_adherents
     end
@@ -26,4 +27,11 @@ Rails.application.routes.draw do
       get '/userparams/:id', to: 'userparams#update'
     end
   end
+
+  # Sidekiq
+  require "sidekiq/web"
+  authenticate :user, ->(user) { user.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
+

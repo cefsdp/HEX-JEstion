@@ -36,6 +36,9 @@ gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass'
 gem 'simple_form'
 
+gem 'sidekiq'
+gem 'sidekiq-failures', '~> 1.0'
+
 # Cloud Storage
 gem "aws-sdk-s3", require: false
 gem "down"

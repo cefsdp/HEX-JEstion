@@ -5,10 +5,33 @@ class AdherentPolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    if user.admin == true
+      # Admin JEstion
+      return true
+    elsif user.membre.nil?
+      if user == adherent.user
+        # Adherent
+        return false
+      else
+        # Autre Junior
+        return false
+      end
+    elsif current_user.membre
+      if current_user.membre.admin?
+        # Admin JE
+        return true
+      else
+        # Membre JE
+        return true
+      end
+    end
+  end
+
   def edit?
     if user.admin == true
       return true
-    elsif user.membre.nil? 
+    elsif user.membre.nil?
       if user == adherent.user
         return true
       else

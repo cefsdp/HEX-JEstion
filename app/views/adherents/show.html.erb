@@ -1,9 +1,12 @@
+<div style="padding-bottom: 1%;">
+  <div style="color: var(--bleu-hex); font-weight: 700; font-size: 18px;"><%= @adherent.nom %></div>
+  <div style="color: var(--bleu-hex); font-weight: 600; font-size: 16px;"><%= @adherent.prenom %></div>
+</div>
+
 <div class="menu">
   <div class="tabs">
     <div class="tab active">Informations</div>
     <div class="tab">Documents</div>
-    <div class="tab">Email et mot de passe</div>
-    <div class="tab">Paramètres</div>
   </div>
   <div class="contents">
     <% # Informations %>
@@ -11,10 +14,6 @@
       <%= simple_form_for [@junior, @user, @adherent] do |f| %>
         <%= f.error_notification %>
         <div class="formulaire">
-          <div class="input">
-            <%= f.input :prenom, required: true, autofocus: true, label: 'Prénom' %>
-            <%= f.input :nom, required: true, autofocus: true, label: 'Nom' %>
-          </div>
           <div class="input">
             <%= f.input :telephone, autofocus: true, label: 'Téléphone' %>
           </div>
@@ -59,89 +58,43 @@
           <% end %>
         <% end %>
       </div>
-      <% # raise%>
+      <% # raise %>
 
-      <div class="modal-button modal-button2" id="add_new_document_adherent">Ajouter un document</div>
       <table class="tableau">
         <thead class="tabl_header">
           <tr class="header_row">
             <th class="colonne"> Nom du document</th>
             <th class="colonne"> Début de validité</th>
             <th class="colonne"> Début de fin de validité</th>
-            <th class="colonne"> Contrôle</th>
+            <th class="colonne"> Validité</th>
           </tr>
         </thead>     
         <tbody class="modal_buttons tabl_contenu">
-            <% @documents.each_with_index do |document, index| %>
-                <tr class="modal-button ligne" id="edit_adherent_document_<%= index %>">
-                  <td class="colonne"> <%= document.nom %></td>
-                  <td class="colonne"> <%= document.date_debut_validite.strftime("%d-%m-%Y") %></td>
-                  <td class="colonne"> <%= document.date_fin_validite.strftime("%d-%m-%Y") %></td>
-                  <td class="colonne"> 
-                    <% case document.validite %>
-                    <% when 'pending' %>
-                      <div class="pending">En attente de validation</div> 
-                    <% when 'valid' %> 
-                      <div class="valid">Document valide</div>
-                    <% when 'invalid' %>
-                      <div class="invalid">Document invalide</div>
-                    <% end %>
-                  </td>
-                </tr>
-            <% end %>
+          <% @documents.each_with_index do |document, index| %>
+            <tr class="modal-button ligne" id="edit_adherent_document_<%= index %>">
+              <td class="colonne"> <%= document.nom %></td>
+              <td class="colonne"> <%= document.date_debut_validite.strftime("%d-%m-%Y") %></td>
+              <td class="colonne"> <%= document.date_fin_validite.strftime("%d-%m-%Y") %></td>
+              <td class="colonne"> 
+                <% case document.validite %>
+                <% when 'pending' %>
+                  <span class="pending">En attente de validation</span> 
+                <% when 'valid' %> 
+                  <span class="valid">Document valide</span>
+                <% when 'invalid' %>
+                  <span class="invalid">Document invalide</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
-    </div>
 
-    <% # Email et Mot de Passe %>
-    <div class="content">
-      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-        <%= f.error_notification %>
-        <div class="formulaire">
-          <div class="input">
-            <%= f.input :email, required: true, autofocus: true, label: 'Adresse mail' %>
-          </div>
 
-          <div class="input">
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-            <% end %>
-          </div>
-
-          <div class="input">
-            <%= f.input :password,
-                        hint: "laissez vide si vous ne souhaitez pas changer de mot de passe",
-                        required: false,
-                        label: 'Nouveau mot de passe',
-                        input_html: { autocomplete: "new-password" } %>
-          </div>
-          <div class="input">
-          <%= f.input :password_confirmation,
-                      required: false,
-                      label: 'Confirmation nouveau mot de passe',
-                      input_html: { autocomplete: "new-password" } %>
-          </div>
-          <div class="input">
-          <%= f.input :current_password,
-                      hint: "pour modifier vos identifiants, nous avons besoin de votre mot de passe",
-                      required: true,
-                      label: 'Mot de passe actuel',
-                      input_html: { autocomplete: "current-password" } %>
-          </div>
-        </div>
-
-        <div class="button">
-          <%= f.button :submit, "Mettre à jour" %>
-        </div>
-      <% end %>
-    </div>
-
-    <% # PARAMETRES %>
-    <div class="content">
-      <%= link_to registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, style: 'color:var(--bleu-hex);' do %>Supprimer mon compte<% end %>
     </div>
   </div>
 </div>
+
 
 
 
@@ -194,7 +147,7 @@
                     <%= f.input :date_debut_validite, as: :date, html5: true %>
                   </div>
                   <div class="input">
-                    <%= f.file_field :document, required: true  %>
+                    <%= link_to document.document.url, target: :_blank do %> <div style='color: var(--bleu-hex)'>Voir le document <i class="fas fa-eye"></i></div> <% end %>
                   </div>
                   <div class="input">
                   </div>
@@ -203,7 +156,8 @@
               </div>
 
               <div class="button">
-                  <%= f.button :submit, "Ajouter le document" %>
+                  <%= f.button :button, "Valider le document", type: 'submit', class: 'vert', name: 'validite_document_adherent', value: 'valid' %>
+                  <%= f.button :button, "Invalider le document", type: 'submit', class: 'rouge', name: 'validite_document_adherent', value: 'invalid' %>
               </div>
             <% end %>
           </div>

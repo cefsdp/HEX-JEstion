@@ -8,6 +8,7 @@ class JuniorsController < ApplicationController
   def show
     @junior = Junior.find(params[:id])
     authorize @junior
+    AdherentSingleUpdateFileStatusJob.perform_now current_user.adherent
   end
 
   def new

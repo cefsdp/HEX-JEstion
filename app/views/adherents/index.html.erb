@@ -1,0 +1,31 @@
+<table class="tableau" id="search_tableau">
+        <thead class="tabl_header">
+            <tr class="header_row">
+                <th class="colonne"> Nom</th>
+                <th class="colonne"> Prénom</th>
+                <th class="colonne"> Validité du Dossier</th>
+            </tr>
+            <tr class="header_search">
+                <th colspan="3" class="search_row"><input type="text" id="tableau_search_bar" placeholder="Recherche"></th>
+            </tr>
+        </thead>
+        <tbody class="tabl_contenu">
+            <% @adherents.each_with_index do |adherent, index| %>
+                <tr onclick="location.href='<%= junior_adherent_path(adherent.junior, adherent) %>'" class="ligne tabl_search_ligne">
+                        <td class="colonne adherent_tag" id='nom' style='color: var(--bleu-hex);'> <%= adherent.nom %></td>
+                        <td class="colonne adherent_tag" id='prenom' style='color: var(--bleu-hex);'> <%= adherent.prenom %></td>
+                        <td class="colonne" id='validite'>
+                            <% if adherent.file_status == 'valid' %>
+                                <div class="valid" style='color: var(--vert)'>Dossier valide</div>
+                            <% elsif adherent.file_status == 'invalid' %>
+                                <div class="invalid" style='color: var(--rouge)'>Dossier invalide</div>
+                            <% elsif adherent.file_status == 'pending' %>
+                                <div class="pending" style='color: var(--jaune)'>En attente de validation</div>
+                            <% end %>
+                        </td>
+                </tr>
+            <% end %>
+        </tbody>
+</table>
+
+<%# adherent_tag_ %>
