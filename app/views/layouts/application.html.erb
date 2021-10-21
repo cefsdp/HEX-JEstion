@@ -13,7 +13,7 @@
   </head>
 
   <body>
-  <% if !@no_navbar %>
+  <% if @no_navbar.class == FalseClass || !current_user.nil? %>
     <div class='page_main options'>
       <%= render 'shared/navbar' %>
       <%= render 'shared/flashes' %>
