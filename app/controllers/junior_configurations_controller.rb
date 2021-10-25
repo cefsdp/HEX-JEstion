@@ -5,7 +5,7 @@ class JuniorConfigurationsController < ApplicationController
     @junior = Junior.find(params[:junior_id])
     @configuration = JuniorConfiguration.find(params[:id])
     @newConfigDocAdherent = ConfigDocAdherent.new
-    @configDocAdherents = @configuration.config_doc_adherents
+    @configDocAdherents = @configuration.config_doc_adherents.order(id: 'ASC')
     authorize @configuration
   end
 

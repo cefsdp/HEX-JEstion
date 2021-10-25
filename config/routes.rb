@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   #APP 
   resources :juniors do 
     resources :membre_requests
-    resources :membres
+    resources :membres do
+      resources :mandat_membres
+    end
     resources :adherents
     resources :junior_configurations do
       resources :config_doc_adherents

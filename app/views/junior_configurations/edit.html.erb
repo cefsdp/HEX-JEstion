@@ -2,6 +2,7 @@
   <div class="tabs">
     <div class="tab active">Niveau d'étude</div>
     <div class="tab">Documents d'adhésion</div>
+    <div class="tab">Postes et Autorisations</div>
     <div class="tab">Autre</div>
   </div>
   <div class="contents">
@@ -35,23 +36,34 @@
 
     <% # Documents d'Adhesion %>
     <div class="content">
-        <div class="modal_buttons">
-            <% @configDocAdherents.each_with_index do |configDocAdherent, index| %>
-                <div class="modal-button" id="edit_adherent_document_<%= index %>">
-                    <div class='modal_button_each_content'> 
-                        <%= configDocAdherent.nom %>
-                    </div>
-                </div>
-            <% end %>
-        
-            <div class="modal-button modal-button2" id="add_adherent_document">
-                Ajouter un document d'adhésion
-            </div>
-        </div>
+        <div class="modal-button modal-button2" id="add_adherent_document">Ajouter un document d'adhésion</div>
+        <table class="tableau" id="search_tableau">
+            <thead class="tabl_header">
+                <tr class="header_row">
+                    <th class="colonne">Nom</th>
+                    <th class="colonne">Durée Validité</th>
+                    <th class="colonne">Obligatoire</th>
+                    <th class="colonne">Archivé</th>
+                </tr>
+            </thead>
+            <tbody class="tabl_contenu">
+                <% @configDocAdherents.each_with_index do |configDocAdherent, index| %>
+                    <tr class="ligne modal-button" id="edit_adherent_document_<%= configDocAdherent.id %>">
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.nom %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><% if configDocAdherent.duree_validite.to_i == 0 %><%= 'Non défini' %><% else %><%= configDocAdherent.duree_validite %> <%= configDocAdherent.format_duree_validite %><% end %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.obligatoire ? 'Oui' : 'Non' %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.archive ? 'Oui' : 'Non' %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
     </div>
 
-    <% # Menu 3 %>
+    <% # Postes & Autorisations %>
     <div class="content">
+        <div>Poles</div>
+        <div>Postes</div>
+        <div>Autorisations</div>
     </div>
 
     <% # Menu 4 %>
@@ -94,10 +106,10 @@
 </div>
 
 <% @configDocAdherents.each_with_index do |configDocAdherent, index_modal| %>
-    <div class="hex_modal" id="edit_adherent_document_<%= index_modal %>">
+    <div class="hex_modal" id="edit_adherent_document_<%= configDocAdherent.id %>">
         <div class="background">
             <div class="header">
-                <div class="modal-close" id="edit_adherent_document_<%= index_modal %>">
+                <div class="modal-close" id="edit_adherent_document_<%= configDocAdherent.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
@@ -105,6 +117,7 @@
                 <%= simple_form_for [@junior, @configuration, configDocAdherent] do |f| %>
                     <%= f.error_notification %>
                     <div class="formulaire">
+                        <%= f.hidden_field :id %>
                         <div class="input">
                             <%= f.input :nom, required: true, label: 'Nom du document' %>
                         </div>
@@ -120,7 +133,7 @@
                     </div>
 
                     <div class="button">
-                        <%= f.button :submit, "Ajouter le document" %>
+                        <%= f.button :submit, "Mettre à jour le document" %>
                     </div>
                 <% end %>
             </div>
