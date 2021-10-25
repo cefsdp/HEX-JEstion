@@ -4,9 +4,10 @@
     <div class="tab">Documents d'adhésion</div>
     <div class="tab">Postes et Autorisations</div>
     <div class="tab">Autre</div>
+    <div class="btn_tab"><%= link_to junior_junior_configuration_archives_path(@junior, @configuration) do %>Archives<% end %></div>
   </div>
   <div class="contents">
-    <% # Menu 1 %>
+    <% # Niveau Etude & Spécialité %>
     <div class="content active">
         <%= simple_form_for [@junior, @configuration] do |f| %>
             <%= f.error_notification %>
@@ -61,17 +62,36 @@
 
     <% # Postes & Autorisations %>
     <div class="content">
-        <div>Poles</div>
-        <div>Postes</div>
-        <div>Autorisations</div>
+        <h2>Poles</h2>
+            <div class="inline_list2">
+                <div class="modal-button inline_list_item bleu" id="add_pole">Ajouter un Pole</div>
+                <% @poles.each_with_index do |pole, index| %>
+                    <div class="modal-button inline_list_item"  id="edit_pole_<%= pole.id %>"><%= pole.nom%></div>
+                <% end %>
+            </div>
+        <h2>Postes</h2>
+            <div class="inline_list2">
+                <div class="modal-button inline_list_item bleu" id="add_poste">Ajouter un Poste</div>
+                <% @postes.each_with_index do |poste, index| %>
+                    <div class="modal-button inline_list_item" id="edit_poste_<%= poste.id %>"><%= poste.nom%></div>
+                <% end %>
+            </div>
+        <h2>Classes Autorisations</h2>
+            <div class="inline_list2">
+                <div class="modal-button inline_list_item bleu" id="add_permission">Ajouter une Classe</div>
+                <% @permissions.each_with_index do |perm, index| %>
+                    <div class="modal-button inline_list_item" id="edit_permission_<%= perm.id %>"><%= perm.nom%></div>
+                <% end %>
+            </div>
     </div>
 
-    <% # Menu 4 %>
+    <% # Autre %>
     <div class="content">
     </div>
   </div>
 </div>
 
+<% # Nouveau document Adherent %>
 <div class="hex_modal" id="add_adherent_document">
     <div class="background">
         <div class="header">
@@ -88,12 +108,12 @@
                     </div>
                     <div class="label">Durée de validite</div>
                     <div class="input">
-                        <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
+                        <%= f.input :duree_validite, label: false, value: 0, hint: "laisser 0 si pas de durée de validité" %>
                         <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
                     </div>
                     <div class="input">
                         <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
-                        <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
+                        <%= f.input :archive, as: :boolean, label: 'Archiver le document', value: false, checked_value: true, unchecked_value: false %>
                     </div>
                 </div>
 
@@ -105,6 +125,7 @@
     </div>
 </div>
 
+<% # Modifier document Adherent %>
 <% @configDocAdherents.each_with_index do |configDocAdherent, index_modal| %>
     <div class="hex_modal" id="edit_adherent_document_<%= configDocAdherent.id %>">
         <div class="background">
@@ -134,6 +155,174 @@
 
                     <div class="button">
                         <%= f.button :submit, "Mettre à jour le document" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Nouveau Pole %>
+<div class="hex_modal" id="add_pole">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_pole">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @configuration, @new_pole] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :id %>
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom du Pole' %>
+                    </div>
+                    <div class="input">
+                        <%= f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
+                    </div>
+                </div>
+                <div class="button">
+                    <%= f.button :submit, "Créer le pole" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier Pole %>
+<% @poles.each do |pole| %>
+    <div class="hex_modal" id="edit_pole_<%= pole.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_pole_<%= pole.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, pole] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du Pole' %>
+                        </div>
+                        <div class="input">
+                            <%= f.input :archive, as: :boolean, label: 'Archiver le pole', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <%= f.button :submit, "Modifier le pole" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Nouveau Poste %>
+<div class="hex_modal" id="add_poste">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_poste">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @configuration, @new_poste] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :id %>
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom du Poste' %>
+                    </div>
+                    <div class="input">
+                        <%= f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
+                    </div>
+                </div>
+                <div class="button">
+                    <%= f.button :submit, "Créer le poste" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier Poste %>
+<% @postes.each do |poste| %>
+    <div class="hex_modal" id="edit_poste_<%= poste.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_poste_<%= poste.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, poste] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du Poste' %>
+                        </div>
+                        <div class="input">
+                            <%= f.input :archive,  as: :boolean, label: 'Archiver le poste', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <%= f.button :submit, "Modifier le poste" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Nouveau permission %>
+<div class="hex_modal" id="add_permission">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_permission">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @configuration, @new_permission] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :id %>
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom de la classe' %>
+                    </div>
+                </div>
+                <div class="button">
+                    <%= f.button :submit, "Créer une Classe de Permission" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier permission %>
+<% @permissions.each do |perm| %>
+    <div class="hex_modal" id="edit_permission_<%= perm.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_permission_<%= perm.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, perm] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom de la classe' %>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <%= f.button :submit, "Modifier une Classe de Permission" %>
                     </div>
                 <% end %>
             </div>

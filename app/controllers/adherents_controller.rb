@@ -43,6 +43,6 @@ class AdherentsController < ApplicationController
 
   def adherent_params
     params.require(:adherent).permit(:id, :nom, :prenom, :telephone, :adresse_postale, :code_postale, :ville,
-                                     :niveau_etude, :annee_diplome, :specialisation_etude)
+                                     :niveau_etude, :annee_diplome, :specialisation_etude, :avatar)
   end
 end

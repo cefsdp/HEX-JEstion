@@ -1,9 +1,10 @@
 class MandatMembresController < ApplicationController
   def create
     @mandat = Mandat.new(mandat_params)
+    authorize @mandat
     if @mandat.save
       flash[:success] = "Object successfully created"
-      redirect_to @junior
+      redirect_back(fallback_location: root_path)
     else
       flash[:error] = "Something went wrong"
       render 'new'
@@ -12,9 +13,10 @@ class MandatMembresController < ApplicationController
 
   def update
     @mandat = Mandat.find(params[:id])
-    if @mandat.update_attributes(mandat_params)
+    authorize @mandat
+    if @mandat.update(mandat_params)
       flash[:success] = "Mandat was successfully updated"
-      redirect_to @mandat
+      redirect_back(fallback_location: root_path)
     else
       flash[:error] = "Something went wrong"
       render 'edit'

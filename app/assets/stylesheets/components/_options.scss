@@ -25,6 +25,23 @@ a {
   }
 }
 
+h1 {
+  color: var(--noir);
+  font-size: 24px;
+  font-weight: 900;
+  font-family: "Poppins", sans-serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: var(--bleu-hex);
+  font-size: 16px;
+  font-weight: 800;
+  font-family: "Poppins", sans-serif;
+  margin-top: 10px;
+}
+
 .margin_top_3 {
   margin-top: 3vh;
 }

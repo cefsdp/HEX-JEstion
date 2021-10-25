@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_111234) do
+ActiveRecord::Schema.define(version: 2021_10_25_201331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_111234) do
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "achive"
+    t.boolean "archive"
     t.index ["junior_id"], name: "index_poles_on_junior_id"
   end
 
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_111234) do
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "achive"
+    t.boolean "archive"
     t.index ["junior_id"], name: "index_postes_on_junior_id"
   end
 

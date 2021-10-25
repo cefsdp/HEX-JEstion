@@ -29,6 +29,9 @@
             <%= f.input :specialisation_etude, autofocus: true, label: 'Spécialisation', collection: @junior.junior_configuration.specialisation_etude, :label_method => lambda { |spe| "#{spe}" } %>
             <%= f.input :annee_diplome, autofocus: true, label: 'Année de diplôme', hint: "Par exemple : 2021" %>
           </div>
+          <div class="input" style="margin-bottom: 10px;">
+            <%= f.file_field :avatar  %>
+          </div>
         </div>
 
         <div class="button">
