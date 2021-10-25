@@ -15,6 +15,20 @@
       justify-content: center;
       align-items: center;
     }
+    .btn_tab {
+      border: 1px solid var(--blanc);
+      background-color: var(--bleu-hex);
+      color: var(--blanc);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: "Poppins", sans-serif;
+      width: 200px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .tab:hover {
       background-color: var(--hover-blue);
       color: var(--blanc-fond);

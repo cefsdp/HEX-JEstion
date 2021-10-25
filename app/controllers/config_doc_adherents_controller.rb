@@ -15,7 +15,7 @@ class ConfigDocAdherentsController < ApplicationController
   end
 
   def update
-    @configDocAdherent = ConfigDocAdherent.find_by(junior_configuration_id: junior_config_id_params)
+    @configDocAdherent = ConfigDocAdherent.find(configdocadherent_params[:id])
     authorize @configDocAdherent
     if @configDocAdherent.update(configdocadherent_params)
       flash[:success] = "Object was successfully updated"
@@ -29,8 +29,9 @@ class ConfigDocAdherentsController < ApplicationController
   private
 
   def configdocadherent_params
-    params.require(:config_doc_adherent).permit(:nom, :obligatoire, :duree_validite, :format_duree_validite,
-                                                archive: false)
+    defaults = { archive: false }
+    params.require(:config_doc_adherent).permit(:id, :nom, :obligatoire, :duree_validite, :format_duree_validite,
+                                                :archive).reverse_merge(defaults)
   end
 
   def junior_id_params

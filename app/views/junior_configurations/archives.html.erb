@@ -1,0 +1,150 @@
+<h1>ARCHIVES</h1>
+<div class="menu">
+  <div class="tabs">
+    <div class="tab active">Documents d'adhésion</div>
+    <div class="tab">Postes et Autorisations</div>
+    <div class="tab">Autre</div>
+    <div class="btn_tab"><%= link_to edit_junior_junior_configuration_path(@junior, @configuration) do %>Retour Configuration<% end %></div>
+  </div>
+
+  <div class="contents">
+    <% # Documents d'Adhesion %>
+    <div class="content active">
+        <table class="tableau" id="search_tableau">
+            <thead class="tabl_header">
+                <tr class="header_row">
+                    <th class="colonne">Nom</th>
+                    <th class="colonne">Durée Validité</th>
+                    <th class="colonne">Obligatoire</th>
+                </tr>
+            </thead>
+            <tbody class="tabl_contenu">
+                <% @configDocAdherents.each_with_index do |configDocAdherent, index| %>
+                    <tr class="ligne modal-button" id="edit_adherent_document_<%= configDocAdherent.id %>">
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.nom %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><% if configDocAdherent.duree_validite.to_i == 0 %><%= 'Non défini' %><% else %><%= configDocAdherent.duree_validite %> <%= configDocAdherent.format_duree_validite %><% end %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.obligatoire ? 'Oui' : 'Non' %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+
+    <% # Postes & Autorisations %>
+    <div class="content">
+        <h2>Poles</h2>
+            <div class="inline_list2">
+                <% @poles.each_with_index do |pole, index| %>
+                    <div class="modal-button inline_list_item"  id="edit_pole_<%= pole.id %>"><%= pole.nom%></div>
+                <% end %>
+            </div>
+        <h2>Postes</h2>
+            <div class="inline_list2">
+                <% @postes.each_with_index do |poste, index| %>
+                    <div class="modal-button inline_list_item" id="edit_poste_<%= poste.id %>"><%= poste.nom%></div>
+                <% end %>
+            </div>
+    </div>
+
+    <% # Menu 4 %>
+    <div class="content">
+    </div>
+  </div>
+</div>
+
+<% # Modifier document Adherent %>
+<% @configDocAdherents.each_with_index do |configDocAdherent, index_modal| %>
+    <div class="hex_modal" id="edit_adherent_document_<%= configDocAdherent.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_adherent_document_<%= configDocAdherent.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, configDocAdherent] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du document' %>
+                        </div>
+                        <div class="label">Durée de validite</div>
+                        <div class="input">
+                            <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
+                            <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
+                        </div>
+                        <div class="input">
+                            <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
+                            <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+
+                    <div class="button">
+                        <%= f.button :submit, "Mettre à jour le document" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Modifier Pole %>
+<% @poles.each_with_index do |pole, index| %>
+    <div class="hex_modal" id="edit_pole_<%= pole.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_pole_<%= pole.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, pole] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du Pole' %>
+                        </div>
+                        <div class="input">
+                            <%= f.input :archive, as: :boolean, label: 'Archiver le pole', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <%= f.button :submit, "Modifier le pole" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Modifier Poste %>
+<% @postes.each_with_index do |poste, index| %>
+    <div class="hex_modal" id="edit_poste_<%= poste.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_poste_<%= poste.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, poste] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :id %>
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom du Poste' %>
+                    </div>
+                    <div class="input">
+                        <%= f.input :archive,  as: :boolean, label: 'Archiver le poste', checked_value: true, unchecked_value: false %>
+                    </div>
+                </div>
+                <div class="button">
+                    <%= f.button :submit, "Modifier le poste" %>
+                </div>
+            <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>

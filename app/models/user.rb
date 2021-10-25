@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_one :membre_request, dependent: :destroy
   has_one :userparam, dependent: :destroy
   has_one :membre, through: :membre_request
+  has_many :mandat_membres, through: :membre
   has_one :adherent, dependent: :destroy
   has_one :document_adherent, through: :adherent
 end

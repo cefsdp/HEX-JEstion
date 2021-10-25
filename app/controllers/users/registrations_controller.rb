@@ -26,6 +26,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @junior = current_user.junior
     @user = current_user
     @adherent = current_user.adherent
+    @membre = @user.membre
+    @mandat_membre = MandatMembre.new
+    @mandats = current_user.mandat_membres
     @document = DocumentAdherent.new
     @documents = DocumentAdherent.where(adherent_id: @adherent.id).order(
       "nom ASC", "date_fin_validite DESC"

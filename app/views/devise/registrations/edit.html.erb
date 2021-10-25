@@ -1,6 +1,7 @@
 <div class="menu">
   <div class="tabs">
     <div class="tab active">Informations</div>
+    <div class="tab">Mandats</div>
     <div class="tab">Documents</div>
     <div class="tab">Email et mot de passe</div>
     <div class="tab">Paramètres</div>
@@ -28,6 +29,9 @@
             <%= f.input :specialisation_etude, autofocus: true, label: 'Spécialisation', collection: @junior.junior_configuration.specialisation_etude, :label_method => lambda { |spe| "#{spe}" } %>
             <%= f.input :annee_diplome, autofocus: true, label: 'Année de diplôme', hint: "Par exemple : 2021" %>
           </div>
+          <div class="input" style="margin-bottom: 10px;">
+            <%= f.file_field :avatar  %>
+          </div>
         </div>
 
         <div class="button">
@@ -36,6 +40,30 @@
       <% end %>
     </div>
 
+    <div class="content margin_top_3">
+      <div class="modal-button modal-button2" id="add_new_mandat">Ajouter un mandat</div>
+      <table class="tableau">
+        <thead class="tabl_header">
+          <tr class="header_row">
+            <th class="colonne">Pole</th>
+            <th class="colonne">Poste</th>
+            <th class="colonne">Date de début</th>
+            <th class="colonne">Date de fin</th>
+          </tr>
+        </thead>
+        <tbody class="tabl_contenu">
+          <% @mandats.each do |mandat| %>
+            <tr>
+              <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.pole %></td>
+              <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.poste %></td>
+              <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.date_debut %></td>
+              <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.date_fin %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    
     <% # Documents %>
     <div class="content margin_top_3">
       <div class="inline_list">
@@ -210,3 +238,32 @@
       </div>
   </div>
 <% end %>
+
+<div class="hex_modal" id="add_new_mandat">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_new_mandat">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+          <%= simple_form_for [@junior, @membre, @mandat_membre] do |f| %>
+            <%= f.error_notification %>
+            <div class="formulaire">
+              <div class="input">
+                <%= f.input :pole, required: true  %>
+                <%= f.input :poste, required: true  %>
+              </div>
+              <div class="input">
+                <%= f.input :annee_debut, required: true, as: :date, html5: true  %>
+                <%= f.input :annee_fin, required: true, as: :date, html5: true  %>
+              </div>
+            </div>
+
+            <div class="button">
+                <%= f.button :submit, "Ajouter le mandat" %>
+            </div>
+          <% end %>
+        </div>
+    </div>
+</div>
