@@ -2,17 +2,79 @@
   <div class="tabs">
     <div class="tab active">Membres</div>
     <div class="tab">Demandes en Attente</div>
-    <div class="tab">Demandes Acceptées</div>
   </div>
   <div class="contents">
     <% # Menu 1 %>
-    <div class="content active"> 
-        <%= @membres %>     
+    <div class="content active">
+      <div class="cards-profile">
+        <% @membres.each do |membre| %>
+          <div class="card">
+            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
+            <div class="contenu">
+              <div class="title">
+                <div><%= membre.membre_request.user.adherent.prenom %></div>
+                <div><%= membre.membre_request.user.adherent.nom %></div>
+              </div>
+              <div class="main">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="comment">
+                <% if membre.membre_request.user.adherent.file_status == 'valid' %>
+                    <div class="valid">Dossier valide</div>
+                <% elsif membre.membre_request.user.adherent.file_status == 'invalid' %>
+                    <div class="invalid">Dossier invalide</div>
+                <% elsif membre.membre_request.user.adherent.file_status == 'pending' %>
+                    <div class="pending">En attente de validation</div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <% # Menu 2 %>
     <div class="content">
-        <%= @requests %>
+      <div class="cards-profile">
+        <% @requests.where(status: 'pending').each do |request| %>
+          <div class="card">
+            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
+            <div class="contenu">
+              <div class="title">
+                <div><%= request.user.adherent.prenom %></div>
+                <div><%= request.user.adherent.nom %></div>
+              </div>
+              <div class="main">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="comment">
+                <% if request.user.adherent.file_status == 'valid' %>
+                    <div class="valid">Dossier valide</div>
+                <% elsif request.user.adherent.file_status == 'invalid' %>
+                    <div class="invalid">Dossier invalide</div>
+                <% elsif request.user.adherent.file_status == 'pending' %>
+                    <div class="pending">En attente de validation</div>
+                <% end %>
+              </div>
+              <% #raise %>
+              <div class="actions">
+                <%= link_to junior_membre_request_path(request.junior_id, request.id, membre_request: {status: 'approved'}), method: 'patch' do %>
+                  <div class="action" style="color: var(--vert);">
+                    <i class="fas fa-check"></i>
+                  </div>
+                <% end %>
+                <%= link_to junior_membre_request_path(request.junior_id, request.id), method: :delete do %>
+                  <div class="action" style="color: var(--rouge);">
+                    <i class="fas fa-times"></i>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <% # Menu 3 %>
