@@ -28,15 +28,29 @@ class MembreRequestsController < ApplicationController
   end
 
   def update
-    @membrerequest = MembreRequest.find(params[:id])
-    authorize @membrerequest
-    if @membrerequest.update(membrerequest_params)
+    @junior = current_user.junior
+    @membre_request = MembreRequest.find(params[:id])
+    authorize @membre_request
+    if @membre_request.update(membrerequest_params)
       check_membership
       flash[:success] = "MembreRequest was successfully updated"
-      redirect_to root_path
+      redirect_to junior_membres_path(@junior)
     else
       flash[:error] = "Something went wrong"
-      render 'edit'
+      render junior_membres_path(@junior)
+    end
+  end
+
+  def destroy
+    @junior = current_user.junior
+    @membrerequest = MembreRequest.find(params[:id])
+    authorize @membrerequest
+    if @membrerequest.destroy
+      flash[:success] = 'MembreRequest was successfully deleted.'
+      redirect_to junior_membres_path(@junior)
+    else
+      flash[:error] = 'Something went wrong'
+      redirect_to junior_membres_path(@junior)
     end
   end
 
@@ -47,7 +61,7 @@ class MembreRequestsController < ApplicationController
   end
 
   def check_membership
-    case @membrerequest.status
+    case @membre_request.status
     when 'rejected'
       @membre_request.destroy
     when 'approved'

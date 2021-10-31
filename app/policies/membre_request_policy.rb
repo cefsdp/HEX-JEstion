@@ -28,4 +28,8 @@ class MembreRequestPolicy < ApplicationPolicy
   def update?
     user.membre.admin == true
   end
+
+  def destroy?
+    update?
+  end
 end
