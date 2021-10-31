@@ -6,8 +6,33 @@
   </div>
   <div class="contents">
     <% # Menu 1 %>
-    <div class="content active"> 
-        <%= @membres %>     
+    <div class="content active">
+      <div class="cards-profile">
+        <% @membres.each do |membre| %>
+          <div class="card">
+            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
+            <div class="contenu">
+              <div class="nom">
+                <div><%= membre.membre_request.user.adherent.prenom %></div>
+                <div><%= membre.membre_request.user.adherent.nom %></div>
+              </div>
+              <div class="infos">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="dossier">
+                <% if membre.membre_request.user.adherent.file_status == 'valid' %>
+                    <div class="valid">Dossier valide</div>
+                <% elsif membre.membre_request.user.adherent.file_status == 'invalid' %>
+                    <div class="invalid">Dossier invalide</div>
+                <% elsif membre.membre_request.user.adherent.file_status == 'pending' %>
+                    <div class="pending">En attente de validation</div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <% # Menu 2 %>

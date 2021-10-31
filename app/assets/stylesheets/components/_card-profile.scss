@@ -1,0 +1,66 @@
+.cards-profile {
+  display: flex;
+  flex-direction: row;
+  gap: 1%;
+  .card {
+    margin-top: 3%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px var(--bleu-hex-33-opacity);
+    background-color: var(--blanc);
+    width: 25vh;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    .avatar {
+      margin-top: 5%;
+      border: none;
+      border-radius: 50%;
+      width: 9vw;
+      height: 9vw;
+      object-fit: cover;
+    }
+    .contenu {
+      margin-top: 10%;
+      margin-bottom: 10%;
+      .nom {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 700;
+        text-align: center;
+        color: var(--bleu-hex);
+      }
+      .infos {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: center;
+        color: var(--noir);
+      }
+      .dossier {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: center;
+        .valid {
+          color: var(--vert);
+        }
+        .invalid {
+          color: var(--rouge);
+        }
+        .pending {
+          color: var(--jaune);
+        }
+      }
+    }
+  }
+}
