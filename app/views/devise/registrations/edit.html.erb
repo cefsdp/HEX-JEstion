@@ -30,7 +30,7 @@
             <%= f.input :annee_diplome, autofocus: true, label: 'Année de diplôme', hint: "Par exemple : 2021" %>
           </div>
           <div class="input" style="margin-bottom: 10px;">
-            <%= f.file_field :avatar  %>
+            <%= f.input :avatar, as: :file  %>
           </div>
         </div>
 
