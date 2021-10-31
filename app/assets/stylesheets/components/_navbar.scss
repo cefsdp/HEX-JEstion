@@ -23,6 +23,12 @@
         .nav_item {
           color: var(--blanc);
           margin: 1vh 0vw;
+          .avatar {
+            border: 1px solid;
+            border-radius: 50%;
+            width: 2vw;
+            height: 2vw;
+          }
           :hover {
             color: var(--hover-blue);
             cursor: pointer;

@@ -20,6 +20,7 @@
     <div class='nav_items'>
       <% if current_user.membre_request.nil? %><div class='nav_item'><%= link_to junior_membre_requests_path(current_user.junior.id, membre_request: { junior: current_user.junior_id, user: current_user.id }), method: 'post' do %><i class="fas fa-user-plus"></i><% end %></div><% end %>
       <% if current_user.membre_request.nil? == false && current_user.membre_request.status == 'pending' %><div class='nav_item'><i class="fas fa-user-clock"></i></div><% end %>
+      <div class='nav_item'><%= link_to edit_user_registration_path do %><% if current_user.adherent.avatar.attached? %><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %> <% else %><i class="fas fa-user-circle"><% end %></i><% end %></div>
     </div>
     <%# Navbar - Membre %>
     <div class='nav_items'>
@@ -37,7 +38,6 @@
     <div class='nav_items'>
     </div>
     <div class="user">
-        <div class='profile'><%= link_to edit_user_registration_path do %> <i class="fas fa-user-circle"></i><% end %></div>
         <div class="logout"><%= link_to destroy_user_session_path, method: :delete do %><i class="fas fa-sign-out-alt"></i><% end %></div>
     </div>
   </div>
