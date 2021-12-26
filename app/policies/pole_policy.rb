@@ -4,7 +4,7 @@ class PolePolicy < ApplicationPolicy
       scope.all
     end
   end
-  
+
   def create?
     if user.admin == true
       # Admin JEstion
@@ -17,8 +17,8 @@ class PolePolicy < ApplicationPolicy
         # Autre Junior
         return false
       end
-    elsif current_user.membre
-      if current_user.membre.admin?
+    elsif user.membre
+      if user.membre.admin?
         # Admin JE
         return true
       else
