@@ -6,12 +6,10 @@ class JuniorConfigurationsController < ApplicationController
     @configuration = JuniorConfiguration.find(params[:id])
     @newConfigDocAdherent = ConfigDocAdherent.new
     @configDocAdherents = @configuration.config_doc_adherents.where(archive: false).order(id: 'ASC')
-    @poles = Pole.where(junior_id: @junior.id, archive: false)
-    @new_pole = Pole.new
-    @postes = Poste.where(junior_id: @junior.id, archive: false)
-    @new_poste = Poste.new
-    @permissions = PermissionMembre.where(junior_id: @junior.id)
-    @new_permission = PermissionMembre.new
+    @pole = Pole.new
+    @poles = Pole.where(junior_configuration: @configuration)
+    @poste = Poste.new
+    @postes = Poste.where(junior_configuration: @configuration)
     authorize @configuration
   end
 

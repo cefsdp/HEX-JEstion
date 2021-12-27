@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :config_doc_adherents
       resources :poles
       resources :postes
-      resources :permission_membres
+      resources :permissions
       get '/archives', to: 'junior_configurations#archives', as: 'archives'
     end
     resources :user do
