@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_04_200550) do
+ActiveRecord::Schema.define(version: 2021_12_27_200046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,30 @@ ActiveRecord::Schema.define(version: 2021_10_04_200550) do
     t.index ["membre_request_id"], name: "index_membres_on_membre_request_id"
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.bigint "junior_configuration_id", null: false
+    t.string "nom"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_configuration_id"], name: "index_permissions_on_junior_configuration_id"
+  end
+
+  create_table "poles", force: :cascade do |t|
+    t.bigint "junior_configuration_id", null: false
+    t.string "nom"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_configuration_id"], name: "index_poles_on_junior_configuration_id"
+  end
+
+  create_table "postes", force: :cascade do |t|
+    t.bigint "junior_configuration_id", null: false
+    t.string "nom"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_configuration_id"], name: "index_postes_on_junior_configuration_id"
+  end
+
   create_table "userparams", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "navbar_active", default: 0
@@ -154,6 +178,9 @@ ActiveRecord::Schema.define(version: 2021_10_04_200550) do
   add_foreign_key "membre_requests", "juniors"
   add_foreign_key "membre_requests", "users"
   add_foreign_key "membres", "membre_requests"
+  add_foreign_key "permissions", "junior_configurations"
+  add_foreign_key "poles", "junior_configurations"
+  add_foreign_key "postes", "junior_configurations"
   add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end
