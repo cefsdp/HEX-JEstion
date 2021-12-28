@@ -1,0 +1,2 @@
+class MandatsController < ApplicationController
+end
