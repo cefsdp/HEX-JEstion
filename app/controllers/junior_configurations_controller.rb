@@ -10,6 +10,8 @@ class JuniorConfigurationsController < ApplicationController
     @poles = Pole.where(junior_configuration: @configuration)
     @poste = Poste.new
     @postes = Poste.where(junior_configuration: @configuration)
+    @permission = Permission.new
+    @permissions = Permission.where(junior_configuration: @configuration)
     authorize @configuration
   end
 

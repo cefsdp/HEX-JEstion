@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_27_200046) do
+ActiveRecord::Schema.define(version: 2021_12_28_215941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,29 @@ ActiveRecord::Schema.define(version: 2021_12_27_200046) do
     t.string "codeje"
   end
 
+  create_table "mandat_requests", force: :cascade do |t|
+    t.bigint "poste_id", null: false
+    t.bigint "pole_id", null: false
+    t.bigint "membre_id", null: false
+    t.date "date_debut"
+    t.date "date_fin"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["membre_id"], name: "index_mandat_requests_on_membre_id"
+    t.index ["pole_id"], name: "index_mandat_requests_on_pole_id"
+    t.index ["poste_id"], name: "index_mandat_requests_on_poste_id"
+  end
+
+  create_table "mandats", force: :cascade do |t|
+    t.bigint "mandat_request_id", null: false
+    t.bigint "permission_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mandat_request_id"], name: "index_mandats_on_mandat_request_id"
+    t.index ["permission_id"], name: "index_mandats_on_permission_id"
+  end
+
   create_table "membre_requests", force: :cascade do |t|
     t.bigint "junior_id", null: false
     t.bigint "user_id", null: false
@@ -175,6 +198,11 @@ ActiveRecord::Schema.define(version: 2021_12_27_200046) do
   add_foreign_key "config_doc_adherents", "junior_configurations"
   add_foreign_key "document_adherents", "adherents"
   add_foreign_key "junior_configurations", "juniors"
+  add_foreign_key "mandat_requests", "membres"
+  add_foreign_key "mandat_requests", "poles"
+  add_foreign_key "mandat_requests", "postes"
+  add_foreign_key "mandats", "mandat_requests"
+  add_foreign_key "mandats", "permissions"
   add_foreign_key "membre_requests", "juniors"
   add_foreign_key "membre_requests", "users"
   add_foreign_key "membres", "membre_requests"

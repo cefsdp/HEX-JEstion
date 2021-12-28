@@ -1,4 +1,4 @@
-class PermissionMembrePolicy < ApplicationPolicy
+class PermissionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
