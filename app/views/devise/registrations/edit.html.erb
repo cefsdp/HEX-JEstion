@@ -46,7 +46,38 @@
     <% if @membre %>
       <div class="content margin_top_3">
         <div class="modal-button modal-button2" id="add_new_mandat">Ajouter un mandat</div>
-        
+        <div class="cards-profile">
+          <% @mandat_requests.each do |mandat_request| %>
+            <div class="card">
+              <div class="contenu">
+                <div class="title">
+                  <div><%= mandat_request.poste.nom %></div>
+                  <div><%= mandat_request.pole.nom %></div>
+                </div>
+                <div class="main">
+                  <div><%= mandat_request.date_debut %></div>
+                  <div><%= mandat_request.date_fin %></div>
+                  <div><%= mandat_request.pole %></div>
+                </div>
+                <div class="comment">
+                  <% if mandat_request.status == 'invalid' %>
+                    <div class="valid">Refusé</div>
+                  <% elsif mandat_request.status == 'pending' %>
+                    <div class="pending">En attente de confirmation</div>
+                  <% elsif mandat_request.status == 'confirmed' %>
+                    <% if mandat_request.date_debut > Date.today %>
+                        <div class="valid">Non débuté</div>
+                    <% elsif mandat_request.date_fin < Date.today %>
+                        <div class="valid">Terminé</div>
+                    <% elsif mandat_request.date_debut <= Date.today %>
+                        <div class="valid">En cours</div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
     <% end %>
     
@@ -237,8 +268,8 @@
               <%= f.error_notification %>
               <div class="formulaire">
                 <div class="input">
-                  <%= f.input :pole, required: true, value_method: :nom, collection: @junior.junior_configuration.poles, :label_method => lambda { |pole| "#{pole.nom}" } %>
-                  <%= f.input :poste, required: true, value_method: :nom, collection: @junior.junior_configuration.postes, :label_method => lambda { |poste| "#{poste.nom}" }  %>
+                  <%= f.input :pole, required: true, value_method: :id, collection: @junior.junior_configuration.poles, :label_method => lambda { |pole| "#{pole.nom}" } %>
+                  <%= f.input :poste, required: true, value_method: :id, collection: @junior.junior_configuration.postes, :label_method => lambda { |poste| "#{poste.nom}" }  %>
                 </div>
                 <div class="input">
                   <%= f.input :date_debut, required: true, as: :date, html5: true  %>
