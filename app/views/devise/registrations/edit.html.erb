@@ -46,26 +46,38 @@
     <% if @membre %>
       <div class="content margin_top_3">
         <div class="modal-button modal-button2" id="add_new_mandat">Ajouter un mandat</div>
-        <table class="tableau">
-          <thead class="tabl_header">
-            <tr class="header_row">
-              <th class="colonne">Pole</th>
-              <th class="colonne">Poste</th>
-              <th class="colonne">Date de début</th>
-              <th class="colonne">Date de fin</th>
-            </tr>
-          </thead>
-          <tbody class="tabl_contenu">
-            <% @mandats.each do |mandat| %>
-              <tr>
-                <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.pole %></td>
-                <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.poste %></td>
-                <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.date_debut %></td>
-                <td class="colonne" style='color: var(--bleu-hex);'><%= mandat.date_fin %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <div class="cards-profile">
+          <% @mandat_requests.each do |mandat_request| %>
+            <div class="card">
+              <div class="contenu">
+                <div class="title">
+                  <div><%= mandat_request.poste.nom %></div>
+                  <div><%= mandat_request.pole.nom %></div>
+                </div>
+                <div class="main">
+                  <div><%= mandat_request.date_debut %></div>
+                  <div><%= mandat_request.date_fin %></div>
+                  <div><%= mandat_request.pole %></div>
+                </div>
+                <div class="comment">
+                  <% if mandat_request.status == 'invalid' %>
+                    <div class="valid">Refusé</div>
+                  <% elsif mandat_request.status == 'pending' %>
+                    <div class="pending">En attente de confirmation</div>
+                  <% elsif mandat_request.status == 'confirmed' %>
+                    <% if mandat_request.date_debut > Date.today %>
+                        <div class="valid">Non débuté</div>
+                    <% elsif mandat_request.date_fin < Date.today %>
+                        <div class="valid">Terminé</div>
+                    <% elsif mandat_request.date_debut <= Date.today %>
+                        <div class="valid">En cours</div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
     <% end %>
     
@@ -242,6 +254,7 @@
       </div>
   </div>
 <% end %>
+
 <% # Nouveau Mandat %>
 <% if @membre %>
   <div class="hex_modal" id="add_new_mandat">
@@ -252,21 +265,21 @@
               </div>
           </div>
           <div class="content">
-            <%= simple_form_for [@junior, @membre, @mandat_membre] do |f| %>
+            <%= simple_form_for [@junior, @membre, @mandat] do |f| %>
               <%= f.error_notification %>
               <div class="formulaire">
                 <div class="input">
-                  <%= f.input :pole, required: true  %>
-                  <%= f.input :poste, required: true  %>
+                  <%= f.input :pole, required: true, value_method: :id, collection: @junior.junior_configuration.poles, :label_method => lambda { |pole| "#{pole.nom}" } %>
+                  <%= f.input :poste, required: true, value_method: :id, collection: @junior.junior_configuration.postes, :label_method => lambda { |poste| "#{poste.nom}" }  %>
                 </div>
                 <div class="input">
-                  <%= f.input :annee_debut, required: true, as: :date, html5: true  %>
-                  <%= f.input :annee_fin, required: true, as: :date, html5: true  %>
+                  <%= f.input :date_debut, required: true, as: :date, html5: true  %>
+                  <%= f.input :date_fin, required: true, as: :date, html5: true  %>
                 </div>
               </div>
 
               <div class="button">
-                  <%= f.button :submit, "Ajouter le mandat" %>
+                  <%= f.button :submit, "Demander l'ajout d'un mandat" %>
               </div>
             <% end %>
           </div>

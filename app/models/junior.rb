@@ -9,4 +9,7 @@ class Junior < ApplicationRecord
 
   has_one :junior_configuration
   has_many :config_doc_adherents, through: :junior_configuration
+  has_many :poles, through: :junior_configuration
+  has_many :postes, through: :junior_configuration
+  has_many :permissions, through: :junior_configuration
 end

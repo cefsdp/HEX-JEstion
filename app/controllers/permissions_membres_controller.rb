@@ -1,2 +1,0 @@
-class PermissionsMembresController < ApplicationController
-end

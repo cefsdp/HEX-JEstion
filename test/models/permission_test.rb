@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PermissionsMembresControllerTest < ActionDispatch::IntegrationTest
+class PermissionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_201331) do
+ActiveRecord::Schema.define(version: 2021_12_28_215941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,17 +102,27 @@ ActiveRecord::Schema.define(version: 2021_10_25_201331) do
     t.string "codeje"
   end
 
-  create_table "mandat_membres", force: :cascade do |t|
-    t.bigint "membre_id", null: false
-    t.bigint "pole_id", null: false
+  create_table "mandat_requests", force: :cascade do |t|
     t.bigint "poste_id", null: false
-    t.date "annee_debut"
-    t.date "annee_fin"
+    t.bigint "pole_id", null: false
+    t.bigint "membre_id", null: false
+    t.date "date_debut"
+    t.date "date_fin"
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["membre_id"], name: "index_mandat_membres_on_membre_id"
-    t.index ["pole_id"], name: "index_mandat_membres_on_pole_id"
-    t.index ["poste_id"], name: "index_mandat_membres_on_poste_id"
+    t.index ["membre_id"], name: "index_mandat_requests_on_membre_id"
+    t.index ["pole_id"], name: "index_mandat_requests_on_pole_id"
+    t.index ["poste_id"], name: "index_mandat_requests_on_poste_id"
+  end
+
+  create_table "mandats", force: :cascade do |t|
+    t.bigint "mandat_request_id", null: false
+    t.bigint "permission_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mandat_request_id"], name: "index_mandats_on_mandat_request_id"
+    t.index ["permission_id"], name: "index_mandats_on_permission_id"
   end
 
   create_table "membre_requests", force: :cascade do |t|
@@ -133,39 +143,28 @@ ActiveRecord::Schema.define(version: 2021_10_25_201331) do
     t.index ["membre_request_id"], name: "index_membres_on_membre_request_id"
   end
 
-  create_table "permission_membres", force: :cascade do |t|
-    t.bigint "junior_id", null: false
+  create_table "permissions", force: :cascade do |t|
+    t.bigint "junior_configuration_id", null: false
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["junior_id"], name: "index_permission_membres_on_junior_id"
-  end
-
-  create_table "permissions_membres", force: :cascade do |t|
-    t.bigint "junior_id", null: false
-    t.bigint "membre_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["junior_id"], name: "index_permissions_membres_on_junior_id"
-    t.index ["membre_id"], name: "index_permissions_membres_on_membre_id"
+    t.index ["junior_configuration_id"], name: "index_permissions_on_junior_configuration_id"
   end
 
   create_table "poles", force: :cascade do |t|
-    t.bigint "junior_id", null: false
+    t.bigint "junior_configuration_id", null: false
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "archive"
-    t.index ["junior_id"], name: "index_poles_on_junior_id"
+    t.index ["junior_configuration_id"], name: "index_poles_on_junior_configuration_id"
   end
 
   create_table "postes", force: :cascade do |t|
-    t.bigint "junior_id", null: false
+    t.bigint "junior_configuration_id", null: false
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "archive"
-    t.index ["junior_id"], name: "index_postes_on_junior_id"
+    t.index ["junior_configuration_id"], name: "index_postes_on_junior_configuration_id"
   end
 
   create_table "userparams", force: :cascade do |t|
@@ -199,17 +198,17 @@ ActiveRecord::Schema.define(version: 2021_10_25_201331) do
   add_foreign_key "config_doc_adherents", "junior_configurations"
   add_foreign_key "document_adherents", "adherents"
   add_foreign_key "junior_configurations", "juniors"
-  add_foreign_key "mandat_membres", "membres"
-  add_foreign_key "mandat_membres", "poles"
-  add_foreign_key "mandat_membres", "postes"
+  add_foreign_key "mandat_requests", "membres"
+  add_foreign_key "mandat_requests", "poles"
+  add_foreign_key "mandat_requests", "postes"
+  add_foreign_key "mandats", "mandat_requests"
+  add_foreign_key "mandats", "permissions"
   add_foreign_key "membre_requests", "juniors"
   add_foreign_key "membre_requests", "users"
   add_foreign_key "membres", "membre_requests"
-  add_foreign_key "permission_membres", "juniors"
-  add_foreign_key "permissions_membres", "juniors"
-  add_foreign_key "permissions_membres", "membres"
-  add_foreign_key "poles", "juniors"
-  add_foreign_key "postes", "juniors"
+  add_foreign_key "permissions", "junior_configurations"
+  add_foreign_key "poles", "junior_configurations"
+  add_foreign_key "postes", "junior_configurations"
   add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end

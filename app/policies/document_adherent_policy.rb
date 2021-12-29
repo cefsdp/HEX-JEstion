@@ -17,8 +17,8 @@ class DocumentAdherentPolicy < ApplicationPolicy
         # Autre Junior
         return false
       end
-    elsif current_user.membre
-      if current_user.membre.admin?
+    elsif user.membre
+      if user.membre.admin?
         # Admin JE
         return true
       else
@@ -40,8 +40,8 @@ class DocumentAdherentPolicy < ApplicationPolicy
         # Autre Junior
         return false
       end
-    elsif current_user.membre
-      if current_user.membre.admin?
+    elsif user.membre
+      if user.membre.admin?
         # Admin JE
         return true
       else

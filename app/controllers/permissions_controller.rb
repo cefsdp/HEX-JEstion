@@ -1,11 +1,11 @@
-class PolesController < ApplicationController
+class PermissionsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @pole = Pole.new(pole_params)
-    @pole.junior_configuration_id = junior_config_id_params.to_i
-    authorize @pole
-    if @pole.save
+    @permission = Permission.new(permission_params)
+    @permission.junior_configuration_id = junior_config_id_params.to_i
+    authorize @permission
+    if @permission.save
       flash[:success] = "Object successfully created"
       redirect_to edit_junior_junior_configuration_path(junior_id_params, junior_config_id_params)
     else
@@ -15,9 +15,9 @@ class PolesController < ApplicationController
   end
 
   def update
-    @pole = Pole.find(pole_params[:id])
-    authorize @pole
-    if @pole.update(pole_params)
+    @permission = Permission.find(permission_params[:id])
+    authorize @permission
+    if @permission.update(permission_params)
       flash[:success] = "Object was successfully updated"
       redirect_to edit_junior_junior_configuration_path(junior_id_params, junior_config_id_params)
     else
@@ -28,9 +28,9 @@ class PolesController < ApplicationController
 
   private
 
-  def pole_params
+  def permission_params
     defaults = { archive: false }
-    params.require(:pole).permit(:id, :nom)
+    params.require(:permission).permit(:id, :nom)
   end
 
   def junior_id_params

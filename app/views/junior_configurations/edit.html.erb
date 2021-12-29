@@ -66,21 +66,21 @@
             <div class="inline_list2">
                 <div class="modal-button inline_list_item bleu" id="add_pole">Ajouter un Pole</div>
                 <% @poles.each_with_index do |pole, index| %>
-                    <div class="modal-button inline_list_item"  id="edit_pole_<%= pole.id %>"><%= pole.nom%></div>
+                    <div class="modal-button inline_list_item"  id="edit_pole_<%= pole.id %>"><%= pole.nom %></div>
                 <% end %>
             </div>
         <h2>Postes</h2>
             <div class="inline_list2">
                 <div class="modal-button inline_list_item bleu" id="add_poste">Ajouter un Poste</div>
                 <% @postes.each_with_index do |poste, index| %>
-                    <div class="modal-button inline_list_item" id="edit_poste_<%= poste.id %>"><%= poste.nom%></div>
+                    <div class="modal-button inline_list_item" id="edit_poste_<%= poste.id %>"><%= poste.nom %></div>
                 <% end %>
             </div>
-        <h2>Classes Autorisations</h2>
+        <h2>Permission</h2>
             <div class="inline_list2">
-                <div class="modal-button inline_list_item bleu" id="add_permission">Ajouter une Classe</div>
-                <% @permissions.each_with_index do |perm, index| %>
-                    <div class="modal-button inline_list_item" id="edit_permission_<%= perm.id %>"><%= perm.nom%></div>
+                <div class="modal-button inline_list_item bleu" id="add_permission">Ajouter une classe</div>
+                <% @permissions.each_with_index do |permission, index| %>
+                    <div class="modal-button inline_list_item" id="edit_permission_<%= permission.id %>"><%= permission.nom %></div>
                 <% end %>
             </div>
     </div>
@@ -171,7 +171,7 @@
             </div>
         </div>
         <div class="content">
-            <%= simple_form_for [@junior, @configuration, @new_pole] do |f| %>
+            <%= simple_form_for [@junior, @configuration, @pole] do |f| %>
                 <%= f.error_notification %>
                 <div class="formulaire">
                     <%= f.hidden_field :id %>
@@ -179,7 +179,7 @@
                         <%= f.input :nom, required: true, label: 'Nom du Pole' %>
                     </div>
                     <div class="input">
-                        <%= f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
+                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
                     </div>
                 </div>
                 <div class="button">
@@ -208,7 +208,7 @@
                             <%= f.input :nom, required: true, label: 'Nom du Pole' %>
                         </div>
                         <div class="input">
-                            <%= f.input :archive, as: :boolean, label: 'Archiver le pole', checked_value: true, unchecked_value: false %>
+                            <% # f.input :archive, as: :boolean, label: 'Archiver le pole', checked_value: true, unchecked_value: false %>
                         </div>
                     </div>
                     <div class="button">
@@ -229,7 +229,7 @@
             </div>
         </div>
         <div class="content">
-            <%= simple_form_for [@junior, @configuration, @new_poste] do |f| %>
+            <%= simple_form_for [@junior, @configuration, @poste] do |f| %>
                 <%= f.error_notification %>
                 <div class="formulaire">
                     <%= f.hidden_field :id %>
@@ -237,7 +237,7 @@
                         <%= f.input :nom, required: true, label: 'Nom du Poste' %>
                     </div>
                     <div class="input">
-                        <%= f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
+                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
                     </div>
                 </div>
                 <div class="button">
@@ -266,7 +266,7 @@
                             <%= f.input :nom, required: true, label: 'Nom du Poste' %>
                         </div>
                         <div class="input">
-                            <%= f.input :archive,  as: :boolean, label: 'Archiver le poste', checked_value: true, unchecked_value: false %>
+                            <% # f.input :archive,  as: :boolean, label: 'Archiver le poste', checked_value: true, unchecked_value: false %>
                         </div>
                     </div>
                     <div class="button">
@@ -278,7 +278,8 @@
     </div>
 <% end %>
 
-<% # Nouveau permission %>
+
+<% # Nouveau Permission %>
 <div class="hex_modal" id="add_permission">
     <div class="background">
         <div class="header">
@@ -287,42 +288,48 @@
             </div>
         </div>
         <div class="content">
-            <%= simple_form_for [@junior, @configuration, @new_permission] do |f| %>
+            <%= simple_form_for [@junior, @configuration, @permission] do |f| %>
                 <%= f.error_notification %>
                 <div class="formulaire">
                     <%= f.hidden_field :id %>
                     <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom de la classe' %>
+                        <%= f.input :nom, required: true, label: 'Nom de la classe de permissions' %>
+                    </div>
+                    <div class="input">
+                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
                     </div>
                 </div>
                 <div class="button">
-                    <%= f.button :submit, "Créer une Classe de Permission" %>
+                    <%= f.button :submit, "Créer la classe de permissions" %>
                 </div>
             <% end %>
         </div>
     </div>
 </div>
 
-<% # Modifier permission %>
-<% @permissions.each do |perm| %>
-    <div class="hex_modal" id="edit_permission_<%= perm.id %>">
+<% # Modifier Permission %>
+<% @permissions.each do |permission| %>
+    <div class="hex_modal" id="edit_permission_<%= permission.id %>">
         <div class="background">
             <div class="header">
-                <div class="modal-close" id="edit_permission_<%= perm.id %>">
+                <div class="modal-close" id="edit_permission_<%= permission.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
             <div class="content">
-                <%= simple_form_for [@junior, @configuration, perm] do |f| %>
+                <%= simple_form_for [@junior, @configuration, permission] do |f| %>
                     <%= f.error_notification %>
                     <div class="formulaire">
                         <%= f.hidden_field :id %>
                         <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom de la classe' %>
+                            <%= f.input :nom, required: true, label: 'Nom du Permission' %>
+                        </div>
+                        <div class="input">
+                            <% # f.input :archive,  as: :boolean, label: 'Archiver le permission', checked_value: true, unchecked_value: false %>
                         </div>
                     </div>
                     <div class="button">
-                        <%= f.button :submit, "Modifier une Classe de Permission" %>
+                        <%= f.button :submit, "Modifier le permission" %>
                     </div>
                 <% end %>
             </div>

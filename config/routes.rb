@@ -7,14 +7,16 @@ Rails.application.routes.draw do
   resources :juniors do 
     resources :membre_requests
     resources :membres do
-      resources :mandat_membres
+      resources :mandat_requests do
+        resources :mandats
+      end
     end
     resources :adherents
     resources :junior_configurations do
       resources :config_doc_adherents
       resources :poles
       resources :postes
-      resources :permission_membres
+      resources :permissions
       get '/archives', to: 'junior_configurations#archives', as: 'archives'
     end
     resources :user do

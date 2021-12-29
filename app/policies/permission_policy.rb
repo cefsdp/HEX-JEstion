@@ -1,4 +1,4 @@
-class PermissionMembrePolicy < ApplicationPolicy
+class PermissionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
@@ -17,8 +17,8 @@ class PermissionMembrePolicy < ApplicationPolicy
         # Autre Junior
         return false
       end
-    elsif current_user.membre
-      if current_user.membre.admin?
+    elsif user.membre
+      if user.membre.admin?
         # Admin JE
         return true
       else

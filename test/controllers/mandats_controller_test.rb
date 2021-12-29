@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PermissionsMembreTest < ActiveSupport::TestCase
+class MandatsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

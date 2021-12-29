@@ -12,13 +12,13 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
           # Autre Junior
           return false
         end
-      elsif current_user.membre
-        if current_user.membre.admin?
+      elsif user.membre
+        if user.membre.admin?
           # Admin JE
-          current_user.junior.adherents
+          user.junior.adherents
         else
           # Membre JE
-          current_user.junior.adherents
+          user.junior.adherents
         end
       end
     end
@@ -36,8 +36,8 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
         # Autre Junior
         return false
       end
-    elsif current_user.membre
-      if current_user.membre.admin?
+    elsif user.membre
+      if user.membre.admin?
         # Admin JE
         return true
       else

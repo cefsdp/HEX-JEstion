@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MandatMembreTest < ActiveSupport::TestCase
+class MandatTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
