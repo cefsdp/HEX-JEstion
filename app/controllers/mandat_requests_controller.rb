@@ -21,11 +21,10 @@ class MandatRequestsController < ApplicationController
   def update
     @mandat_request = MandatRequest.find(update_mandat_request_id_params)
     authorize @mandat_request
-    raise
     if @mandat_request.update(status: mandat_request_params[:status])
       check_mandatship
       flash[:success] = "Mandat Request was successfully updated"
-      redirect_to edit_user_registration_path
+      redirect_to junior_membres_path(@junior)
     else
       flash[:error] = "Something went wrong"
       render 'edit'
@@ -65,8 +64,8 @@ class MandatRequestsController < ApplicationController
     params.require(:membre_id)
   end
 
-  def permission_id_params
-    params.require(:permission_id)
+  def permission_params
+    params.require(:permission).permit(:id)
   end
 
   def check_mandatship
@@ -74,7 +73,7 @@ class MandatRequestsController < ApplicationController
     when 'rejected'
       @mandat_request.destroy
     when 'approved'
-      @mandat = Mandat.create(mandat_request_id: @mandat_request.id, permission_id: permission_id_params.to_i)
+      @mandat = Mandat.create(mandat_request_id: @mandat_request.id, permission_id: permission_params[:id].to_i)
     end
   end
 end
