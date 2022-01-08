@@ -18,8 +18,7 @@
               </div>
               <div class="main">
                 <div></div>
-                <% #raise %> 
-                  <% mandats_en_cours = membre.mandat_requests.where('date_debut > ?', Date.today).where('Date_fin < ?', Date.today) %>
+                  <% mandats_en_cours = membre.mandat_requests.where(status: 'approved').where('date_debut < ?', Date.today).where('Date_fin > ?', Date.today) %>
                   <% if !mandats_en_cours.count.zero? %>
                     <div>Poste : <%= mandats_en_cours.first.poste.nom %></div>
                     <div>Pole : <%= mandats_en_cours.first.pole.nom %></div>

@@ -55,16 +55,16 @@
                   <div><%= mandat_request.pole.nom %></div>
                 </div>
                 <div class="main">
-                  <div><%= mandat_request.date_debut %></div>
-                  <div><%= mandat_request.date_fin %></div>
-                  <div><%= mandat_request.pole %></div>
+                  <div>Du <%= mandat_request.date_debut.strftime("%d/%m/%Y") %></div>
+                  <div>Au <%= mandat_request.date_fin.strftime("%d/%m/%Y") %></div>
+                  <div><%= mandat_request.status == 'approved' ? mandat_request.mandat.permission.nom : 'Aucune autorisation' %></div>
                 </div>
                 <div class="comment">
                   <% if mandat_request.status == 'invalid' %>
                     <div class="valid">Refusé</div>
                   <% elsif mandat_request.status == 'pending' %>
                     <div class="pending">En attente de confirmation</div>
-                  <% elsif mandat_request.status == 'confirmed' %>
+                  <% elsif mandat_request.status == 'approved' %>
                     <% if mandat_request.date_debut > Date.today %>
                         <div class="valid">Non débuté</div>
                     <% elsif mandat_request.date_fin < Date.today %>

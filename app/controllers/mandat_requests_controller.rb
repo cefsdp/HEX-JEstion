@@ -19,6 +19,7 @@ class MandatRequestsController < ApplicationController
   end
 
   def update
+    @junior = current_user.junior
     @mandat_request = MandatRequest.find(update_mandat_request_id_params)
     authorize @mandat_request
     if @mandat_request.update(status: mandat_request_params[:status])
