@@ -26,11 +26,25 @@ class MandatRequestsController < ApplicationController
                               date_debut: mandat_request_params[:date_debut],
                               date_fin: mandat_request_params[:date_fin],
                               status: mandat_request_params[:status])
-      flash[:success] = "Object was successfully updated"
+      check_mandatship
+      flash[:success] = "Mandat Request was successfully updated"
       redirect_to edit_user_registration_path
     else
       flash[:error] = "Something went wrong"
       render 'edit'
+    end
+  end
+
+  def destroy
+    @junior = current_user.junior
+    @mandat_request = MandatRequest.find(params[:id])
+    authorize @mandat_request
+    if @mandat_request.destroy
+      flash[:success] = 'MandatRequest was successfully deleted.'
+      redirect_to junior_membres_path(@junior)
+    else
+      flash[:error] = 'Something went wrong'
+      redirect_to junior_membres_path(@junior)
     end
   end
 
@@ -48,5 +62,18 @@ class MandatRequestsController < ApplicationController
 
   def membre_id_params
     params.require(:membre_id)
+  end
+
+  def permission_id_params
+    params.require(:permission_id)
+  end
+
+  def check_mandatship
+    case @mandat_request.status
+    when 'rejected'
+      @mandat_request.destroy
+    when 'approved'
+      @mandat = Mandat.create(mandat_request_id: @mandat_request.id, permission_id: permission_id_params.to_i)
+    end
   end
 end

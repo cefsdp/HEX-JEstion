@@ -1,7 +1,7 @@
 class MandatRequestPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      scope.all if user.membre.nil? == false
     end
   end
 

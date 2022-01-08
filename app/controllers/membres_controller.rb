@@ -3,6 +3,7 @@ class MembresController < ApplicationController
 
   def index
     @membres = policy_scope(Membre)
-    @requests = policy_scope(MembreRequest)
+    @request_membres = policy_scope(MembreRequest)
+    @request_mandats = policy_scope(MandatRequest)
   end
 end
