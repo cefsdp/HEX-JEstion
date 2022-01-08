@@ -10,7 +10,7 @@
       <div class="cards-profile">
         <% @membres.each do |membre| %>
           <div class="card">
-            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
+            <div class="avatar"><%= image_tag membre.membre_request.user.adherent.avatar.url, class: 'avatar' %></div>
             <div class="contenu">
               <div class="title">
                 <div><%= membre.membre_request.user.adherent.prenom %></div>
@@ -40,7 +40,7 @@
       <div class="cards-profile">
         <% @request_membres.where(status: 'pending').each do |request| %>
           <div class="card">
-            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
+            <div class="avatar"><%= image_tag request.user.adherent.avatar.url, class: 'avatar' %></div>
             <div class="contenu">
               <div class="title">
                 <div><%= request.user.adherent.prenom %></div>
@@ -59,7 +59,6 @@
                     <div class="pending">En attente de validation</div>
                 <% end %>
               </div>
-              <% #raise %>
               <div class="actions">
                 <%= link_to junior_membre_request_path(request.junior_id, request.id, membre_request: {status: 'approved'}), method: 'patch' do %>
                   <div class="action" style="color: var(--vert);">
@@ -78,45 +77,47 @@
       </div>
     </div>
 
+    <% #raise %>
     <% # Menu 3 %>
     <div class="content">
       <div class="cards-profile">
         <% @request_mandats.where(status: 'pending').each do |request| %>
-          <div class="card">
-            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
-            <div class="contenu">
-              <div class="title">
-                <div><%= request.user.adherent.prenom %></div>
-                <div><%= request.user.adherent.nom %></div>
-              </div>
-              <div class="main">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="comment">
-                <% if request.user.adherent.file_status == 'valid' %>
-                    <div class="valid">Dossier valide</div>
-                <% elsif request.user.adherent.file_status == 'invalid' %>
-                    <div class="invalid">Dossier invalide</div>
-                <% elsif request.user.adherent.file_status == 'pending' %>
-                    <div class="pending">En attente de validation</div>
+          <%= simple_form_for [@junior, request.membre, request] do |f| %>
+            <div class="card">
+              <div class="avatar"><%= image_tag request.membre.membre_request.user.adherent.avatar.url, class: 'avatar' %></div>
+              <div class="contenu">
+                <div class="title">
+                  <div><%= request.membre.membre_request.user.adherent.prenom %></div>
+                  <div><%= request.membre.membre_request.user.adherent.nom %></div>
+                </div>
+                <div class="main">
+                  <div>Poste : <%= request.poste.nom %></div>
+                  <div>Pole : <%= request.pole.nom %></div>
+                  <div>Du : <%= request.date_debut.strftime("%d/%m/%Y") %></div>
+                  <div>Au : <%= request.date_fin.strftime("%d/%m/%Y") %></div>
+                </div>
+                <div class="comment">
+                <%= simple_fields_for :no_model_fields do |n| %>
+                  <%= n.input :permission_field, autofocus: true, label: "Classe d'autorisation", collection: @junior.junior_configuration.permissions, :label_method => lambda { |autorisation| "#{autorisation.nom}" } %>
                 <% end %>
-              </div>
-              <% #raise %>
-              <div class="actions">
-                <%= link_to junior_membre_request_path(request.junior_id, request.id, membre_request: {status: 'approved'}), method: 'patch' do %>
-                  <div class="action" style="color: var(--vert);">
-                    <i class="fas fa-check"></i>
-                  </div>
-                <% end %>
-                <%= link_to junior_membre_request_path(request.junior_id, request.id), method: :delete do %>
-                  <div class="action" style="color: var(--rouge);">
-                    <i class="fas fa-times"></i>
-                  </div>
-                <% end %>
+                <%= f.hidden_field :status, value: "approved" %>
+                </div>
+                <% #raise %>
+                <div class="actions">
+                  <%= link_to junior_membre_mandat_request_path(request.membre.membre_request.junior_id, request.membre.membre_request.id, request.id), method: 'patch' do %>
+                    <div class="action" style="color: var(--vert);">
+                      <i class="fas fa-check"></i>
+                    </div>
+                  <% end %>
+                  <%= link_to junior_membre_mandat_request_path(request.membre.membre_request.junior_id, request.membre.membre_request.id, request.id), method: :delete do %>
+                    <div class="action" style="color: var(--rouge);">
+                      <i class="fas fa-times"></i>
+                    </div>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>  
         <% end %>
       </div>
     </div>

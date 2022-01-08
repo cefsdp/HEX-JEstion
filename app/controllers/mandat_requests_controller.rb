@@ -19,13 +19,10 @@ class MandatRequestsController < ApplicationController
   end
 
   def update
-    @mandat_request = MandatRequest.find(mandat_request_params[:id])
+    @mandat_request = MandatRequest.find(update_mandat_request_id_params)
     authorize @mandat_request
-    if @mandat_request.update(poste: Poste.find(mandat_request_params[:poste].to_i),
-                              pole: Pole.find(mandat_request_params[:pole].to_i),
-                              date_debut: mandat_request_params[:date_debut],
-                              date_fin: mandat_request_params[:date_fin],
-                              status: mandat_request_params[:status])
+    raise
+    if @mandat_request.update(status: mandat_request_params[:status])
       check_mandatship
       flash[:success] = "Mandat Request was successfully updated"
       redirect_to edit_user_registration_path
@@ -54,6 +51,10 @@ class MandatRequestsController < ApplicationController
     defaults = { status: 'pending' }
     params.require(:mandat_request).permit(:id, :poste, :pole, :date_debut, :date_fin,
                                            :status).reverse_merge(defaults)
+  end
+
+  def update_mandat_request_id_params
+    params.require(:id)
   end
 
   def junior_id_params
