@@ -23,6 +23,22 @@
         .nav_item {
           color: var(--blanc);
           margin: 1vh 0vw;
+          position: relative;
+          .tooltiptext {
+            visibility: hidden;
+            position: absolute;
+            background-color: var(--jaune-hex);
+            color: #fff;
+            width: 150px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+            padding: 5px 5px;
+            border-radius: 6px;
+            margin-left: 1vw;
+            z-index: 1;
+          }
           .avatar {
             border: 1px solid;
             border-radius: 50%;
@@ -33,6 +49,11 @@
           :hover {
             color: var(--hover-blue);
             cursor: pointer;
+          }
+        }
+        :hover {
+          .tooltiptext {
+            visibility: visible;
           }
         }
       }
@@ -53,9 +74,29 @@
           .profile {
             font-size: 10px;
             color: var(--blanc);
+            .tooltiptext {
+              visibility: hidden;
+              position: absolute;
+              background-color: var(--jaune-hex);
+              color: #fff;
+              width: 100px;
+              font-size: 10px;
+              font-weight: 500;
+              font-family: "Poppins", sans-serif;
+              text-align: center;
+              padding: 5px 5px;
+              border-radius: 6px;
+              margin-top: 3vh;
+              z-index: 1;
+            }
             :hover {
               color: var(--hover-blue);
               cursor: pointer;
+            }
+          }
+          :hover {
+            .tooltiptext {
+              visibility: visible;
             }
           }
           .active {
@@ -76,6 +117,26 @@
           align-items: center;
           a {
             font-size: 11px;
+          }
+          .tooltiptext {
+            visibility: hidden;
+            position: absolute;
+            background-color: var(--jaune-hex);
+            color: #fff;
+            width: 100px;
+            font-size: 10px;
+            font-weight: 500;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+            padding: 5px 5px;
+            border-radius: 6px;
+            margin-left: 3vh;
+            z-index: 1;
+          }
+        }
+        :hover {
+          .tooltiptext {
+            visibility: visible;
           }
         }
       }
