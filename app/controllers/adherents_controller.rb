@@ -11,8 +11,8 @@ class AdherentsController < ApplicationController
   def show
     @adherent = Adherent.find(params[:id])
     authorize @adherent
-    @junior = current_user.junior
-    @user = current_user
+    @user = @adherent.user
+    @junior = @user.junior
     @document = DocumentAdherent.new
     @documents = DocumentAdherent.where(adherent_id: @adherent.id).order(
       "nom ASC", "date_fin_validite DESC"
