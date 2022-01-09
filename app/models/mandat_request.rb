@@ -3,5 +3,5 @@ class MandatRequest < ApplicationRecord
   belongs_to :pole
   belongs_to :membre
 
-  has_many :mandats, dependent: :destroy
+  has_one :mandat, dependent: :destroy
 end

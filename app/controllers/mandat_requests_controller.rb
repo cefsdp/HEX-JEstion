@@ -19,16 +19,13 @@ class MandatRequestsController < ApplicationController
   end
 
   def update
-    @mandat_request = MandatRequest.find(mandat_request_params[:id])
+    @junior = current_user.junior
+    @mandat_request = MandatRequest.find(update_mandat_request_id_params)
     authorize @mandat_request
-    if @mandat_request.update(poste: Poste.find(mandat_request_params[:poste].to_i),
-                              pole: Pole.find(mandat_request_params[:pole].to_i),
-                              date_debut: mandat_request_params[:date_debut],
-                              date_fin: mandat_request_params[:date_fin],
-                              status: mandat_request_params[:status])
+    if @mandat_request.update(status: mandat_request_params[:status])
       check_mandatship
       flash[:success] = "Mandat Request was successfully updated"
-      redirect_to edit_user_registration_path
+      redirect_to junior_membres_path(@junior)
     else
       flash[:error] = "Something went wrong"
       render 'edit'
@@ -56,6 +53,10 @@ class MandatRequestsController < ApplicationController
                                            :status).reverse_merge(defaults)
   end
 
+  def update_mandat_request_id_params
+    params.require(:id)
+  end
+
   def junior_id_params
     params.require(:junior_id)
   end
@@ -64,8 +65,8 @@ class MandatRequestsController < ApplicationController
     params.require(:membre_id)
   end
 
-  def permission_id_params
-    params.require(:permission_id)
+  def permission_params
+    params.require(:permission).permit(:id)
   end
 
   def check_mandatship
@@ -73,7 +74,7 @@ class MandatRequestsController < ApplicationController
     when 'rejected'
       @mandat_request.destroy
     when 'approved'
-      @mandat = Mandat.create(mandat_request_id: @mandat_request.id, permission_id: permission_id_params.to_i)
+      @mandat = Mandat.create(mandat_request_id: @mandat_request.id, permission_id: permission_params[:id].to_i)
     end
   end
 end

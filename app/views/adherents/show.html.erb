@@ -1,13 +1,18 @@
-<div style="padding-bottom: 1%;">
-  <div style="color: var(--bleu-hex); font-weight: 700; font-size: 18px;"><%= @adherent.nom %></div>
-  <div style="color: var(--bleu-hex); font-weight: 600; font-size: 16px;"><%= @adherent.prenom %></div>
+<div class="user_page_header">
+  <div class="avatar"><%= image_tag @adherent.avatar.url, class: 'avatar' %></div>
+  <div class="nom">
+    <h1><%= @adherent.nom %></h1>
+    <h1><%= @adherent.prenom %></h1>
+  </div>
 </div>
 
 <div class="menu">
   <div class="tabs">
     <div class="tab active">Informations</div>
     <div class="tab">Documents</div>
+    <% if !@user.membre.nil? %><div class="tab">Mandats</div><% end %>
   </div>
+  
   <div class="contents">
     <% # Informations %>
     <div class="content active">      
@@ -89,9 +94,163 @@
           <% end %>
         </tbody>
       </table>
-
-
     </div>
+
+    <% # Mandats%>
+    <% if !@user.membre.nil? %>
+      <div class="content">
+        <% mandats_en_cours = @user.membre.mandat_requests.where(status: 'approved').where('date_debut < ?', Date.today).where('Date_fin > ?', Date.today) %>
+        <% mandats_passés = @user.membre.mandat_requests.where(status: 'approved').where('date_debut > ?', Date.today) %>
+        <% mandats_futurs = @user.membre.mandat_requests.where(status: 'approved').where('Date_fin < ?', Date.today) %>
+        <% mandats_demandes = @user.membre.mandat_requests.where(status: 'pending')%>
+        <% if !mandats_en_cours.count.zero?%>
+          <h2>Mandats en cours</h2>
+          <div class="cards-profile">
+            <% mandats_en_cours.each do |mandat_request| %>
+              <div class="card">
+                <div class="contenu">
+                  <div class="title">
+                    <div><%= mandat_request.poste.nom %></div>
+                    <div><%= mandat_request.pole.nom %></div>
+                  </div>
+                  <div class="main">
+                    <div>Du <%= mandat_request.date_debut.strftime("%d/%m/%Y") %></div>
+                    <div>Au <%= mandat_request.date_fin.strftime("%d/%m/%Y") %></div>
+                    <div><%= mandat_request.status == 'approved' ? mandat_request.mandat.permission.nom : 'Aucune autorisation' %></div>
+                  </div>
+                  <div class="comment">
+                  </div>
+                  <div class="actions">
+                    <%= button_tag(:type => 'button') do %>
+                      <%= link_to junior_membre_mandat_request_path(mandat_request.membre.membre_request.junior_id, mandat_request.membre.membre_request.id, mandat_request.id), method: :delete do %>
+                        <div class="action" style="color: var(--rouge);">
+                          Supprimer le mandat 
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if !mandats_passés.count.zero?%>
+          <h2>Mandats passés</h2>
+          <div class="cards-profile">
+            <% mandats_passés.each do |mandat_request| %>
+              <div class="card">
+                <div class="contenu">
+                  <div class="title">
+                    <div><%= mandat_request.poste.nom %></div>
+                    <div><%= mandat_request.pole.nom %></div>
+                  </div>
+                  <div class="main">
+                    <div>Du <%= mandat_request.date_debut.strftime("%d/%m/%Y") %></div>
+                    <div>Au <%= mandat_request.date_fin.strftime("%d/%m/%Y") %></div>
+                    <div><%= mandat_request.status == 'approved' ? mandat_request.mandat.permission.nom : 'Aucune autorisation' %></div>
+                  </div>
+                  <div class="comment">
+                  </div>
+                  <div class="actions">
+                    <%= button_tag(:type => 'button') do %>
+                      <%= link_to junior_membre_mandat_request_path(mandat_request.membre.membre_request.junior_id, mandat_request.membre.membre_request.id, mandat_request.id), method: :delete do %>
+                        <div class="action" style="color: var(--rouge);">
+                          Supprimer le mandat 
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+
+        <% if !mandats_futurs.count.zero?%>
+          <h2>Mandats Futurs</h2>
+          <div class="cards-profile">
+            <% mandats_futurs.each do |mandat_request| %>
+              <div class="card">
+                <div class="contenu">
+                  <div class="title">
+                    <div><%= mandat_request.poste.nom %></div>
+                    <div><%= mandat_request.pole.nom %></div>
+                  </div>
+                  <div class="main">
+                    <div>Du <%= mandat_request.date_debut.strftime("%d/%m/%Y") %></div>
+                    <div>Au <%= mandat_request.date_fin.strftime("%d/%m/%Y") %></div>
+                    <div><%= mandat_request.status == 'approved' ? mandat_request.mandat.permission.nom : 'Aucune autorisation' %></div>
+                  </div>
+                  <div class="comment">
+                  </div>
+                  <div class="actions">
+                    <%= button_tag(:type => 'button') do %>
+                      <%= link_to junior_membre_mandat_request_path(mandat_request.membre.membre_request.junior_id, mandat_request.membre.membre_request.id, mandat_request.id), method: :delete do %>
+                        <div class="action" style="color: var(--rouge);">
+                          Supprimer le mandat 
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+
+        <% if !mandats_demandes.count.zero?%>
+        <h2>Demandes de mandats</h2>
+          <div class="cards-profile">
+            <% mandats_demandes.each do |request| %>
+              <%= simple_form_for [@junior, request.membre, request] do |f| %>
+                <div class="card">
+                  <div class="contenu">
+                    <div class="title">
+                      <div><%= request.poste.nom %></div>
+                      <div><%= request.pole.nom %></div>
+                    </div>
+                    <div class="main">
+                      <div>Du <%= request.date_debut.strftime("%d/%m/%Y") %></div>
+                      <div>Au <%= request.date_fin.strftime("%d/%m/%Y") %></div>
+                    </div>
+                    <div class="comment">
+                    <%= simple_fields_for :permission do |n| %>
+                      <div class="formulaire">
+                        <div class="input">
+                        <%= n.input :id, autofocus: true, label: "Autorisation :", collection: @junior.junior_configuration.permissions, :label_method => lambda { |autorisation| "#{autorisation.nom}" } %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <%= f.hidden_field :status, value: "approved" %>
+                    </div>
+                    <% #raise %>
+                    <div class="actions">
+                      <%= button_tag type: 'submit' do %>
+                        <div class="action" style="color: var(--vert);">
+                          <i class="fas fa-check"></i>
+                        </div>
+                      <% end %>
+                      <%= button_tag(:type => 'button') do %>
+                        <%= link_to junior_membre_mandat_request_path(request.membre.membre_request.junior_id, request.membre.membre_request.id, request.id), method: :delete do %>
+                          <div class="action" style="color: var(--rouge);">
+                            <i class="fas fa-times"></i>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>  
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+
   </div>
 </div>
 
