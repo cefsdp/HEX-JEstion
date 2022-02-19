@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_28_215941) do
+ActiveRecord::Schema.define(version: 2022_02_06_164634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,32 @@ ActiveRecord::Schema.define(version: 2021_12_28_215941) do
     t.index ["user_id"], name: "index_adherents_on_user_id"
   end
 
+  create_table "clients", force: :cascade do |t|
+    t.bigint "junior_id", null: false
+    t.string "sexe"
+    t.string "langue"
+    t.string "prenom"
+    t.string "nom"
+    t.string "email"
+    t.string "telephone"
+    t.string "entreprise"
+    t.string "poste"
+    t.string "site_web"
+    t.string "telephone_entreprise"
+    t.string "siret"
+    t.string "type"
+    t.string "activite"
+    t.string "adresse"
+    t.string "ville"
+    t.string "code_postal"
+    t.string "pays"
+    t.string "provenance"
+    t.string "premier_contact"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_id"], name: "index_clients_on_junior_id"
+  end
+
   create_table "config_doc_adherents", force: :cascade do |t|
     t.bigint "junior_configuration_id", null: false
     t.string "nom"
@@ -84,6 +110,32 @@ ActiveRecord::Schema.define(version: 2021_12_28_215941) do
     t.string "raison_invalid"
     t.date "date_fin_validite"
     t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
+  end
+
+  create_table "etapes", force: :cascade do |t|
+    t.bigint "etude_id", null: false
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["etude_id"], name: "index_etapes_on_etude_id"
+  end
+
+  create_table "etudes", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.bigint "prestation_id", null: false
+    t.bigint "charge_etude_id"
+    t.bigint "charge_qualite_id"
+    t.bigint "charge_rh_id"
+    t.string "statut"
+    t.date "date_debut"
+    t.string "ref_etude"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["charge_etude_id"], name: "index_etudes_on_charge_etude_id"
+    t.index ["charge_qualite_id"], name: "index_etudes_on_charge_qualite_id"
+    t.index ["charge_rh_id"], name: "index_etudes_on_charge_rh_id"
+    t.index ["client_id"], name: "index_etudes_on_client_id"
+    t.index ["prestation_id"], name: "index_etudes_on_prestation_id"
   end
 
   create_table "junior_configurations", force: :cascade do |t|
@@ -151,6 +203,14 @@ ActiveRecord::Schema.define(version: 2021_12_28_215941) do
     t.index ["junior_configuration_id"], name: "index_permissions_on_junior_configuration_id"
   end
 
+  create_table "phases", force: :cascade do |t|
+    t.bigint "etape_id", null: false
+    t.string "nom"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["etape_id"], name: "index_phases_on_etape_id"
+  end
+
   create_table "poles", force: :cascade do |t|
     t.bigint "junior_configuration_id", null: false
     t.string "nom"
@@ -165,6 +225,14 @@ ActiveRecord::Schema.define(version: 2021_12_28_215941) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["junior_configuration_id"], name: "index_postes_on_junior_configuration_id"
+  end
+
+  create_table "prestations", force: :cascade do |t|
+    t.bigint "junior_configuration_id", null: false
+    t.string "nom"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_configuration_id"], name: "index_prestations_on_junior_configuration_id"
   end
 
   create_table "userparams", force: :cascade do |t|
@@ -195,8 +263,15 @@ ActiveRecord::Schema.define(version: 2021_12_28_215941) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adherents", "users"
+  add_foreign_key "clients", "juniors"
   add_foreign_key "config_doc_adherents", "junior_configurations"
   add_foreign_key "document_adherents", "adherents"
+  add_foreign_key "etapes", "etudes"
+  add_foreign_key "etudes", "clients"
+  add_foreign_key "etudes", "prestations"
+  add_foreign_key "etudes", "users", column: "charge_etude_id"
+  add_foreign_key "etudes", "users", column: "charge_qualite_id"
+  add_foreign_key "etudes", "users", column: "charge_rh_id"
   add_foreign_key "junior_configurations", "juniors"
   add_foreign_key "mandat_requests", "membres"
   add_foreign_key "mandat_requests", "poles"
@@ -207,8 +282,10 @@ ActiveRecord::Schema.define(version: 2021_12_28_215941) do
   add_foreign_key "membre_requests", "users"
   add_foreign_key "membres", "membre_requests"
   add_foreign_key "permissions", "junior_configurations"
+  add_foreign_key "phases", "etapes"
   add_foreign_key "poles", "junior_configurations"
   add_foreign_key "postes", "junior_configurations"
+  add_foreign_key "prestations", "junior_configurations"
   add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end

@@ -5,13 +5,23 @@ Rails.application.routes.draw do
 
   #APP 
   resources :juniors do 
+
     resources :membre_requests
+    
     resources :membres do
       resources :mandat_requests do
         resources :mandats
       end
     end
+
+    resources :etudes do
+      resources :etapes
+      resources :phases
+    end
+
+    resources :clients
     resources :adherents
+
     resources :junior_configurations do
       resources :config_doc_adherents
       resources :poles
@@ -19,6 +29,7 @@ Rails.application.routes.draw do
       resources :permissions
       get '/archives', to: 'junior_configurations#archives', as: 'archives'
     end
+
     resources :user do
       resources :adherents do
         resources :document_adherents

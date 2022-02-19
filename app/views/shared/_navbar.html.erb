@@ -25,13 +25,13 @@
     <%# Navbar - Membre %>
     <div class='nav_items'>
       <div class='nav_item'><%= link_to junior_path(current_user.junior_id) do %><i class="fas fa-home"></i><% end %><span class="tooltiptext">Accueil</span></div>
-      <div class='nav_item'><i class="fas fa-briefcase"></i><span class="tooltiptext">JEstion Etudes</span></div>
-      <div class='nav_item'><i class="fas fa-project-diagram"></i><span class="tooltiptext">JEstion Projets</span></div>
+      <div class='nav_item'><%= link_to junior_etudes_path(current_user.junior_id) do %><i class="fas fa-briefcase"></i><% end %><span class="tooltiptext">JEstion Etudes</span></div>
+      <% # <div class='nav_item'><i class="fas fa-project-diagram"></i><span class="tooltiptext">JEstion Projets</span></div> %>
       <div class='nav_item'><%= link_to junior_adherents_path(current_user.junior_id) do %><i class="fas fa-users"></i><% end %><span class="tooltiptext">JEstion Adherents</span></div>
       <div class='nav_item'><%= link_to junior_membres_path(current_user.junior_id) do %><i class="fas fa-user-tie"></i><% end %><span class="tooltiptext">JEstion Membres</span></div>
-      <div class='nav_item'><i class="fas fa-chart-bar"></i><span class="tooltiptext">JEstion Indicateurs</span></div>
-      <div class='nav_item'><i class="fas fa-file-invoice-dollar"></i><span class="tooltiptext">JEstion Trésorerie</span></div>
-      <div class='nav_item'><i class="fas fa-question-circle"></i><span class="tooltiptext">Support</span></div>
+      <% # <div class='nav_item'><i class="fas fa-chart-bar"></i><span class="tooltiptext">JEstion Indicateurs</span></div> %>
+      <% # <div class='nav_item'><i class="fas fa-file-invoice-dollar"></i><span class="tooltiptext">JEstion Trésorerie</span></div> %>
+      <% # <div class='nav_item'><i class="fas fa-question-circle"></i><span class="tooltiptext">Support</span></div> %>
       <div class='nav_item'><%= link_to edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id) do %><i class="fas fa-cog"></i><% end %><span class="tooltiptext">Configuration</span></div>
     </div>
     <%# Navbar - Admin %>
