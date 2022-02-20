@@ -16,8 +16,8 @@
         <% @etudes.each_with_index do |etude, index| %>
             <tr onclick="location.href='<%= junior_etude_path(etude.junior, etude) %>'" class="ligne tabl_search_ligne">
                 <td class="colonne"> <%= etude.ref_etude %></td>
-                <td class="colonne"> <%= etude.date_signature.strftime("%d-%m-%Y") %></td>
                 <td class="colonne"> <%= etude.date_debut.strftime("%d-%m-%Y") %></td>
+                <td class="colonne"> <%= etude.date_signature.nil? ? "N/A" : etude.date_signature.strftime("%d-%m-%Y") %></td>
                 <td class="colonne"> <%= etude.prestation.nom %></td>
                 <td class="colonne"> <%= etude.statut %></td>
             </tr>

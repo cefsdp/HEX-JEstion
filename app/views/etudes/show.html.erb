@@ -1,0 +1,286 @@
+<h1><%= @etude.ref_etude %><%= @etude.client.nil? ? "" : " - " + @etude.client.entreprise %></h1>
+<div class="menu">
+  <div class="tabs">
+    <div class="tab active">Tableau de bord</div>
+    <div class="tab">Informations</div>
+    <div class="tab">Phases et documents</div>
+  </div>
+  <div class="contents">
+    <% # Tableau de bord %>
+    <div class="content active">   
+        Informations sur l'étude
+        Prochaines étapes
+        Selections en cours
+        Gantt
+        Camembert suivi phases (cloturé, passé non cloturé, futures)
+        Camembert suivi documents (futures, passé + preuves, passé sans preuves)
+        Camembert JEH signé / facturé / reversé / déclaré 
+        Camembert Facture émis / payé / en attente
+        Camembert Avenants
+    </div>
+
+    <% # Informations %>
+    <div class="content">
+        <div class="mise_en_page1">
+            <div class="part reductible">
+                <div class="titre_reducteur">
+                    <h2>Etude</h2>
+                    <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                    <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                </div>
+                <div class="content_reducteur">
+                    <div class="display_donnee">
+                        <div>
+                            <div class="label_donnee">Référence</div>
+                            <div class="donnee"><%= @etude.ref_etude %></div>
+                        </div>
+                        <div>
+                            <div class="label_donnee">Confidentialité</div>
+                            <div class="donnee"><%= @etude.confidentielle == true ? "Etude Confidentielle" : "Etude non confidentielle" %></div>
+                        </div>
+                    </div>
+                    <div class="display_donnee">
+                        <div>
+                            <div class="label_donnee">Prestation</div>
+                            <div class="donnee"><%= @etude.prestation.nom %></div>
+                        </div>
+                        <div>
+                            <div class="label_donnee">Statut de l'étude</div>
+                            <div class="donnee"><%= @etude.statut %></div>
+                        </div>
+                    </div>
+                    <div class="display_donnee">
+                        <div>
+                            <div class="label_donnee">Date de début des négociations</div>
+                            <div class="donnee"><%= @etude.date_debut.strftime("%d/%m/%Y") %></div>
+                        </div>
+                        <div>
+                            <div class="label_donnee">Date de Signature</div>
+                            <div class="donnee"><%= @etude.date_signature.nil? ? "N/A" : @etude.date_signature.strftime("%d/%m/%Y") %></div>
+                        </div>
+                    </div>
+                    <div class="h3 modal-button" id="modifier_etude">Modifier les informations</div>
+                </div>
+            </div>
+
+            <div class="part reductible">
+                <div class="titre_reducteur">
+                    <h2>Client</h2>
+                    <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                    <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                </div>
+                <div class="content_reducteur">
+                    <% if @etude.client == nil %>
+                        <div class="h3"><%= link_to new_junior_client_path(current_user.junior_id, etude_id: @etude.id) do %>Ajouter un nouveau client<% end %></div>
+                        <div class="h3 modal-button" id="add_client_existant">Ajouter un client existant</div>
+                    <% else %>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Titre</div>
+                                <div class="donnee"><%= @etude.client.sexe == "" ? "N/A" : @etude.client.sexe %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Prénom</div>
+                                <div class="donnee"><%= @etude.client.prenom == "" ? "N/A" : @etude.client.prenom %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Nom</div>
+                                <div class="donnee"><%= @etude.client.nom == "" ? "N/A" : @etude.client.nom%></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Téléphone</div>
+                                <div class="donnee"><%= @etude.client.telephone == "" ? "N/A" : @etude.client.telephone %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Adresse Email</div>
+                                <div class="donnee"><%= @etude.client.email == "" ? "N/A" : @etude.client.email %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">langue</div>
+                                <div class="donnee"><%= @etude.client.langue == "" ? "N/A" : @etude.client.langue %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Entreprise</div>
+                                <div class="donnee"><%= @etude.client.entreprise == "" ? "N/A" : @etude.client.entreprise %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">SIRET</div>
+                                <div class="donnee"><%= @etude.client.siret == "" ? "N/A" : @etude.client.siret %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Type d'entreprise</div>
+                                <div class="donnee"><%= @etude.client.type_entreprise == "" ? "N/A" : @etude.client.type_entreprise %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Activité du client</div>
+                                <div class="donnee"><%= @etude.client.activite == "" ? "N/A" : @etude.client.activite %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Telephone de l'entreprise</div>
+                                <div class="donnee"><%= @etude.client.telephone_entreprise == "" ? "N/A" : @etude.client.telephone_entreprise %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Site de l'entreprise</div>
+                                <div class="donnee"><%= @etude.client.site_web == "" ? "N/A" : @etude.client.site_web %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Adresse</div>
+                                <div class="donnee"><%= @etude.client.adresse == "" ? "N/A" : @etude.client.adresse %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Code Postale et Ville</div>
+                                <div class="donnee"><%= @etude.client.code_postal == "" ? "N/A" : @etude.client.code_postal %>, <%= @etude.client.ville == "" ? "N/A" : @etude.client.ville %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Pays</div>
+                                <div class="donnee"><%= @etude.client.pays == "" ? "N/A" : @etude.client.pays %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Poste de l'interlocuteur</div>
+                                <div class="donnee"><%= @etude.client.poste == "" ? "N/A" : @etude.client.poste %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Provenance</div>
+                                <div class="donnee"><%= @etude.client.provenance == "" ? "N/A" : @etude.client.provenance %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Méthode premier contact</div>
+                                <div class="donnee"><%= @etude.client.premier_contact == "" ? "N/A" : @etude.client.premier_contact %></div>
+                            </div>
+                        </div>
+                        <div class="h3 modal-button" id="edit_client">Modifier les informations</div>
+                        <div class="h3"><%= link_to edit_junior_client_path(@etude.junior_id, @etude.client) do %>Modifier les informations client<% end %></div>
+                        <div class="h3 modal-button" id="remove_client">Retirer le client de l'étude</div>
+                    <% end %>
+                </div>
+            </div>
+            <div class="part reductible">
+                <div class="titre_reducteur">
+                    <h2>Chargés de projets</h2>
+                    <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                    <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                </div>
+                <div class="content_reducteur">
+                    CdP
+                </div>
+            </div>
+            <div class="part reductible">
+                <div class="titre_reducteur">
+                    <h2>Marge, taux de TVA et frais</h2>
+                    <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                    <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                </div>
+                <div class="content_reducteur">
+                    Autres
+                </div>
+            </div>
+            <div class="part reductible">
+                <div class="titre_reducteur">
+                    <h2>Campus en charge</h2>
+                    <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                    <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                </div>
+                <div class="content_reducteur">
+                    Autres
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% # Phases et documents %>
+    <div class="content">
+        Ajouter etapes
+        Trier etapes par date
+        modifier etapes (modales)
+    </div>
+  </div>
+</div>
+
+
+<% # Modifier l'étude %>
+<div class="hex_modal" id="modifier_etude">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="modifier_etude">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @etude] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.input :ref_etude, autofocus: true, required: true, label: "Référence de l'étude", placeholder: @new_reference %>
+                        <%= f.input :confidentielle, autofocus: true, required: true, label: "Confidentialité", as: :select, collection: [["Etude confidentielle", true], ["Etude non confidentielle", false]] %>
+                    </div>
+                    <div class="input">
+                        <%= f.association :prestation, required: true, autofocus: true, label: "Prestation", collection: @junior.junior_configuration.prestations, :label_method => lambda { |prestation| "#{prestation.nom}" } %>
+                        <%= f.input :statut, autofocus: true, label: 'statut', required: true, collection: ["En négociation", "Signé", "Terminé", "Avorté", "Stand by"]%>
+                    </div>
+                    <div class="input">
+                        <%= f.input :date_debut, as: :date, html5: true, required: true, autofocus: true, label: "Début des négociations" %>
+                        <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date de Signature" %>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <%= f.button :submit, "Modifier l'étude" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Ajouter un client existant %>
+<div class="hex_modal" id="add_client_existant">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_client_existant">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            Contenu
+        </div>
+    </div>
+</div>
+
+<% # Modifier les informations du client %>
+<div class="hex_modal" id="edit_client">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="edit_client">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            Contenu
+        </div>
+    </div>
+</div>
+
+<% # Retirer le client de l'étude %>
+<div class="hex_modal" id="remove_client">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="remove_client">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            Etes vous sur ? remarque le client existera toujours dans la base de donnée
+        </div>
+    </div>
+</div>

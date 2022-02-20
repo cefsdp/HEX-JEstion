@@ -7,6 +7,8 @@ class EtudesController < ApplicationController
 
   def show
     @etude = Etude.find(params[:id])
+    @junior = @etude.junior
+    @new_client = Client.new
     authorize @etude
   end
 
@@ -20,20 +22,29 @@ class EtudesController < ApplicationController
   def create
     @junior = Junior.find(junior_id_params)
     @etude = Etude.new(etude_params)
+    @etude.junior = @junior
     authorize @etude
     if @etude.save
       flash[:success] = "Object successfully created"
-      redirect_to @etude
+      redirect_to junior_etude_path(@junior, @etude)
     else
       flash[:error] = "Something went wrong"
       render 'new'
     end
   end
 
-  def edit
-    @junior = Junior.find(junior_id_params)
+  def destroy
     @etude = Etude.find(params[:id])
+    authorize @etude
+    if @etude.destroy
+      flash[:success] = 'Etude was successfully deleted.'
+      redirect_to etudes_url
+    else
+      flash[:error] = 'Something went wrong'
+      redirect_to etudes_url
+    end
   end
+  
 
   private
 

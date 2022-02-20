@@ -1,0 +1,5 @@
+<% if params[:etude_id].nil? %>
+    <%= render 'clients/shared/forms' %>
+<% else %>
+    <%= render 'clients/shared/etude_forms' %>
+<% end %>

@@ -25,6 +25,7 @@ import { initMenuSelector } from "../components/menu_selector"
 import { initArrayInput } from "../components/array_input"
 import { initHEXModal } from "../components/hex_modal"
 import { initTableauHexSearchBar } from "../components/tableau_hex_search_bar"
+import {initReducteur} from "../components/reducteur"
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
@@ -37,4 +38,5 @@ document.addEventListener('turbolinks:load', () => {
   initArrayInput();
   initHEXModal();
   initTableauHexSearchBar();
+  initReducteur();
 });
