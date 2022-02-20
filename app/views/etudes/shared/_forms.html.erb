@@ -1,0 +1,26 @@
+<%= simple_form_for [@junior, @new_etude] do |f| %>
+    <%= f.error_notification %>
+    <div class="formulaire">
+        <div class="input">
+            <%= f.input :ref_etude, autofocus: true, required: true, label: "Référence de l'étude", placeholder: @new_reference, input_html: { value: @new_reference } %>
+            <%= f.input :confidentielle, autofocus: true, required: true, label: "Confidentialité", as: :select, collection: [["Etude confidentielle", true], ["Etude non confidentielle", false]] %>
+        </div>
+        <div class="input">
+            <%= f.input :prestation, required: true, autofocus: true, label: "Prestation", collection: @junior.junior_configuration.prestations, :label_method => lambda { |prestation| "#{prestation.nom}" } %>
+            <%= f.input :statut, autofocus: true, label: 'statut', required: true, collection: ["En négociation", "Signé", "Terminé", "Avorté", "Stand by"]%>
+        </div>
+        <div class="input">
+            <%= f.input :charge_etude_id, required: true, autofocus: true, label: "Chargé d'étude", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" } %>
+            <%= f.input :charge_qualite_id, autofocus: true, label: "Chargé de qualité", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" }  %>
+            <%= f.input :charge_rh_id, autofocus: true, label: "Chargé des R.H.", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" }  %>
+        </div>
+        <div class="input">
+            <%= f.input :date_debut, as: :date, html5: true, required: true, autofocus: true, label: "Date de début des négociations" %>
+            <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date de Signature" %>
+        </div>
+    </div>
+
+    <div class="button">
+        <%= f.button :submit, "Créer l'étude" %>
+    </div>
+<% end %>

@@ -1,14 +1,11 @@
-class EtudePolicy < ApplicationPolicy
+class PrestationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all
     end
   end
 
-  def new?
-    create?
-  end
-
+  
   def create?
     if user.admin == true
       # Admin JEstion
@@ -16,7 +13,7 @@ class EtudePolicy < ApplicationPolicy
     elsif user.membre.nil?
       if user == adherent.user
         # Adherent
-        return true
+        return false
       else
         # Autre Junior
         return false
@@ -27,7 +24,7 @@ class EtudePolicy < ApplicationPolicy
         return true
       else
         # Membre JE
-        return true
+        return false
       end
     end
   end

@@ -11,8 +11,12 @@ class EtudesController < ApplicationController
   end
 
   def new
-    @etude = Etude.new
+    @junior = Junior.find(junior_id_params)
+    @new_etude = Etude.new
     @client = Client.new
+    authorize @new_etude
+
+    @new_reference = new_ref_calculation
   end
 
   def create
@@ -36,5 +40,21 @@ class EtudesController < ApplicationController
   def etude_params
     params.require(:etude).permit(:id, :ref_etude, :statut, :date_debut, :charge_qualite_id, :charge_rh_id,
                                   :charge_etude_id, :client_id, :prestation_id)
+  end
+
+  def junior_id_params
+    params.require(:junior_id)
+  end
+
+  def new_ref_calculation
+    if @etudes.nil?
+      Date.today.strftime("%y") + "001"
+    else
+      if @etudes.order(:ref_etude).last
+        @etudes.order(:ref_etude).last.ref_etude.to_i + 1
+      else
+        Date.today.strftime("%y") + "001"
+      end
+    end
   end
 end

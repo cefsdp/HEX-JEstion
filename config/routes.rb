@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :poles
       resources :postes
       resources :permissions
+      resources :prestations
       get '/archives', to: 'junior_configurations#archives', as: 'archives'
     end
 
