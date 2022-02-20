@@ -160,7 +160,6 @@
                                 <div class="donnee"><%= @etude.client.premier_contact == "" ? "N/A" : @etude.client.premier_contact %></div>
                             </div>
                         </div>
-                        <div class="h3 modal-button" id="edit_client">Modifier les informations</div>
                         <div class="h3"><%= link_to edit_junior_client_path(@etude.junior_id, @etude.client) do %>Modifier les informations client<% end %></div>
                         <div class="h3 modal-button" id="remove_client">Retirer le client de l'étude</div>
                     <% end %>
@@ -252,21 +251,18 @@
             </div>
         </div>
         <div class="content">
-            Contenu
-        </div>
-    </div>
-</div>
+            <%= simple_form_for [@junior, @etude] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.association :client, autofocus: true, required: true, label: "Nom | Entreprise du client", collection: @junior.clients, :label_method => lambda { |client| "#{client.nom} | #{client.entreprise}" } %>
+                    </div>
+                </div>
 
-<% # Modifier les informations du client %>
-<div class="hex_modal" id="edit_client">
-    <div class="background">
-        <div class="header">
-            <div class="modal-close" id="edit_client">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="content">
-            Contenu
+                <div class="button">
+                    <%= f.button :submit, "Ajouter le client" %>
+                </div>
+            <% end %>
         </div>
     </div>
 </div>
@@ -280,7 +276,18 @@
             </div>
         </div>
         <div class="content">
-            Etes vous sur ? remarque le client existera toujours dans la base de donnée
+            <%= simple_form_for [@junior, @etude] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.input :client, as: :hidden, input_html: { :value => "remove" }  %>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <%= f.button :submit, "Supprimer le client de l'étude" %>
+                </div>
+            <% end %>
         </div>
     </div>
 </div>

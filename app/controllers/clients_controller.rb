@@ -33,15 +33,16 @@ class ClientsController < ApplicationController
     end
 
     def edit
-        @etude = Etude.find(params[:id])
-        authorize @etude
+        @client = Client.find(params[:id].to_i)
+        @junior = Junior.find(params[:junior_id].to_i)
+        authorize @client
     end
     
 
     def update
         @client = Client.find(params[:id])
         @junior = Junior.find(params[:junior_id].to_i)
-        authorize @etude
+        authorize @client
         if @client.update(client_params)
           flash[:success] = "Client was successfully updated"
           redirect_to @junior

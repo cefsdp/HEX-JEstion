@@ -23,7 +23,7 @@ class EtudesController < ApplicationController
     @junior = Junior.find(junior_id_params)
     @etude = Etude.new(etude_params)
     @etude.junior = @junior
-    authorize @etude
+    authorize junior_etude_path(@junior, @etude)
     if @etude.save
       flash[:success] = "Object successfully created"
       redirect_to junior_etude_path(@junior, @etude)
@@ -32,6 +32,24 @@ class EtudesController < ApplicationController
       render 'new'
     end
   end
+
+  def update
+    @etude = Etude.find(params[:id])
+    @junior = Junior.find(junior_id_params)
+    if etude_params[:client] == "remove"
+      @etude.update(client: nil)
+      redirect_to junior_etude_path(@junior, @etude)
+    else
+      if @etude.update(etude_params)
+        flash[:success] = "Etude was successfully updated"
+        redirect_to junior_etude_path(@junior, @etude)
+      else
+        flash[:error] = "Something went wrong"
+        render 'edit'
+      end
+    end
+  end
+  
 
   def destroy
     @etude = Etude.find(params[:id])
@@ -49,8 +67,7 @@ class EtudesController < ApplicationController
   private
 
   def etude_params
-    params.require(:etude).permit(:id, :ref_etude, :statut, :date_debut, :charge_qualite_id, :charge_rh_id,
-                                  :charge_etude_id, :client_id, :prestation_id, :confidentielle, :date_signature)
+    params.require(:etude).permit!
   end
 
   def junior_id_params

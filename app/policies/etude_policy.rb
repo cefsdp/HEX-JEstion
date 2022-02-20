@@ -39,4 +39,8 @@ class EtudePolicy < ApplicationPolicy
   def update?
     create?
   end
+
+  def edit?
+    create?
+  end
 end
