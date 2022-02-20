@@ -12,14 +12,13 @@ class EtudesController < ApplicationController
 
   def new
     @junior = Junior.find(junior_id_params)
-    @new_etude = Etude.new
-    @client = Client.new
-    authorize @new_etude
-
+    @etude = Etude.new
+    authorize @etude
     @new_reference = new_ref_calculation
   end
 
   def create
+    @junior = Junior.find(junior_id_params)
     @etude = Etude.new(etude_params)
     authorize @etude
     if @etude.save
@@ -32,6 +31,7 @@ class EtudesController < ApplicationController
   end
 
   def edit
+    @junior = Junior.find(junior_id_params)
     @etude = Etude.find(params[:id])
   end
 
@@ -39,7 +39,7 @@ class EtudesController < ApplicationController
 
   def etude_params
     params.require(:etude).permit(:id, :ref_etude, :statut, :date_debut, :charge_qualite_id, :charge_rh_id,
-                                  :charge_etude_id, :client_id, :prestation_id)
+                                  :charge_etude_id, :client_id, :prestation_id, :confidentielle, :date_signature)
   end
 
   def junior_id_params

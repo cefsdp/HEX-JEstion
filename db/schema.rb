@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_20_163527) do
+ActiveRecord::Schema.define(version: 2022_02_20_174750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,7 +121,6 @@ ActiveRecord::Schema.define(version: 2022_02_20_163527) do
   end
 
   create_table "etudes", force: :cascade do |t|
-    t.bigint "client_id", null: false
     t.bigint "prestation_id", null: false
     t.bigint "charge_etude_id"
     t.bigint "charge_qualite_id"
@@ -134,10 +133,13 @@ ActiveRecord::Schema.define(version: 2022_02_20_163527) do
     t.date "date_signature"
     t.string "nom"
     t.boolean "confidentielle", default: false
+    t.bigint "client_id"
+    t.bigint "junior_id", null: false
     t.index ["charge_etude_id"], name: "index_etudes_on_charge_etude_id"
     t.index ["charge_qualite_id"], name: "index_etudes_on_charge_qualite_id"
     t.index ["charge_rh_id"], name: "index_etudes_on_charge_rh_id"
     t.index ["client_id"], name: "index_etudes_on_client_id"
+    t.index ["junior_id"], name: "index_etudes_on_junior_id"
     t.index ["prestation_id"], name: "index_etudes_on_prestation_id"
   end
 
@@ -271,6 +273,7 @@ ActiveRecord::Schema.define(version: 2022_02_20_163527) do
   add_foreign_key "document_adherents", "adherents"
   add_foreign_key "etapes", "etudes"
   add_foreign_key "etudes", "clients"
+  add_foreign_key "etudes", "juniors"
   add_foreign_key "etudes", "prestations"
   add_foreign_key "etudes", "users", column: "charge_etude_id"
   add_foreign_key "etudes", "users", column: "charge_qualite_id"

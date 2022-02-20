@@ -1,4 +1,4 @@
-<%= simple_form_for [@junior, @new_etude] do |f| %>
+<%= simple_form_for [@junior, @etude] do |f| %>
     <%= f.error_notification %>
     <div class="formulaire">
         <div class="input">
@@ -6,7 +6,7 @@
             <%= f.input :confidentielle, autofocus: true, required: true, label: "Confidentialité", as: :select, collection: [["Etude confidentielle", true], ["Etude non confidentielle", false]] %>
         </div>
         <div class="input">
-            <%= f.input :prestation, required: true, autofocus: true, label: "Prestation", collection: @junior.junior_configuration.prestations, :label_method => lambda { |prestation| "#{prestation.nom}" } %>
+            <%= f.association :prestation, required: true, autofocus: true, label: "Prestation", collection: @junior.junior_configuration.prestations, :label_method => lambda { |prestation| "#{prestation.nom}" } %>
             <%= f.input :statut, autofocus: true, label: 'statut', required: true, collection: ["En négociation", "Signé", "Terminé", "Avorté", "Stand by"]%>
         </div>
         <div class="input">
