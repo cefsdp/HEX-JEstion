@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_06_164634) do
+ActiveRecord::Schema.define(version: 2022_02_20_122013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 2022_02_06_164634) do
     t.string "ref_etude"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "date_signature"
     t.index ["charge_etude_id"], name: "index_etudes_on_charge_etude_id"
     t.index ["charge_qualite_id"], name: "index_etudes_on_charge_qualite_id"
     t.index ["charge_rh_id"], name: "index_etudes_on_charge_rh_id"

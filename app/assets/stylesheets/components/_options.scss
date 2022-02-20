@@ -25,6 +25,16 @@ a {
   }
 }
 
+.lien_bleu {
+  a {
+    color: var(--bleu-hex);
+  }
+  :hover {
+    color: var(--hover-blue);
+    text-decoration: none;
+  }
+}
+
 h1 {
   color: var(--noir);
   font-size: 24px;
