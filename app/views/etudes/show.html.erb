@@ -172,7 +172,21 @@
                     <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
                 </div>
                 <div class="content_reducteur">
-                    CdP
+                    <div class="display_donnee">
+                        <div>
+                            <div class="label_donnee">Chargé d'étude</div>
+                            <div class="donnee"><%= @etude.charge_etude == "" || @etude.charge_etude == nil ? "N/A" : @etude.charge_etude.adherent.prenom + " " + @etude.charge_etude.adherent.nom %></div>
+                        </div>
+                        <div>
+                            <div class="label_donnee">Chargé de qualité</div>
+                            <div class="donnee"><%= @etude.charge_qualite == "" || @etude.charge_qualite == nil ? "N/A" : @etude.charge_qualite.adherent.prenom + " " + @etude.charge_qualite.adherent.nom %></div>
+                        </div>
+                        <div>
+                            <div class="label_donnee">Chargé des R.H.</div>
+                            <div class="donnee"><%= @etude.charge_rh == "" || @etude.charge_rh == nil ? "N/A" : @etude.charge_rh.adherent.prenom + " " + @etude.charge_rh.adherent.nom %></div>
+                        </div>
+                    </div>
+                    <div class="h3 modal-button" id="modifier_CdP">Modifier les Chargés de Projets</div>
                 </div>
             </div>
             <div class="part reductible">
@@ -286,6 +300,35 @@
 
                 <div class="button">
                     <%= f.button :submit, "Supprimer le client de l'étude" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier CdP %>
+<div class="hex_modal" id="modifier_CdP">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="modifier_CdP">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @etude] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.input :charge_etude_id, required: true, autofocus: true, label: "Chargé d'étude", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" } %>
+                        <%= f.input :charge_qualite_id, autofocus: true, label: "Chargé de qualité", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" }  %>
+                    </div>
+                    <div class="input">
+                        <%= f.input :charge_rh_id, autofocus: true, label: "Chargé des R.H.", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" }  %>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <%= f.button :submit, "Modifier les CdP" %>
                 </div>
             <% end %>
         </div>
