@@ -47,7 +47,7 @@
       <div class="cards-profile">
         <% @request_membres.where(status: 'pending').each do |request| %>
           <div class="card">
-            <div class="avatar"><%= request.membre_request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(request.membre_request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
+            <div class="avatar"><%= request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
             <div class="contenu">
               <div class="title">
                 <div><%= request.user.adherent.prenom %></div>
@@ -91,7 +91,7 @@
         <% @request_mandats.where(status: 'pending').each do |request| %>
           <%= simple_form_for [@junior, request.membre, request] do |f| %>
             <div class="card">
-            <div class="avatar"><%= request.membre_request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(request.membre_request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
+            <div class="avatar"><%= request.membre.membre_request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(request.membre.membre_request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
               <div class="contenu">
                 <div class="title">
                   <div><%= request.membre.membre_request.user.adherent.prenom %></div>
