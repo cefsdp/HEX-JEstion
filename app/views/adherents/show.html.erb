@@ -1,5 +1,5 @@
 <div class="user_page_header">
-  <div class="avatar"><%= image_tag @adherent.avatar.url, class: 'avatar' %></div>
+  <div class="avatar"><%= @adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(@adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
   <div class="nom">
     <h1><%= @adherent.nom %></h1>
     <h1><%= @adherent.prenom %></h1>
