@@ -10,7 +10,7 @@
       <div class="cards-profile">
         <% @membres.each do |membre| %>
           <div class="card">
-            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
+            <div class="avatar"><%= membre.membre_request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(membre.membre_request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
             <div class="contenu">
               <div class="title">
                 <div><%= membre.membre_request.user.adherent.prenom %></div>
@@ -40,8 +40,7 @@
       <div class="cards-profile">
         <% @request_membres.where(status: 'pending').each do |request| %>
           <div class="card">
-            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
-            <div class="contenu">
+            <div class="avatar"><%= membre.membre_request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(membre.membre_request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>            <div class="contenu">
               <div class="title">
                 <div><%= request.user.adherent.prenom %></div>
                 <div><%= request.user.adherent.nom %></div>
@@ -83,8 +82,7 @@
       <div class="cards-profile">
         <% @request_mandats.where(status: 'pending').each do |request| %>
           <div class="card">
-            <div class="avatar"><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %></div>
-            <div class="contenu">
+            <div class="avatar"><%= membre.membre_request.user.adherent.avatar.url.nil? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(membre.membre_request.user.adherent.avatar.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>            <div class="contenu">
               <div class="title">
                 <div><%= request.user.adherent.prenom %></div>
                 <div><%= request.user.adherent.nom %></div>
