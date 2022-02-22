@@ -25,6 +25,16 @@ a {
   }
 }
 
+.lien_bleu {
+  a {
+    color: var(--bleu-hex);
+  }
+  :hover {
+    color: var(--hover-blue);
+    text-decoration: none;
+  }
+}
+
 h1 {
   color: var(--noir);
   font-size: 24px;
@@ -40,6 +50,23 @@ h2 {
   font-weight: 800;
   font-family: "Poppins", sans-serif;
   margin-top: 10px;
+}
+
+.h3 {
+  color: var(--hover-blue) !important;
+  font-style: italic;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-family: "Poppins", sans-serif;
+  border: none !important;
+  margin-top: 1px;
+  a {
+    color: var(--hover-blue);
+    :hover {
+      color: var(--jaune-hex);
+      text-decoration: none;
+    }
+  }
 }
 
 .margin_top_3 {

@@ -12,6 +12,8 @@ class JuniorConfigurationsController < ApplicationController
     @postes = Poste.where(junior_configuration: @configuration)
     @permission = Permission.new
     @permissions = Permission.where(junior_configuration: @configuration)
+    @new_prestation = Prestation.new
+    @prestations = Prestation.where(junior_configuration: @configuration)
     authorize @configuration
   end
 

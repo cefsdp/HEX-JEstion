@@ -283,7 +283,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   down
-  font-awesome-sass
+  font-awesome-sass (~> 5.15.1)
   image_processing (>= 1.2)
   jbuilder (~> 2.7)
   listen (~> 3.3)

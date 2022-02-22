@@ -5,20 +5,32 @@ Rails.application.routes.draw do
 
   #APP 
   resources :juniors do 
+
     resources :membre_requests
+    
     resources :membres do
       resources :mandat_requests do
         resources :mandats
       end
     end
+
+    resources :etudes do
+      resources :etapes
+      resources :phases
+    end
+
+    resources :clients
     resources :adherents
+
     resources :junior_configurations do
       resources :config_doc_adherents
       resources :poles
       resources :postes
       resources :permissions
+      resources :prestations
       get '/archives', to: 'junior_configurations#archives', as: 'archives'
     end
+
     resources :user do
       resources :adherents do
         resources :document_adherents

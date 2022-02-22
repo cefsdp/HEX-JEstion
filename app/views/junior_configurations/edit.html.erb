@@ -1,7 +1,8 @@
 <div class="menu">
   <div class="tabs">
-    <div class="tab active">Niveau d'étude</div>
-    <div class="tab">Documents d'adhésion</div>
+    <div class="tab active">Enseignements</div>
+    <div class="tab">Prestations</div>
+    <div class="tab">Adhésion</div>
     <div class="tab">Postes et Autorisations</div>
     <div class="tab">Autre</div>
     <div class="btn_tab"><%= link_to junior_junior_configuration_archives_path(@junior, @configuration) do %>Archives<% end %></div>
@@ -33,6 +34,18 @@
                 <%= f.button :submit, "Enregistrer" %>
             </div>
         <% end %>    
+    </div>
+
+    <% # Prestations et études %>
+    <div class="content">
+        <div class="modal-button modal-button2" id="add_prestation">Ajouter une prestation</div>
+        <div class="inline_list2">
+            <% @prestations.each do |prestation| %> 
+                <div class="inline_list_item modal-button" id="edit_prestation_<%= prestation.id %>">
+                    <%= prestation.nom %>
+                </div>
+            <% end %>
+        </div>  
     </div>
 
     <% # Documents d'Adhesion %>
@@ -330,6 +343,64 @@
                     </div>
                     <div class="button">
                         <%= f.button :submit, "Modifier le permission" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Nouveau Prestation %>
+<div class="hex_modal" id="add_prestation">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_prestation">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @configuration, @new_prestation] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :id %>
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom de la prestations' %>
+                    </div>
+                    <div class="input">
+                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
+                    </div>
+                </div>
+                <div class="button">
+                    <%= f.button :submit, "Créer la prestations" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier prestation %>
+<% @prestations.each do |prestation| %>
+    <div class="hex_modal" id="edit_prestation_<%= prestation.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_prestation_<%= prestation.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, prestation] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du prestation' %>
+                        </div>
+                        <div class="input">
+                            <% # f.input :archive,  as: :boolean, label: 'Archiver le prestation', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+                    <div class="button">
+                        <%= f.button :submit, "Modifier la prestation" %>
                     </div>
                 <% end %>
             </div>

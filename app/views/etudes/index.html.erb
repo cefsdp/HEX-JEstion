@@ -1,0 +1,27 @@
+<div class="lien_bleu"><%= link_to new_junior_etude_path(current_user.junior_id) do %>Ajouter une étude<% end %></div>
+    <table class="tableau" id="search_tableau">
+    <thead class="tabl_header">
+        <tr class="header_row">
+        <th class="colonne"> Reference étude</th>
+        <th class="colonne"> Date de signature</th>
+        <th class="colonne"> Date de début d'étude</th>
+        <th class="colonne"> prestation</th>
+        <th class="colonne"> Statut</th>
+        </tr>
+        <tr class="header_search">
+            <th colspan="5" class="search_row"><input type="text" id="tableau_search_bar" placeholder="Recherche"></th>
+        </tr>
+    </thead>     
+    <tbody class="modal_buttons tabl_contenu">
+        <% @etudes.each_with_index do |etude, index| %>
+            <tr onclick="location.href='<%= junior_etude_path(etude.junior, etude) %>'" class="ligne tabl_search_ligne">
+                <td class="colonne"> <%= etude.ref_etude %></td>
+                <td class="colonne"> <%= etude.date_debut.strftime("%d-%m-%Y") %></td>
+                <td class="colonne"> <%= etude.date_signature.nil? ? "N/A" : etude.date_signature.strftime("%d-%m-%Y") %></td>
+                <td class="colonne"> <%= etude.prestation.nom %></td>
+                <td class="colonne"> <%= etude.statut %></td>
+            </tr>
+        <% end %>
+    </tbody>
+    </table>
+</div>

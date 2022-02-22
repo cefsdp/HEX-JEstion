@@ -1,0 +1,45 @@
+<%= simple_form_for [@junior, @new_client] do |f| %>
+    <%= f.error_notification %>
+    <%= simple_fields_for :etude do |o| %>
+        <%= o.hidden_field :id %>
+    <% end %>
+    <div class="formulaire">
+        <div class="input">
+            <%= f.input :sexe, autofocus: true, required: true, label: "Titre", collection: ["Monsieur", "Madame"] %>
+            <%= f.input :prenom, autofocus: true, required: true, label: "Prénom" %>
+            <%= f.input :nom, autofocus: true, required: true, label: "Nom" %>
+        </div>
+        <div class="input">
+            <%= f.input :telephone, autofocus: true, label: "Téléphone"%>
+            <%= f.input :email, autofocus: true, label: "Adresse Email" %>
+            <%= f.input :langue, autofocus: true, label: "Langue" %>
+        </div>
+        <div class="input">
+            <%= f.input :entreprise, autofocus: true, required: true, label: "Entreprise"%>
+            <%= f.input :siret, autofocus: true, label: "Numéro de SIRET" %>
+        </div>
+        <div class="input">
+            <%= f.input :type_entreprise, autofocus: true, required: true, label: "Type d'entreprise", collection: ["Grand Groupe", "TPE/PME", "Associations", "Administration publique", "Junior-Entreprise", "Start-up", "Entrepreneur"] %>
+            <%= f.input :activite, autofocus: true, label: "Activité de l'entreprise" %>
+        </div>
+        <div class="input">
+            <%= f.input :telephone_entreprise, autofocus: true, label: "Téléphone de l'entreprise" %>
+            <%= f.input :site_web, autofocus: true, label: "Site web de l'entreprise" %>
+        </div>
+        <div class="input">
+            <%= f.input :adresse, autofocus: true, label: "Adresse" %>
+            <%= f.input :code_postal, autofocus: true, label: "Code Postale" %>
+            <%= f.input :ville, autofocus: true, label: "Ville" %>
+            <%= f.input :pays, autofocus: true, label: "Pays" %>
+        </div>
+        <div class="input">
+            <%= f.input :poste, autofocus: true, label: "Poste" %>
+            <%= f.input :provenance, autofocus: true, required: true, label: "Provenance" %>
+            <%= f.input :premier_contact, autofocus: true, required: true, label: "Méthode de premier contact" %>
+        </div>
+    </div>
+
+    <div class="button">
+        <%= f.button :submit, "Ajouter le client" %>
+    </div>
+<% end %>
