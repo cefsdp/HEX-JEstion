@@ -3,9 +3,6 @@ class AdherentsController < ApplicationController
 
   def index
     @adherents = policy_scope(Adherent)
-    @adherents.each do |adherent|
-      AdherentSingleUpdateFileStatusJob.perform_later adherent
-    end
   end
 
   def show
