@@ -9,9 +9,8 @@ Rails.application.routes.draw do
     resources :membre_requests
     
     resources :membres do
-      resources :mandat_requests do
-        resources :mandats
-      end
+      resources :mandat_requests
+      resources :mandats
     end
 
     resources :etudes do
