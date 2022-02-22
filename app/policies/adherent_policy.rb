@@ -10,12 +10,12 @@ class AdherentPolicy < ApplicationPolicy
       # Admin JEstion
       return true
     elsif user.membre.nil?
-      if user == adherent.user
+      if user.adherent
         # Adherent
         return false
       else
         # Autre Junior
-        return false
+        return true
       end
     elsif user.membre
       if user.membre.admin?
@@ -30,15 +30,24 @@ class AdherentPolicy < ApplicationPolicy
 
   def edit?
     if user.admin == true
+      # Admin JEstion
       return true
     elsif user.membre.nil?
-      if user == adherent.user
+      if user.adherent
+        # Adherent
+        return false
+      else
+        # Autre Junior
+        return true
+      end
+    elsif user.membre
+      if user.membre.admin?
+        # Admin JE
         return true
       else
-        return false
+        # Membre JE
+        return true
       end
-    elsif current_user.membre.admin?
-      return true
     end
   end
 
