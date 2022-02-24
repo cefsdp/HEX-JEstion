@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_181058) do
+ActiveRecord::Schema.define(version: 2022_02_20_215515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,14 +110,6 @@ ActiveRecord::Schema.define(version: 2022_02_24_181058) do
     t.string "raison_invalid"
     t.date "date_fin_validite"
     t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
-  end
-
-  create_table "etapes", force: :cascade do |t|
-    t.bigint "etude_id", null: false
-    t.string "type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["etude_id"], name: "index_etapes_on_etude_id"
   end
 
   create_table "etudes", force: :cascade do |t|
@@ -269,7 +261,6 @@ ActiveRecord::Schema.define(version: 2022_02_24_181058) do
   add_foreign_key "clients", "juniors"
   add_foreign_key "config_doc_adherents", "junior_configurations"
   add_foreign_key "document_adherents", "adherents"
-  add_foreign_key "etapes", "etudes"
   add_foreign_key "etudes", "clients"
   add_foreign_key "etudes", "juniors"
   add_foreign_key "etudes", "prestations"
