@@ -87,6 +87,13 @@
           }
           .form-group {
             margin-bottom: 0rem !important;
+            width: 100%;
+            ::placeholder {
+              color: lightgrey;
+            }
+            small {
+              color: lightgray;
+            }
           }
         }
       }

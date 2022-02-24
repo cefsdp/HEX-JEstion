@@ -1,0 +1,82 @@
+<h1><%= @etude.ref_etude %><%= @etude.client.nil? ? "" : " - " + @etude.client.entreprise %><%= " - " + @phase.nom %></h1>
+
+<div class="menu">
+  <div class="tabs">
+    <div class="tab active">Informations</div>
+    <div class="tab">Postulants</div>
+    <div class="tab">Intervenants</div>
+    <div class="tab">livrables</div>
+  </div>
+  <div class="contents margin_top_3">
+    <% # Menu 1 %>
+    <div class="content active">
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Date de début</div>
+                <div class="donnee"><%= @phase.date_debut.strftime("%d/%m/%Y") %></div>
+            </div>
+            <div>
+                <div class="label_donnee">Date de fin</div>
+                <div class="donnee"><%= @phase.date_fin.strftime("%d/%m/%Y") %></div>
+            </div>
+        </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Nombre d'intervenants</div>
+                <div class="donnee"><%= @phase.nombre_intervenant %></div>
+            </div>
+            <div>
+                <div class="label_donnee">Nombre de JEH par intervenant</div>
+                <div class="donnee"><%= @phase.jeh_par_intervenant %></div>
+            </div>
+        </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Frais sur la phase</div>
+                <div class="donnee"><%= @phase.frais %></div>
+            </div>
+            <div>
+                <div class="label_donnee">Montant brut par JEH</div>
+                <div class="donnee"><%= @phase.remuneration_par_jeh %></div>
+            </div>
+            <div>
+                <div class="label_donnee">Indémnisation par JEH</div>
+                <div class="donnee"><%= @phase.indemnisation_par_jeh %></div>
+            </div>
+        </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Description de la phase</div>
+                <div class="donnee"><%= @phase.description_phase %></div>
+            </div>
+        </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Description de la mission des intervenants</div>
+                <div class="donnee"><%= @phase.description_mission_intervenant %></div>
+            </div>
+        </div>
+
+        <div class="h3"><%= link_to "Modifier les informations de la phase", edit_junior_etude_phase_path(@phase.etude.junior, @phase.etude, @phase) %></div>
+    </div>      
+    </div>
+
+    <% # Menu 2 %>
+    <div class="content">
+        Lancer une campagne
+        Selectionner les intervenants
+        verification dossier + Anciennes missions
+    </div>
+
+    <% # Menu 3 %>
+    <div class="content">
+        Listes intervenants
+        Suivi RM, Avenants, QS/RP, BV, autres docs interv
+    </div>
+
+    <% # Menu 4 %>
+    <div class="content">
+        upload des livrables
+    </div>
+  </div>
+</div>

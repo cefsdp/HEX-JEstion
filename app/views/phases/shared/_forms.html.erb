@@ -1,0 +1,33 @@
+<%= simple_form_for [@junior, @etude, @phase] do |f| %>
+    <%= f.error_notification %>
+    <div class="formulaire">
+        <div class="input">
+            <%= f.input :nom, autofocus: true, required: true, label: "Nom de la Phase", placeholder: "Phase d'Analyse" %>
+        </div>
+        <div class="input">
+            <%= f.input :date_debut, as: :date, html5: true, autofocus: true, required: true, label: "Date de début de la phase" %>
+            <%= f.input :date_fin, as: :date, html5: true, autofocus: true, required: true, label: "Date de fin de la phase" %>
+        </div>
+        <div class="input">
+            <%= f.input :nombre_intervenant, autofocus: true, required: true, label: "Nombre d'intervenants sur la phase" %>
+            <%= f.input :jeh_par_intervenant, autofocus: true, required: true, label: "Nombre de JEH par intervenant" %>
+        </div>
+        <div class="input">
+            <%= f.input :remuneration_par_jeh, autofocus: true, required: true, label: "Montant brut d'un JEH" %>
+            <%= f.input :indemnisation_par_jeh, autofocus: true, required: true, label: "Indemnisation par JEH" %>
+        </div>
+        <div class="input">
+            <%= f.input :frais, autofocus: true, required: true, label: "Frais concernant la phase" %>
+        </div>
+        <div class="input">
+            <%= f.input :description_phase, as: :text, autofocus: true, required: true, label: "Description de la phase", wrapper_html: { class: "text-area-wrapper"} %>
+        </div>
+        <div class="input">
+            <%= f.input :description_mission_intervenant, as: :text, autofocus: true, required: true, label: "Description de la mission de l'intervenant", wrapper_html: { class: "text-area-wrapper"} %>
+        </div>
+    </div>
+
+    <div class="button">
+        <%= f.button :submit, "Enregistrer la phase" %>
+    </div>
+<% end %>

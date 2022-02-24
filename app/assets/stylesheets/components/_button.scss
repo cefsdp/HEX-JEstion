@@ -1,0 +1,30 @@
+.buttons_line {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+}
+
+.buttons_column {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+}
+
+.btn1 {
+  width: auto;
+  height: auto;
+  color: var(--blanc);
+  background-color: var(--bleu-hex);
+  border-radius: 30px;
+  padding: 2%;
+}
+.btn1:hover {
+  color: var(--jaune-hex);
+  background-color: var(--hover-blue);
+  cursor: pointer;
+}
