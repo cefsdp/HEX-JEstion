@@ -19,6 +19,7 @@
                           required: true,
                           label: false,
                           autofocus: true,
+                          placeholder: "jestion@hex-agency.fr",
                           input_html: { autocomplete: "email", class: 'form_input' } %>
             </div>
             <div class="form_line">
@@ -26,7 +27,7 @@
               <%= f.input :password,
                           required: true,
                           label: false, 
-                          hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                          hint: ("Mot de passe - #{@minimum_password_length} characters minimum" if @minimum_password_length),
                           input_html: { autocomplete: "new-password", class: 'form_input' }%>
             </div>
             <div class="form_line">
@@ -34,6 +35,7 @@
               <%= f.input :password_confirmation,
                           required: true,
                           label: false, 
+                          hint: ("Confirmation mot de passe"),
                           input_html: { autocomplete: "new-password", class: 'form_input' }%>
             </div>
             <div class="form_line">
@@ -41,6 +43,7 @@
               <%= f.input :junior,
                           required: true,
                           label: false, 
+                          placeholder: "Code Junior-Entreprise",
                           input_html: { class: 'form_input' } %>
             </div>
             <div class="form_btn">
