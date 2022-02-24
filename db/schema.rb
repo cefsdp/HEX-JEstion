@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_20_215515) do
+ActiveRecord::Schema.define(version: 2022_02_24_181058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,11 +209,9 @@ ActiveRecord::Schema.define(version: 2022_02_20_215515) do
   end
 
   create_table "phases", force: :cascade do |t|
-    t.bigint "etape_id", null: false
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["etape_id"], name: "index_phases_on_etape_id"
   end
 
   create_table "poles", force: :cascade do |t|
@@ -288,7 +286,6 @@ ActiveRecord::Schema.define(version: 2022_02_20_215515) do
   add_foreign_key "membre_requests", "users"
   add_foreign_key "membres", "membre_requests"
   add_foreign_key "permissions", "junior_configurations"
-  add_foreign_key "phases", "etapes"
   add_foreign_key "poles", "junior_configurations"
   add_foreign_key "postes", "junior_configurations"
   add_foreign_key "prestations", "junior_configurations"
