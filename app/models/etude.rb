@@ -5,4 +5,6 @@ class Etude < ApplicationRecord
   belongs_to :charge_qualite, class_name: 'User', optional: true
   belongs_to :charge_rh, class_name: 'User', optional: true
   belongs_to :junior
+
+  has_many :phases, dependent: :destroy
 end

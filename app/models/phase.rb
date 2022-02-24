@@ -1,3 +1,3 @@
 class Phase < ApplicationRecord
-  belongs_to :etape
+  belongs_to :etude
 end

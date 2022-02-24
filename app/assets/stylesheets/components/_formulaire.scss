@@ -17,6 +17,11 @@
           border-bottom: var(--vert);
         }
       }
+      textarea {
+        border: none;
+        border-bottom: 2px solid var(--jaune-hex);
+        background: none;
+      }
       select {
         border: none;
         background-color: transparent;
@@ -98,5 +103,13 @@
   }
   .jaune {
     background-color: var(--jaune);
+  }
+}
+
+.text-area-wrapper {
+  width: 100% !important;
+  :focus {
+    outline: none;
+    box-shadow: none;
   }
 }

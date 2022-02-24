@@ -5,6 +5,10 @@ class PhasePolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    create?
+  end
+
   def create?
     if user.admin == true
       # Admin JEstion

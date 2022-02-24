@@ -6,6 +6,7 @@ class JuniorConfiguration < ApplicationRecord
   has_many :postes, dependent: :destroy
 
   has_many :permissions, dependent: :destroy
+  has_many :prestations, dependent: :destroy
 
   has_one_attached :logo
 end

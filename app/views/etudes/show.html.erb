@@ -191,17 +191,7 @@
             </div>
             <div class="part reductible">
                 <div class="titre_reducteur">
-                    <h2>Marge, taux de TVA et frais</h2>
-                    <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
-                    <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
-                </div>
-                <div class="content_reducteur">
-                    Autres
-                </div>
-            </div>
-            <div class="part reductible">
-                <div class="titre_reducteur">
-                    <h2>Campus en charge</h2>
+                    <h2>Taux de marge, taux de TVA et frais</h2>
                     <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
                     <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
                 </div>
@@ -214,10 +204,68 @@
 
     <% # Phases et documents %>
     <div class="content">
-        <div class="h3 modal-button" id="modifier_CdP">Ajouter une phase ou un document</div>
-        Ajouter etapes
-        Trier etapes par date
-        modifier etapes (modales)
+        <div class="h3 modal-button" id="add_etape">Ajouter une phase ou un document</div>
+        <div class="mise_en_page1">
+            <% @phases.each do |phase| %>
+                <div class="part reductible">
+                    <div class="titre_reducteur">
+                        <h2><%= phase.nom %></h2>
+                        <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                        <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                    </div>
+                    <div class="content_reducteur">
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Date de début</div>
+                                <div class="donnee"><%= phase.date_debut.strftime("%d/%m/%Y") %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Date de fin</div>
+                                <div class="donnee"><%= phase.date_fin.strftime("%d/%m/%Y") %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Nombre d'intervenants</div>
+                                <div class="donnee"><%= phase.nombre_intervenant %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Nombre de JEH par intervenant</div>
+                                <div class="donnee"><%= phase.jeh_par_intervenant %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Frais sur la phase</div>
+                                <div class="donnee"><%= phase.frais %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Montant brut par JEH</div>
+                                <div class="donnee"><%= phase.remuneration_par_jeh %></div>
+                            </div>
+                            <div>
+                                <div class="label_donnee">Indémnisation par JEH</div>
+                                <div class="donnee"><%= phase.indemnisation_par_jeh %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Description de la phase</div>
+                                <div class="donnee"><%= phase.description_phase %></div>
+                            </div>
+                        </div>
+                        <div class="display_donnee">
+                            <div>
+                                <div class="label_donnee">Description de la mission des intervenants</div>
+                                <div class="donnee"><%= phase.description_mission_intervenant %></div>
+                            </div>
+                        </div>
+
+                        <div class="h3"><%= link_to "Gérer la phase", junior_etude_phase_path(phase.etude.junior, phase.etude, phase) %></div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
     </div>
   </div>
 </div>
@@ -332,6 +380,28 @@
                     <%= f.button :submit, "Modifier les CdP" %>
                 </div>
             <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Add Etape %>
+<div class="hex_modal" id="add_etape">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_etape">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <h1>Souhaitez-vous ajouter une phase ou un document d'étude ?</h1>
+            <div class="buttons_column">
+                <div class="buttons_line">
+                    <div class="btn1"><%= link_to "Nouvelle Phase", new_junior_etude_phase_path(@junior, @etude, @new_phase) %></div>
+                </div>
+                <div class="buttons_line">
+                    <div class="btn1">Nouveau document d'étude</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

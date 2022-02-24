@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     end
 
     resources :etudes do
-      resources :etapes
       resources :phases
     end
 

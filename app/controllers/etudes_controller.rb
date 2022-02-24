@@ -9,6 +9,8 @@ class EtudesController < ApplicationController
     @etude = Etude.find(params[:id])
     @junior = @etude.junior
     @new_client = Client.new
+    @phases = @etude.phases.order("date_debut ASC")
+    @new_phase = Phase.new
     authorize @etude
   end
 
@@ -23,33 +25,31 @@ class EtudesController < ApplicationController
     @junior = Junior.find(junior_id_params)
     @etude = Etude.new(etude_params)
     @etude.junior = @junior
-    authorize junior_etude_path(@junior, @etude)
+    authorize @etude
     if @etude.save
       flash[:success] = "Object successfully created"
       redirect_to junior_etude_path(@junior, @etude)
     else
       flash[:error] = "Something went wrong"
-      render 'new'
+      render junior_etude_path(@junior, @etude)
     end
   end
 
   def update
     @etude = Etude.find(params[:id])
     @junior = Junior.find(junior_id_params)
+    authorize @etude
     if etude_params[:client] == "remove"
       @etude.update(client: nil)
       redirect_to junior_etude_path(@junior, @etude)
+    elsif @etude.update(etude_params)
+      flash[:success] = "Etude was successfully updated"
+      redirect_to junior_etude_path(@junior, @etude)
     else
-      if @etude.update(etude_params)
-        flash[:success] = "Etude was successfully updated"
-        redirect_to junior_etude_path(@junior, @etude)
-      else
-        flash[:error] = "Something went wrong"
-        render 'edit'
-      end
+      flash[:error] = "Something went wrong"
+      render junior_etude_path(@junior, @etude)
     end
   end
-  
 
   def destroy
     @etude = Etude.find(params[:id])
@@ -62,7 +62,6 @@ class EtudesController < ApplicationController
       redirect_to etudes_url
     end
   end
-  
 
   private
 
@@ -77,12 +76,10 @@ class EtudesController < ApplicationController
   def new_ref_calculation
     if @etudes.nil?
       Date.today.strftime("%y") + "001"
+    elsif @etudes.order(:ref_etude).last
+      @etudes.order(:ref_etude).last.ref_etude.to_i + 1
     else
-      if @etudes.order(:ref_etude).last
-        @etudes.order(:ref_etude).last.ref_etude.to_i + 1
-      else
-        Date.today.strftime("%y") + "001"
-      end
+      Date.today.strftime("%y") + "001"
     end
   end
 end
