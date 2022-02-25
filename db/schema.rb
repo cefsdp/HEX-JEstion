@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_204525) do
+ActiveRecord::Schema.define(version: 2022_02_25_220728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,13 @@ ActiveRecord::Schema.define(version: 2022_02_24_204525) do
     t.index ["junior_configuration_id"], name: "index_prestations_on_junior_configuration_id"
   end
 
+  create_table "selection_intervenants", force: :cascade do |t|
+    t.bigint "phase_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["phase_id"], name: "index_selection_intervenants_on_phase_id"
+  end
+
   create_table "userparams", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "navbar_active", default: 0
@@ -292,6 +299,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_204525) do
   add_foreign_key "poles", "junior_configurations"
   add_foreign_key "postes", "junior_configurations"
   add_foreign_key "prestations", "junior_configurations"
+  add_foreign_key "selection_intervenants", "phases"
   add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end
