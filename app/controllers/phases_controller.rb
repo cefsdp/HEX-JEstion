@@ -5,6 +5,8 @@ class PhasesController < ApplicationController
     @junior = Junior.find(junior_id_params)
     @etude = Etude.find(etude_id_params)
     @phase = Phase.find(phase_id_params)
+    @campagne_selection = SelectionIntervenant.find_by(phase: @phase.id)
+    @new_campagne_selection = SelectionIntervenant.new
     authorize @phase
   end
 

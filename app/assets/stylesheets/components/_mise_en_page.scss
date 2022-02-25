@@ -30,6 +30,46 @@
   }
 }
 
+.mise_en_page2 {
+  .part {
+    border: 2px solid var(--jaune-hex);
+    border-radius: 10px;
+    padding: 0% 1%;
+  }
+  .reductible {
+    .titre_reducteur {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      .i_reduit {
+        display: block;
+        i {
+          color: var(--bleu-hex);
+          size: 14px;
+        }
+      }
+      .i_developpe {
+        display: none;
+        i {
+          color: var(--bleu-hex);
+          size: 14px;
+        }
+      }
+    }
+    .content_reducteur {
+      display: none;
+    }
+  }
+  .border_vert {
+    border-color: var(--vert);
+  }
+  .border_rouge {
+    border-color: var(--rouge);
+  }
+}
+
 .display_donnee {
   display: flex;
   gap: 5%;

@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     end
 
     resources :etudes do
-      resources :phases
+      resources :phases do
+        resources :selection_intervenants
+      end
     end
 
     resources :clients
