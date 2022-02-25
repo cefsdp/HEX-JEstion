@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_25_222425) do
+ActiveRecord::Schema.define(version: 2022_02_25_232015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,6 +233,18 @@ ActiveRecord::Schema.define(version: 2022_02_25_222425) do
     t.index ["junior_configuration_id"], name: "index_postes_on_junior_configuration_id"
   end
 
+  create_table "postulants", force: :cascade do |t|
+    t.string "note"
+    t.bigint "selection_intervenant_id", null: false
+    t.bigint "user_id", null: false
+    t.string "commentaire_postulant"
+    t.string "commentaire_selection"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["selection_intervenant_id"], name: "index_postulants_on_selection_intervenant_id"
+    t.index ["user_id"], name: "index_postulants_on_user_id"
+  end
+
   create_table "prestations", force: :cascade do |t|
     t.bigint "junior_configuration_id", null: false
     t.string "nom"
@@ -299,6 +311,8 @@ ActiveRecord::Schema.define(version: 2022_02_25_222425) do
   add_foreign_key "phases", "etudes"
   add_foreign_key "poles", "junior_configurations"
   add_foreign_key "postes", "junior_configurations"
+  add_foreign_key "postulants", "selection_intervenants"
+  add_foreign_key "postulants", "users"
   add_foreign_key "prestations", "junior_configurations"
   add_foreign_key "selection_intervenants", "phases"
   add_foreign_key "userparams", "users"
