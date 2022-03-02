@@ -3,6 +3,8 @@ class SelectionIntervenantsController < ApplicationController
     @selections = policy_scope(SelectionIntervenant)
     @selections_actifs = @selections.where(active: true)
     @selections_inactif = @selections.where(active: true)
+    @new_postulant = Postulant.new
+    @junior = Junior.find(junior_id_params.to_i)
   end
 
   def create
