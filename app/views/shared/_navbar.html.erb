@@ -18,6 +18,7 @@
 
     <%# Navbar - User %>
     <div class='nav_items'>
+      <div class='nav_item'><%= link_to junior_selection_intervenants_path(current_user.junior_id) do %><i class="fas fa-search-dollar"></i><% end %></div>
       <% if current_user.membre_request.nil? %><div class='nav_item'><%= link_to junior_membre_requests_path(current_user.junior.id, membre_request: { junior: current_user.junior_id, user: current_user.id }), method: 'post' do %><i class="fas fa-user-plus"></i><% end %></div><% end %>
       <% if current_user.membre_request.nil? == false && current_user.membre_request.status == 'pending' %><div class='nav_item'><i class="fas fa-user-clock"></i></div><% end %>
       <div class='nav_item'><%= link_to edit_user_registration_path do %><% if current_user.adherent.avatar.attached? %><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %> <% else %> <%= image_tag("logo_hex.png", class: 'avatar') %> <% end %></i><% end %><span class="tooltiptext">Mon Profil</span></div>

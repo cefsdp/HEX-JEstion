@@ -1,7 +1,7 @@
 class SelectionIntervenantPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      scope.where(phase: user.junior.phases)
     end
   end
 

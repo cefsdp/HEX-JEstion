@@ -1,0 +1,85 @@
+<div class="menu">
+  <div class="tabs">
+    <div class="tab active">Nouvelles missions</div>
+    <div class="tab">Mes missions</div>
+    <div class="tab">Missions Inactives</div>
+  </div>
+  <div class="contents">
+    <% # Menu 1 %>
+    <div class="content active">      
+      <% @selections_actifs.each do |selection_actif| %>
+        <div class="cards_mission">
+          <div class="card">
+            <div class="ligne">
+              <div class="colone">
+                <div class="label">Mission :</div>
+                <div class="longtext">
+                  <%= selection_actif.phase.description_mission_intervenant %>
+                </div>
+              </div>
+            </div>
+            <div class="ligne">
+              <div class="colone">
+                <div class="label">Du :</div>
+                <div class="courttext">
+                  <%= selection_actif.phase.date_debut %>
+                </div>
+              </div>
+              <div class="colone">
+                <div class="label">Au :</div>
+                <div class="courttext">
+                  <%= selection_actif.phase.date_fin %>
+                </div>
+              </div>
+            </div>
+            <div class="ligne">
+              <div class="colone">
+                <div class="label">Où ?</div>
+                <div class="courttext">
+                  <%= "A ajouter" %>
+                </div>
+              </div>
+              <div class="colone">
+                <div class="label">Combien ?</div>
+                <div class="courttext">
+                  <%= (selection_actif.phase.indemnisation_par_jeh * selection_actif.phase.jeh_par_intervenant).to_s + " € brut" %>
+                </div>
+              </div>
+            </div>
+            <div class="ligne">
+              <div class="colone">
+              </div>
+              <div class="colone">
+                  <div class="button modal-button" id="add_postulant">Postuler</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% # Menu 2 %>
+    <div class="content">
+    </div>
+
+    <% # Menu 3 %>
+    <div class="content">
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="hex_modal" id="add_postulant">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_postulant">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            Postuler
+        </div>
+    </div>
+</div>

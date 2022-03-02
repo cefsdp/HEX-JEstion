@@ -7,6 +7,8 @@ class Junior < ApplicationRecord
   has_many :membres, through: :membre_requests
   has_many :adherents, through: :users
   has_many :clients, dependent: :destroy
+  has_many :etudes, dependent: :destroy
+  has_many :phases, through: :etudes
 
   has_one :junior_configuration
   has_many :config_doc_adherents, through: :junior_configuration

@@ -1,4 +1,10 @@
 class SelectionIntervenantsController < ApplicationController
+  def index
+    @selections = policy_scope(SelectionIntervenant)
+    @selections_actifs = @selections.where(active: true)
+    @selections_inactif = @selections.where(active: true)
+  end
+
   def create
     @junior = Junior.find(junior_id_params)
     @etude = Etude.find(etude_id_params)

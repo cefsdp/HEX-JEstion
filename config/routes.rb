@@ -15,9 +15,11 @@ Rails.application.routes.draw do
 
     resources :etudes do
       resources :phases do
-        resources :selection_intervenants
+        resources :selection_intervenants, except: :index 
       end
     end
+
+    resources :selection_intervenants, only: :index 
 
     resources :clients
     resources :adherents
