@@ -120,7 +120,7 @@
                         <div class="colone">
                         <div class="label">Où ?</div>
                         <div class="courttext">
-                            <%= "N/A" %>
+                            <%= @campagne_selection.phase.lieux_mission.nil? ? "N/A" : @campagne_selection.phase.lieux_mission  %>
                         </div>
                         </div>
                         <div class="colone">
@@ -152,19 +152,35 @@
             <h2>Aucun adhérent n'a postulé à la mission !</h2>
         <% elsif @campagne_selection.postulants %>
             <h2>Liste des postulants :</h2>
-            <div class="mise_en_page2">
-                <div class="part border_vert reductible">
-                    <div class="titre_reducteur">
-                        <h2>Postulant 1</h2>
-                        <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
-                        <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
-                    </div>
-                    <div class="content_reducteur">
-                        Listing des candidats (Statut dossier, accès documents, infos étudiant (anciennes études, autres documents), marquage couleur)
-                        Selection des intervenants (ajouter / retirer + numéro de RM)
+            <% @campagne_selection.postulants.each do |postulant| %>
+                <div class="mise_en_page2">
+                    <div class="part border_vert reductible">
+                        <div class="titre_reducteur">
+                            <h2><%= postulant.user.adherent.prenom%> <%= postulant.user.adherent.nom%></h2>
+                            <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                            <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                        </div>
+                        <div class="content_reducteur">
+                            <div class="h3">Dossier intervenant :</div>
+                            <div class="display_donnee">
+                                <div class="small-list">
+                                    <div class="small-item vert">BA</div>
+                                    <div class="small-item">Cotisation</div>
+                                    <div class="small-item">CVEC</div>
+                                </div>
+                            </div>
+                            <div class="h3">Message de l'intervenant :</div>
+                            <div class="display_donnee">
+                                <div>
+                                    <div class="donnee"><%= postulant.selection_intervenant.phase.description_mission_intervenant ? postulant.selection_intervenant.phase.description_mission_intervenant : "N/A" %></div>
+                                </div>
+                            </div>
+                            Listing des candidats (Statut dossier, accès documents, infos étudiant (anciennes études, autres documents), marquage couleur)
+                            Selection des intervenants (ajouter / retirer + numéro de RM)
+                        </div>
                     </div>
                 </div>
-            </div>
+            <% end %>
         <% end %>
     </div>
 
