@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_204525) do
+ActiveRecord::Schema.define(version: 2022_03_03_195816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,9 @@ ActiveRecord::Schema.define(version: 2022_02_24_204525) do
     t.string "description_mission_intervenant"
     t.integer "indemnisation_par_jeh"
     t.integer "remuneration_par_jeh"
+    t.string "lieux_mission"
+    t.string "specialisation_postulant", default: [], array: true
+    t.string "niveau_etude_postulant", default: [], array: true
     t.index ["etude_id"], name: "index_phases_on_etude_id"
   end
 
@@ -233,12 +236,33 @@ ActiveRecord::Schema.define(version: 2022_02_24_204525) do
     t.index ["junior_configuration_id"], name: "index_postes_on_junior_configuration_id"
   end
 
+  create_table "postulants", force: :cascade do |t|
+    t.string "note"
+    t.bigint "selection_intervenant_id", null: false
+    t.bigint "user_id", null: false
+    t.string "commentaire_postulant"
+    t.string "commentaire_selection"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "commentaire_choix"
+    t.index ["selection_intervenant_id"], name: "index_postulants_on_selection_intervenant_id"
+    t.index ["user_id"], name: "index_postulants_on_user_id"
+  end
+
   create_table "prestations", force: :cascade do |t|
     t.bigint "junior_configuration_id", null: false
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["junior_configuration_id"], name: "index_prestations_on_junior_configuration_id"
+  end
+
+  create_table "selection_intervenants", force: :cascade do |t|
+    t.bigint "phase_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "active"
+    t.index ["phase_id"], name: "index_selection_intervenants_on_phase_id"
   end
 
   create_table "userparams", force: :cascade do |t|
@@ -291,7 +315,10 @@ ActiveRecord::Schema.define(version: 2022_02_24_204525) do
   add_foreign_key "phases", "etudes"
   add_foreign_key "poles", "junior_configurations"
   add_foreign_key "postes", "junior_configurations"
+  add_foreign_key "postulants", "selection_intervenants"
+  add_foreign_key "postulants", "users"
   add_foreign_key "prestations", "junior_configurations"
+  add_foreign_key "selection_intervenants", "phases"
   add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end

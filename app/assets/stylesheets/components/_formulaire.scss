@@ -29,6 +29,23 @@
       }
     }
   }
+  .selector {
+    div {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      .select2-container {
+        span {
+          .select2-selection {
+            border: none;
+            background-color: transparent;
+            border-bottom: 2px solid var(--jaune-hex);
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
   .array_forms {
     display: block;
     margin: 2vh 0%;

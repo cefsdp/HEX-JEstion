@@ -15,4 +15,5 @@ class User < ApplicationRecord
   has_many :mandats, through: :mandat_requests
   has_one :adherent, dependent: :destroy
   has_one :document_adherent, through: :adherent
+  has_many :postulants, dependent: :destroy
 end
