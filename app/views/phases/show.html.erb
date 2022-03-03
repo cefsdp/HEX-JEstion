@@ -57,6 +57,25 @@
                 <div class="donnee"><%= @phase.description_mission_intervenant %></div>
             </div>
         </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Lieux de la mission de l'intervenant</div>
+                <div class="donnee"><%= @phase.lieux_mission.nil? ? "N/A" : @phase.lieux_mission %></div>
+            </div>
+        </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Niveau d'étude de l'intervenant recherché</div>
+                <div class="donnee"><%= @phase.niveau_etude_postulant.count == 0 ? "N/A" : @phase.niveau_etude_postulant.to_sentence %></div>
+            </div>
+        </div>
+        <div class="display_donnee">
+            <div>
+                <div class="label_donnee">Spécialisation d'étude de l'intervenant recherché</div>
+                <div class="donnee"><%= @phase.specialisation_postulant.count == 0 ? "N/A" : @phase.specialisation_postulant.to_sentence %></div>
+            </div>
+        </div>
+        
 
         <div class="h3"><%= link_to "Modifier les informations de la phase", edit_junior_etude_phase_path(@phase.etude.junior, @phase.etude, @phase) %></div>
     </div>      
@@ -73,6 +92,66 @@
             <% end %>
         <% elsif @campagne_selection.active == true %>
             <h2>La campagne de selection pour cette phase est en cours !</h2>
+            <div class="cards_mission">
+                <div class="card">
+                    <div class="ligne">
+                        <div class="colone">
+                        <div class="label">Mission :</div>
+                        <div class="longtext">
+                            <%= @campagne_selection.phase.description_mission_intervenant %>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="colone">
+                        <div class="label">Du :</div>
+                        <div class="courttext">
+                            <%= @campagne_selection.phase.date_debut.strftime("%d/%m/%Y") %>
+                        </div>
+                        </div>
+                        <div class="colone">
+                        <div class="label">Au :</div>
+                        <div class="courttext">
+                            <%= @campagne_selection.phase.date_fin.strftime("%d/%m/%Y") %>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="colone">
+                        <div class="label">Où ?</div>
+                        <div class="courttext">
+                            <%= "N/A" %>
+                        </div>
+                        </div>
+                        <div class="colone">
+                            <div class="label">Combien ?</div>
+                            <div class="courttext">
+                                <%= (@campagne_selection.phase.indemnisation_par_jeh * @campagne_selection.phase.jeh_par_intervenant).to_s + " € brut" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%= simple_form_for [@junior, @etude, @phase, @campagne_selection], html: { class: "h_align_self" } do |f| %>
+                    <%= f.error_notification %>
+                        <%= f.hidden_field :phase_id, value: @phase.id %>
+                        <%= f.hidden_field :active, value: false %>
+                        <%= f.button :submit, "Mettre fin à la campagne de selection !", class: "h3" %>
+                <% end %>
+            </div>
+        <% elsif @campagne_selection.active == false %>
+            <h2>La campagne est terminée, relancer la campagne ?</h2>
+            <%= simple_form_for [@junior, @etude, @phase, @campagne_selection] do |f| %>
+                <%= f.error_notification %>
+                    <%= f.hidden_field :phase_id, value: @phase.id %>
+                    <%= f.hidden_field :active, value: true %>
+                    <%= f.button :submit, "Relancer une campagne de selection !", class: "h3" %>
+            <% end %>
+        <% end %>
+
+        <% if @campagne_selection.postulants.nil? %>
+            <h2>Aucun adhérent n'a postulé à la mission !</h2>
+        <% elsif @campagne_selection.postulants %>
+            <h2>Liste des postulants :</h2>
             <div class="mise_en_page2">
                 <div class="part border_vert reductible">
                     <div class="titre_reducteur">
@@ -86,20 +165,6 @@
                     </div>
                 </div>
             </div>
-            <%= simple_form_for [@junior, @etude, @phase, @campagne_selection] do |f| %>
-                <%= f.error_notification %>
-                    <%= f.hidden_field :phase_id, value: @phase.id %>
-                    <%= f.hidden_field :active, value: false %>
-                    <%= f.button :submit, "Mettre fin à la campagne de selection !", class: "h3" %>
-            <% end %>
-        <% elsif @campagne_selection.active == false %>
-            <h2>La campagne est terminée, relancer la campagne ?</h2>
-            <%= simple_form_for [@junior, @etude, @phase, @campagne_selection] do |f| %>
-                <%= f.error_notification %>
-                    <%= f.hidden_field :phase_id, value: @phase.id %>
-                    <%= f.hidden_field :active, value: true %>
-                    <%= f.button :submit, "Relancer une campagne de selection !", class: "h3" %>
-            <% end %>
         <% end %>
     </div>
 

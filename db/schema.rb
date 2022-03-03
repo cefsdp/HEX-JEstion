@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_200649) do
+ActiveRecord::Schema.define(version: 2022_03_03_195816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,9 @@ ActiveRecord::Schema.define(version: 2022_03_02_200649) do
     t.string "description_mission_intervenant"
     t.integer "indemnisation_par_jeh"
     t.integer "remuneration_par_jeh"
+    t.string "lieux_mission"
+    t.string "specialisation_postulant", default: [], array: true
+    t.string "niveau_etude_postulant", default: [], array: true
     t.index ["etude_id"], name: "index_phases_on_etude_id"
   end
 

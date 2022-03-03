@@ -7,6 +7,8 @@ class PhasesController < ApplicationController
     @phase = Phase.find(phase_id_params)
     @campagne_selection = SelectionIntervenant.find_by(phase: @phase.id)
     @new_campagne_selection = SelectionIntervenant.new
+    @config_specialisation_etude = JuniorConfiguration.find_by(junior_id: @junior.id).specialisation_etude
+    @config_niveau_etude = JuniorConfiguration.find_by(junior_id: @junior.id).niveau_etude
     authorize @phase
   end
 
@@ -14,6 +16,8 @@ class PhasesController < ApplicationController
     @junior = Junior.find(junior_id_params)
     @etude = Etude.find(etude_id_params)
     @phase = Phase.new
+    @config_specialisation_etude = JuniorConfiguration.find_by(junior_id: @junior.id).specialisation_etude
+    @config_niveau_etude = JuniorConfiguration.find_by(junior_id: @junior.id).niveau_etude
     authorize @phase
   end
 
@@ -36,6 +40,8 @@ class PhasesController < ApplicationController
     @junior = Junior.find(junior_id_params)
     @etude = Etude.find(etude_id_params)
     @phase = Phase.find(phase_id_params)
+    @config_specialisation_etude = JuniorConfiguration.find_by(junior_id: @junior.id).specialisation_etude
+    @config_niveau_etude = JuniorConfiguration.find_by(junior_id: @junior.id).niveau_etude
     authorize @phase
   end
 
