@@ -9,6 +9,8 @@ class PhasesController < ApplicationController
     @new_campagne_selection = SelectionIntervenant.new
     @config_specialisation_etude = JuniorConfiguration.find_by(junior_id: @junior.id).specialisation_etude
     @config_niveau_etude = JuniorConfiguration.find_by(junior_id: @junior.id).niveau_etude
+    @config_docs_junior = @junior.junior_configuration.config_doc_adherents
+    @campagne_selection.nil? ? @postulants_doc_controlled = "" : @postulants_doc_controlled = postulants_doc_controller(@campagne_selection.postulants)
     authorize @phase
   end
 
@@ -88,5 +90,35 @@ class PhasesController < ApplicationController
 
   def junior_id_params
     params[:junior_id]
+  end
+
+  def postulants_doc_controller(postulants)
+    all_postulants_docs = []
+    postulants.each do |postulant|
+      postulant_docs = { postulant: postulant.id, documents: [] }
+      @config_docs_junior.each do |doc_config|
+        if postulant.user.adherent.document_adherents.where(nom: doc_config.nom,
+                                                            validite: ['valid', 'pending']).count.zero?
+          postulant_docs[:documents] << { nom: doc_config.nom, validite: "invalid" }
+        else
+          a_tester = postulant.user.adherent.document_adherents.where(nom: doc_config.nom,
+                                                                      validite: ['valid', 'pending'])
+          if test_date_documents(a_tester).count.zero?
+            postulant_docs[:documents] << { nom: doc_config.nom, validite: "invalid" }
+          elsif test_date_documents(a_tester).find_by(validite: "valid")
+            postulant_docs[:documents] << { nom: doc_config.nom, validite: "valid" }
+          elsif test_date_documents(a_tester).find_by(validite: "pending")
+            postulant_docs[:documents] << { nom: doc_config.nom, validite: "pending" }
+          end
+        end
+      end
+      all_postulants_docs << postulant_docs
+    end
+    return all_postulants_docs
+  end
+
+  def test_date_documents(docs)
+    docs.where('date_debut_validite < :date_debut AND date_fin_validite > :date_fin', date_debut: @phase.date_debut,
+                                                                                      date_fin: @phase.date_fin)
   end
 end

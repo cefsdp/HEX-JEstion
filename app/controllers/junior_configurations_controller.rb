@@ -43,6 +43,7 @@ class JuniorConfigurationsController < ApplicationController
   private
 
   def configuration_params
-    params.require(:junior_configuration).permit(:id, niveau_etude: [], specialisation_etude: [])
+    params.require(:junior_configuration).permit(:id, niveau_etude: [], specialisation_etude: [],
+                                                      types_entreprises: [], provenances_clients: [], methodes_premier_contact: [])
   end
 end

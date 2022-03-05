@@ -2,6 +2,7 @@
   .tabs {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     .tab {
       border: 1px solid var(--blanc);
       background-color: var(--bleu-hex);

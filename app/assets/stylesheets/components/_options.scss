@@ -35,6 +35,20 @@ a {
   }
 }
 
+.lien_jaune {
+  a,
+  div {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--jaune-hex);
+    border-bottom: none !important;
+  }
+  :hover {
+    color: var(--hover-blue);
+    text-decoration: none;
+  }
+}
+
 h1 {
   color: var(--noir);
   font-size: 24px;

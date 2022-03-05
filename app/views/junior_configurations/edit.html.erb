@@ -1,11 +1,15 @@
+<h1>Configuration - <%= @junior.nom%></h1>
+
+
 <div class="menu">
   <div class="tabs">
     <div class="tab active">Enseignements</div>
-    <div class="tab">Prestations</div>
+    <div class="tab">Activité</div>
+    <div class="tab">Etudes</div>
     <div class="tab">Adhésion</div>
-    <div class="tab">Postes et Autorisations</div>
-    <div class="tab">Autre</div>
-    <div class="btn_tab"><%= link_to junior_junior_configuration_archives_path(@junior, @configuration) do %>Archives<% end %></div>
+    <div class="tab">Membres</div>
+    <div class="tab">Autorisations</div>
+    <div class="tab">Autres</div>
   </div>
   <div class="contents">
     <% # Niveau Etude & Spécialité %>
@@ -36,8 +40,10 @@
         <% end %>    
     </div>
 
-    <% # Prestations et études %>
-    <div class="content">
+
+    <% # Prestations %>
+    <div class="content"> 
+        <h2>Prestations</h2>
         <div class="modal-button modal-button2" id="add_prestation">Ajouter une prestation</div>
         <div class="inline_list2">
             <% @prestations.each do |prestation| %> 
@@ -45,7 +51,42 @@
                     <%= prestation.nom %>
                 </div>
             <% end %>
-        </div>  
+        </div> 
+    </div>
+
+    <% # Etudes %>
+    <div class="content"> 
+        <%= simple_form_for [@junior, @configuration] do |f| %>
+            <%= f.error_notification %>
+            <div class="formulaire">
+                <div class="array_forms">
+                    <div class='array_input'>
+                        <div class="label">Types d'entreprises</div>
+                        <div class="inputs"><%= f.input :types_entreprises, as: :array, label: false %></div>
+                        
+                    </div>
+                    <div class="btn array_input_btn" name="junior_configuration[types_entreprises][]" id="add_new_input">Ajouter une entrée</div>
+                </div>
+                <div class="array_forms">
+                    <div class='array_input'>
+                        <div class="label">Provenances des clients</div>
+                        <div class="inputs"><%= f.input :provenances_clients, as: :array, label: false  %></div>
+                    </div>
+                    <div class="btn array_input_btn" name="junior_configuration[provenances_clients][]" id="add_new_input">Ajouter une entrée</div>
+                </div>
+                <div class="array_forms">
+                    <div class='array_input'>
+                        <div class="label">Méthodes de premier contact</div>
+                        <div class="inputs"><%= f.input :methodes_premier_contact, as: :array, label: false  %></div>
+                    </div>
+                    <div class="btn array_input_btn" name="junior_configuration[methodes_premier_contact][]" id="add_new_input">Ajouter une entrée</div>
+                </div>
+            </div>
+
+            <div class="button">
+                <%= f.button :submit, "Enregistrer" %>
+            </div>
+        <% end %>
     </div>
 
     <% # Documents d'Adhesion %>
@@ -96,6 +137,16 @@
                     <div class="modal-button inline_list_item" id="edit_permission_<%= permission.id %>"><%= permission.nom %></div>
                 <% end %>
             </div>
+    </div>
+
+    <div class="content">
+        <h2>Permission</h2>
+        <div class="inline_list2">
+            <div class="modal-button inline_list_item bleu" id="add_permission">Ajouter une classe</div>
+            <% @permissions.each_with_index do |permission, index| %>
+                <div class="modal-button inline_list_item" id="edit_permission_<%= permission.id %>"><%= permission.nom %></div>
+            <% end %>
+        </div>
     </div>
 
     <% # Autre %>

@@ -161,22 +161,28 @@
                             <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
                         </div>
                         <div class="content_reducteur">
-                            <div class="h3">Dossier intervenant :</div>
+                            <div class="h3">Documents obligatoires du postulant :</div>
                             <div class="display_donnee">
                                 <div class="small-list">
-                                    <div class="small-item vert">BA</div>
-                                    <div class="small-item">Cotisation</div>
-                                    <div class="small-item">CVEC</div>
+                                    <% postulant_docs_controlled = @postulants_doc_controlled.select {|control| control[:postulant] = postulant.id }%>
+                                    <% documents = postulant_docs_controlled.first[:documents]%>
+                                    <% documents.each do |document| %>
+                                        <% case document[:validite]; when "valid" then couleur = "vert"; when "pending" then couleur = "jaune"; when "invalid" then couleur = "rouge"; end %>
+                                        <div class="small-item <%= couleur %>"><%= document[:nom] %></div>
+                                    <% end %>
                                 </div>
                             </div>
-                            <div class="h3">Message de l'intervenant :</div>
+                            <div class="h3">Message du postulant :</div>
                             <div class="display_donnee">
                                 <div>
                                     <div class="donnee"><%= postulant.selection_intervenant.phase.description_mission_intervenant ? postulant.selection_intervenant.phase.description_mission_intervenant : "N/A" %></div>
                                 </div>
                             </div>
-                            Listing des candidats (Statut dossier, accès documents, infos étudiant (anciennes études, autres documents), marquage couleur)
-                            Selection des intervenants (ajouter / retirer + numéro de RM)
+                            <div class="h3">En savoir plus sur le postulant :</div>
+                                <div class="lien_jaune"><%= link_to "Cliquez ici pour aller sur le profil du postulant."%></div>
+                            <div class="h3">Evaluer le postulant :</div>
+                                <div class="modal-button3 modal-button" id="evaluer_postulant_<%= postulant.id %>">Cliquez ici pour évaluer le postulant</div>
+                            <div class="h3">Actions :</div>
                         </div>
                     </div>
                 </div>
@@ -196,3 +202,34 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+<% @campagne_selection.postulants.each do |postulant| %>
+    <div class="hex_modal" id="evaluer_postulant_<%= postulant.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="evaluer_postulant_<%= postulant.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <div class="input">
+                            <%= f.input :note, collection: ["Bon profil", "Profil moyen", "Profil inadapté"], label: "Evaluation du profil de #{postulant.user.adherent.prenom} #{postulant.user.adherent.nom} pour la mission" %>
+                        </div>
+                        <div class="button">
+                            <%= f.button :submit, "Evaluer le postulant" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>

@@ -16,7 +16,7 @@
             <%= f.input :siret, autofocus: true, label: "Numéro de SIRET" %>
         </div>
         <div class="input">
-            <%= f.input :type_entreprise, autofocus: true, required: true, label: "Type d'entreprise", collection: ["Grand Groupe", "TPE/PME", "Associations", "Administration publique", "Junior-Entreprise", "Start-up", "Entrepreneur"] %>
+            <%= f.input :type_entreprise, autofocus: true, required: true, label: "Type d'entreprise", collection: @types_entreprises %>
             <%= f.input :activite, autofocus: true, label: "Activité de l'entreprise" %>
         </div>
         <div class="input">
@@ -31,8 +31,8 @@
         </div>
         <div class="input">
             <%= f.input :poste, autofocus: true, label: "Poste" %>
-            <%= f.input :provenance, autofocus: true, required: true, label: "Provenance" %>
-            <%= f.input :premier_contact, autofocus: true, required: true, label: "Méthode de premier contact" %>
+            <%= f.input :provenance, autofocus: true, required: true, label: "Provenance", collection: @provenances_clients %>
+            <%= f.input :premier_contact, autofocus: true, required: true, label: "Méthode de premier contact", collection: @methodes_premier_contact %>
         </div>
     </div>
 

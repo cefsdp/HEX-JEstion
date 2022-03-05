@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_195816) do
+ActiveRecord::Schema.define(version: 2022_03_05_182232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,12 +135,23 @@ ActiveRecord::Schema.define(version: 2022_03_03_195816) do
     t.index ["prestation_id"], name: "index_etudes_on_prestation_id"
   end
 
+  create_table "intervenants", force: :cascade do |t|
+    t.bigint "phase_id", null: false
+    t.string "ref_rm"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["phase_id"], name: "index_intervenants_on_phase_id"
+  end
+
   create_table "junior_configurations", force: :cascade do |t|
     t.bigint "junior_id", null: false
     t.text "niveau_etude", default: [], array: true
     t.text "specialisation_etude", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "types_entreprises", default: [], array: true
+    t.string "provenances_clients", default: [], array: true
+    t.string "methodes_premier_contact", default: [], array: true
     t.index ["junior_id"], name: "index_junior_configurations_on_junior_id"
   end
 
@@ -302,6 +313,7 @@ ActiveRecord::Schema.define(version: 2022_03_03_195816) do
   add_foreign_key "etudes", "users", column: "charge_etude_id"
   add_foreign_key "etudes", "users", column: "charge_qualite_id"
   add_foreign_key "etudes", "users", column: "charge_rh_id"
+  add_foreign_key "intervenants", "phases"
   add_foreign_key "junior_configurations", "juniors"
   add_foreign_key "mandat_requests", "membres"
   add_foreign_key "mandat_requests", "poles"

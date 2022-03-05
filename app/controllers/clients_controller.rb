@@ -8,6 +8,9 @@ class ClientsController < ApplicationController
     @etude = Etude.find(params[:etude_id].to_i)
     @junior = Junior.find(params[:junior_id].to_i)
     authorize @new_client
+    @types_entreprises = JuniorConfiguration.find_by(junior_id: @junior.id).types_entreprises
+    @provenances_clients = JuniorConfiguration.find_by(junior_id: @junior.id).provenances_clients
+    @methodes_premier_contact = JuniorConfiguration.find_by(junior_id: @junior.id).methodes_premier_contact
   end
 
   def create
@@ -36,6 +39,9 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id].to_i)
     @junior = Junior.find(params[:junior_id].to_i)
     authorize @client
+    @types_entreprises = JuniorConfiguration.find_by(junior_id: @junior.id).types_entreprises
+    @provenances_clients = JuniorConfiguration.find_by(junior_id: @junior.id).provenances_clients
+    @methodes_premier_contact = JuniorConfiguration.find_by(junior_id: @junior.id).methodes_premier_contact
   end
 
   def update
