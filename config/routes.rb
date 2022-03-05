@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         resources :selection_intervenants, except: :index do
           resources :postulants
         end
+        resources :intervenants
       end
     end
 

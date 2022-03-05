@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_05_182232) do
+ActiveRecord::Schema.define(version: 2022_03_05_185821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,7 +140,9 @@ ActiveRecord::Schema.define(version: 2022_03_05_182232) do
     t.string "ref_rm"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
     t.index ["phase_id"], name: "index_intervenants_on_phase_id"
+    t.index ["user_id"], name: "index_intervenants_on_user_id"
   end
 
   create_table "junior_configurations", force: :cascade do |t|
@@ -314,6 +316,7 @@ ActiveRecord::Schema.define(version: 2022_03_05_182232) do
   add_foreign_key "etudes", "users", column: "charge_qualite_id"
   add_foreign_key "etudes", "users", column: "charge_rh_id"
   add_foreign_key "intervenants", "phases"
+  add_foreign_key "intervenants", "users"
   add_foreign_key "junior_configurations", "juniors"
   add_foreign_key "mandat_requests", "membres"
   add_foreign_key "mandat_requests", "poles"
