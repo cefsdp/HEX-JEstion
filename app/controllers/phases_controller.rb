@@ -11,7 +11,7 @@ class PhasesController < ApplicationController
     @config_niveau_etude = JuniorConfiguration.find_by(junior_id: @junior.id).niveau_etude
     @config_docs_junior = @junior.junior_configuration.config_doc_adherents
     @new_intervenant = Intervenant.new
-    @intervenants = Intervenant.where(phase_id: @phase.id)
+    @intervenants = Intervenant.where(phase_id: @phase.id).order(ref_rm: :asc)
     @campagne_selection.nil? ? @postulants_doc_controlled = "" : @postulants_doc_controlled = postulants_doc_controller(@campagne_selection.postulants)
     authorize @phase
   end
