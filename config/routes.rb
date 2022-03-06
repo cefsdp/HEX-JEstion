@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
     resources :junior_configurations do
       resources :config_doc_adherents
+      resources :config_doc_etudes
       resources :poles
       resources :postes
       resources :permissions

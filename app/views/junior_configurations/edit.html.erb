@@ -7,6 +7,7 @@
     <div class="tab">Activité</div>
     <div class="tab">Etudes</div>
     <div class="tab">Adhésion</div>
+    <div class="tab">Documents Types</div>
     <div class="tab">Membres</div>
     <div class="tab">Autorisations</div>
     <div class="tab">Autres</div>
@@ -108,6 +109,33 @@
                         <td class="colonne" style='color: var(--bleu-hex);'><% if configDocAdherent.duree_validite.to_i == 0 %><%= 'Non défini' %><% else %><%= configDocAdherent.duree_validite %> <%= configDocAdherent.format_duree_validite %><% end %></td>
                         <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.obligatoire ? 'Oui' : 'Non' %></td>
                         <td class="colonne" style='color: var(--bleu-hex);'><%= configDocAdherent.archive ? 'Oui' : 'Non' %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+
+    <% # Documents Types %>
+    <div class="content">
+        <div class="modal-button modal-button2" id="add_etude_document">Ajouter un document type</div>
+        <table class="tableau" id="search_tableau">
+            <thead class="tabl_header">
+                <tr class="header_row">
+                    <th class="colonne">Nom</th>
+                    <th class="colonne">Type</th>
+                    <th class="colonne">Obligatoire</th>
+                    <th class="colonne">Accessibilité</th>
+                    <th class="colonne">Archivé</th>
+                </tr>
+            </thead>
+            <tbody class="tabl_contenu">
+                <% @configDocEtudes.each_with_index do |configDocEtude, index| %>
+                    <tr class="ligne modal-button" id="edit_etude_document_<%= configDocEtude.id %>">
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocEtude.nom %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocEtude.type_doc %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocEtude.obligatoire ? 'Oui' : 'Non' %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocEtude.interne ? 'Usage Interne' : 'Usage Externe' %></td>
+                        <td class="colonne" style='color: var(--bleu-hex);'><%= configDocEtude.archive ? 'Oui' : 'Non' %></td>
                     </tr>
                 <% end %>
             </tbody>
@@ -452,6 +480,78 @@
                     </div>
                     <div class="button">
                         <%= f.button :submit, "Modifier la prestation" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<% # Nouveau document Adherent %>
+<div class="hex_modal" id="add_etude_document">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_etude_document">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @configuration, @newConfigDocEtude] do |f| %>
+                <%= f.error_notification %>
+                <%= f.hidden_field :junior_configuration_id, value: @configuration.id %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.input :nom, required: true, label: 'Nom du document' %>
+                    </div>
+                    <div class="input">
+                        <%= f.input :type_doc, label: "Type de document", collection: [["Document d'adhésion", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]], hint: "A quoi/qui est rattaché le document ?" %>
+                        <%= f.input :interne, collection: [['Document à usage interne', true], ['Document à usage externe', false]], label: "Accessibilité" %>                    </div>
+                    <div class="input">
+                        <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
+                        <%= f.input :archive, as: :boolean, label: 'Archiver le document', value: false, checked_value: true, unchecked_value: false %>
+                    </div>
+                    <div class="input" style="margin-bottom: 10px;">
+                        <%= f.input :document_type, as: :file, label: 'Document type' %>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <%= f.button :submit, "Ajouter le document" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier document Etude %>
+<% @configDocEtudes.each_with_index do |configDocEtude, index_modal| %>
+    <div class="hex_modal" id="edit_etude_document_<%= configDocEtude.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_etude_document_<%= configDocEtude.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @configuration, configDocEtude] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <%= f.hidden_field :id %>
+                        <div class="input">
+                            <%= f.input :nom, required: true, label: 'Nom du document' %>
+                        </div>
+                    <div class="input">
+                        <%= f.input :type_doc, label: "Type de document", collection: [["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]], hint: "A quoi/qui est rattaché le document ?" %>
+                        <%= f.input :interne, collection: [['Document à usage interne', true], ['Document à usage externe', false]], label: "Accessibilité" %>
+                    </div>
+                        <div class="input">
+                            <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
+                            <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
+                        </div>
+                    </div>
+
+                    <div class="button">
+                        <%= f.button :submit, "Mettre à jour le document" %>
                     </div>
                 <% end %>
             </div>

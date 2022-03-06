@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_06_101217) do
+ActiveRecord::Schema.define(version: 2022_03_06_113028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,15 +99,15 @@ ActiveRecord::Schema.define(version: 2022_03_06_101217) do
   end
 
   create_table "config_doc_etudes", force: :cascade do |t|
-    t.bigint "junior_configurations_id", null: false
     t.string "nom"
     t.boolean "obligatoire"
     t.boolean "interne", default: true
     t.boolean "archive"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "type"
-    t.index ["junior_configurations_id"], name: "index_config_doc_etudes_on_junior_configurations_id"
+    t.bigint "junior_configuration_id", null: false
+    t.string "type_doc"
+    t.index ["junior_configuration_id"], name: "index_config_doc_etudes_on_junior_configuration_id"
   end
 
   create_table "document_adherents", force: :cascade do |t|
@@ -134,30 +134,30 @@ ActiveRecord::Schema.define(version: 2022_03_06_101217) do
   end
 
   create_table "document_intervenants", force: :cascade do |t|
-    t.bigint "intervenants_id", null: false
     t.string "ref_doc"
     t.string "validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["intervenants_id"], name: "index_document_intervenants_on_intervenants_id"
+    t.bigint "intervenant_id", null: false
+    t.index ["intervenant_id"], name: "index_document_intervenants_on_intervenant_id"
   end
 
   create_table "document_phases", force: :cascade do |t|
-    t.bigint "phases_id", null: false
     t.string "ref_doc"
     t.string "validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["phases_id"], name: "index_document_phases_on_phases_id"
+    t.bigint "phase_id", null: false
+    t.index ["phase_id"], name: "index_document_phases_on_phase_id"
   end
 
   create_table "document_postulants", force: :cascade do |t|
-    t.bigint "postulants_id", null: false
     t.string "ref_doc"
     t.string "validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["postulants_id"], name: "index_document_postulants_on_postulants_id"
+    t.bigint "postulant_id", null: false
+    t.index ["postulant_id"], name: "index_document_postulants_on_postulant_id"
   end
 
   create_table "etudes", force: :cascade do |t|
@@ -356,12 +356,12 @@ ActiveRecord::Schema.define(version: 2022_03_06_101217) do
   add_foreign_key "adherents", "users"
   add_foreign_key "clients", "juniors"
   add_foreign_key "config_doc_adherents", "junior_configurations"
-  add_foreign_key "config_doc_etudes", "junior_configurations", column: "junior_configurations_id"
+  add_foreign_key "config_doc_etudes", "junior_configurations"
   add_foreign_key "document_adherents", "adherents"
   add_foreign_key "document_etudes", "etudes"
-  add_foreign_key "document_intervenants", "intervenants", column: "intervenants_id"
-  add_foreign_key "document_phases", "phases", column: "phases_id"
-  add_foreign_key "document_postulants", "postulants", column: "postulants_id"
+  add_foreign_key "document_intervenants", "intervenants"
+  add_foreign_key "document_phases", "phases"
+  add_foreign_key "document_postulants", "postulants"
   add_foreign_key "etudes", "clients"
   add_foreign_key "etudes", "juniors"
   add_foreign_key "etudes", "prestations"
