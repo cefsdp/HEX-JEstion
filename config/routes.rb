@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
     resources :user do
       resources :adherents do
-        resources :document_adherents
+        resources :document_adhesions
       end
     end
   end

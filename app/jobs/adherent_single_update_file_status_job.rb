@@ -3,7 +3,7 @@ class AdherentSingleUpdateFileStatusJob < ApplicationJob
 
   def perform(adherent)
     necessary_documents = ConfigDocAdherent.where(junior_configuration_id: JuniorConfiguration.where(junior_id: adherent.junior.id))
-    adherent_documents = DocumentAdherent.where(adherent_id: adherent.id, validite: ['valid', 'pending'])
+    adherent_documents = DocumentAdhesion.where(adherent_id: adherent.id, validite: ['valid', 'pending'])
     file_status = nil
     necessary_documents.each do |nec_doc|
       if adherent_documents.where(nom: nec_doc.nom).empty?

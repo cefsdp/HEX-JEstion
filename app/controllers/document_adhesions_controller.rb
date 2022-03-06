@@ -1,20 +1,20 @@
-class DocumentAdherentsController < ApplicationController
+class DocumentAdhesionsController < ApplicationController
   before_action :authenticate_user!
 
   def create
     @user = current_user
     @adherentDocumentParams = document_adherent_params
     @juniorConfigDocAdherent = ConfigDocAdherent.where(junior_configuration_id: JuniorConfiguration.find_by(junior_id: @user.junior_id).id).find_by(nom: @adherentDocumentParams[:nom])
-    @documentAdherent = DocumentAdherent.new(adherent_id: @user.adherent.id,
+    @documentAdhesion = DocumentAdhesion.new(adherent_id: @user.adherent.id,
                                              nom: @adherentDocumentParams[:nom],
                                              obligatoire: @juniorConfigDocAdherent.obligatoire,
                                              archive: false,
                                              date_debut_validite: @adherentDocumentParams[:date_debut_validite],
                                              validite: 'pending',
                                              document: @adherentDocumentParams[:document])
-    @documentAdherent.date_fin_validite = calcul_date_fin_validite(@documentAdherent)
-    authorize @documentAdherent
-    if @documentAdherent.save
+    @documentAdhesion.date_fin_validite = calcul_date_fin_validite(@documentAdhesion)
+    authorize @documentAdhesion
+    if @documentAdhesion.save
       flash[:success] = "Object successfully created"
       redirect_to edit_user_registration_path
     else
@@ -27,13 +27,13 @@ class DocumentAdherentsController < ApplicationController
     @user = current_user
     @adherentDocumentParams = document_adherent_params
     @juniorConfigDocAdherent = ConfigDocAdherent.where(junior_configuration_id: JuniorConfiguration.find_by(junior_id: @user.junior_id).id).find_by(nom: @adherentDocumentParams[:nom])
-    @documentAdherent = DocumentAdherent.find(params[:id])
-    authorize @documentAdherent
-    if @documentAdherent.update(nom: @adherentDocumentParams[:nom],
+    @documentAdhesion = DocumentAdhesion.find(params[:id])
+    authorize @documentAdhesion
+    if @documentAdhesion.update(nom: @adherentDocumentParams[:nom],
                                 obligatoire: @juniorConfigDocAdherent.obligatoire,
                                 archive: false,
                                 date_debut_validite: @adherentDocumentParams[:date_debut_validite],
-                                date_fin_validite: calcul_date_fin_validite(@documentAdherent),
+                                date_fin_validite: calcul_date_fin_validite(@documentAdhesion),
                                 validite: document_adherent_validite_params,
                                 document: @adherentDocumentParams[:document])
       flash[:success] = "Object was successfully updated"
@@ -47,7 +47,7 @@ class DocumentAdherentsController < ApplicationController
   private
 
   def document_adherent_params
-    params.require(:document_adherent).permit(:nom, :obligatoire, :date_debut_validite, :validite, :archive, :document)
+    params.require(:document_adhesion).permit(:nom, :obligatoire, :date_debut_validite, :validite, :archive, :document)
     # validite: pending, valid, invalid
     # Controle Date Validite : .where('date_fin_validite > ?', DateTime.now)
   end

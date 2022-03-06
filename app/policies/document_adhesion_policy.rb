@@ -1,4 +1,4 @@
-class DocumentAdherentPolicy < ApplicationPolicy
+class DocumentAdhesionPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope.all

@@ -10,8 +10,8 @@ class AdherentsController < ApplicationController
     authorize @adherent
     @user = @adherent.user
     @junior = @user.junior
-    @document = DocumentAdherent.new
-    @documents = DocumentAdherent.where(adherent_id: @adherent.id).order(
+    @document = DocumentAdhesion.new
+    @documents = DocumentAdhesion.where(adherent_id: @adherent.id).order(
       "nom ASC", "date_fin_validite DESC"
     )
     @configuration_id = JuniorConfiguration.find_by(junior_id: @junior.id)

@@ -99,11 +99,11 @@ class PhasesController < ApplicationController
     postulants.each do |postulant|
       postulant_docs = { postulant: postulant.id, documents: [] }
       @config_docs_junior.each do |doc_config|
-        if postulant.user.adherent.document_adherents.where(nom: doc_config.nom,
+        if postulant.user.adherent.document_adhesions.where(nom: doc_config.nom,
                                                             validite: ['valid', 'pending']).count.zero?
           postulant_docs[:documents] << { nom: doc_config.nom, validite: "invalid" }
         else
-          a_tester = postulant.user.adherent.document_adherents.where(nom: doc_config.nom,
+          a_tester = postulant.user.adherent.document_adhesions.where(nom: doc_config.nom,
                                                                       validite: ['valid', 'pending'])
           if test_date_documents(a_tester).count.zero?
             postulant_docs[:documents] << { nom: doc_config.nom, validite: "invalid" }

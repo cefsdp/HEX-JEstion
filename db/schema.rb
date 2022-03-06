@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_06_113028) do
+ActiveRecord::Schema.define(version: 2022_03_06_115132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
     t.index ["junior_configuration_id"], name: "index_config_doc_etudes_on_junior_configuration_id"
   end
 
-  create_table "document_adherents", force: :cascade do |t|
+  create_table "document_adhesions", force: :cascade do |t|
     t.bigint "adherent_id", null: false
     t.string "nom"
     t.boolean "obligatoire"
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
     t.date "date_debut_validite"
     t.string "raison_invalid"
     t.date "date_fin_validite"
-    t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
+    t.index ["adherent_id"], name: "index_document_adhesions_on_adherent_id"
   end
 
   create_table "document_etudes", force: :cascade do |t|
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
     t.string "validite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "date_signature"
     t.index ["etude_id"], name: "index_document_etudes_on_etude_id"
   end
 
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "intervenant_id", null: false
+    t.date "date_signature"
     t.index ["intervenant_id"], name: "index_document_intervenants_on_intervenant_id"
   end
 
@@ -148,6 +150,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "phase_id", null: false
+    t.date "date_signature"
     t.index ["phase_id"], name: "index_document_phases_on_phase_id"
   end
 
@@ -157,6 +160,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "postulant_id", null: false
+    t.date "date_signature"
     t.index ["postulant_id"], name: "index_document_postulants_on_postulant_id"
   end
 
@@ -357,7 +361,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_113028) do
   add_foreign_key "clients", "juniors"
   add_foreign_key "config_doc_adherents", "junior_configurations"
   add_foreign_key "config_doc_etudes", "junior_configurations"
-  add_foreign_key "document_adherents", "adherents"
+  add_foreign_key "document_adhesions", "adherents"
   add_foreign_key "document_etudes", "etudes"
   add_foreign_key "document_intervenants", "intervenants"
   add_foreign_key "document_phases", "phases"
