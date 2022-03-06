@@ -504,7 +504,7 @@
                         <%= f.input :nom, required: true, label: 'Nom du document' %>
                     </div>
                     <div class="input">
-                        <%= f.input :type_doc, label: "Type de document", collection: [["Document d'adhésion", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]], hint: "A quoi/qui est rattaché le document ?" %>
+                        <%= f.input :type_doc, label: "Type de document", collection: [["Document d'adherent", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]], hint: "A quoi/qui est rattaché le document ?" %>
                         <%= f.input :interne, collection: [['Document à usage interne', true], ['Document à usage externe', false]], label: "Accessibilité" %>                    </div>
                     <div class="input">
                         <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>

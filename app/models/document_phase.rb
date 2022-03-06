@@ -1,3 +1,5 @@
 class DocumentPhase < ApplicationRecord
-  belongs_to :phases
+  belongs_to :phase
+
+  has_one_attached :document
 end
