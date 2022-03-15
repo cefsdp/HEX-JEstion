@@ -34,6 +34,9 @@
         <div class="selector">
             <%= f.input :niveau_etude_postulant, collection: @config_niveau_etude, input_html: { class: 'js-example-basic-multiple', multiple: "multiple", name:"state[]" }, label: "Niveau d'étude des intervenants" %>
         </div>
+        <div class="input">
+            <%= f.input :statut, autofocus: true, label: 'Statut de la phase', required: true, collection: ["En cours", "Terminée", "Stand-by"]%>
+        </div>
         
     </div>
 

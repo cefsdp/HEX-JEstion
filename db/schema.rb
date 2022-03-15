@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_06_123518) do
+ActiveRecord::Schema.define(version: 2022_03_15_202807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -297,6 +297,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_123518) do
     t.string "lieux_mission"
     t.string "specialisation_postulant", default: [], array: true
     t.string "niveau_etude_postulant", default: [], array: true
+    t.string "statut"
     t.index ["etude_id"], name: "index_phases_on_etude_id"
   end
 

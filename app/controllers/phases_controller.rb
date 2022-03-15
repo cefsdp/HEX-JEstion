@@ -33,10 +33,10 @@ class PhasesController < ApplicationController
     authorize @phase
     if @phase.save
       flash[:success] = "Phase successfully created"
-      redirect_to junior_etude_path(@junior, @etude)
+      redirect_to junior_etude_phase_path(@junior, @etude, @phase)
     else
       flash[:error] = "Something went wrong"
-      render 'new'
+      redirect_to junior_etude_phase_path(@junior, @etude, @phase)
     end
   end
 
@@ -56,10 +56,10 @@ class PhasesController < ApplicationController
     authorize @phase
     if @phase.update(phase_params)
       flash[:success] = "Phase was successfully updated"
-      redirect_to junior_etude_path(@junior, @etude)
+      redirect_to junior_etude_phase_path(@junior, @etude, @phase)
     else
       flash[:error] = "Something went wrong"
-      render 'edit'
+      redirect_to junior_etude_phase_path(@junior, @etude, @phase)
     end
   end
 
