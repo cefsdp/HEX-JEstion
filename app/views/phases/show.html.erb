@@ -148,7 +148,7 @@
             <% end %>
         <% end %>
 
-        <% if @campagne_selection.postulants.nil? %>
+        <% if @campagne_selection.nil? || @campagne_selection.postulants.nil? %>
             <h2>Aucun adhérent n'a postulé à la mission !</h2>
         <% elsif @campagne_selection.postulants %>
             <h2>Liste des postulants :</h2>
@@ -309,147 +309,84 @@
 
 
 <% # ==========================================================================================================================%>
-<% # Evaluer le postulant%>
-<% @campagne_selection.postulants.each do |postulant| %>
-    <div class="hex_modal" id="evaluer_postulant_<%= postulant.id %>">
-        <div class="background">
-            <div class="header">
-                <div class="modal-close" id="evaluer_postulant_<%= postulant.id %>">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <div class="input">
-                            <%= f.input :note, collection: ["Bon profil", "Profil moyen", "Profil inadapté"], label: "Evaluation du profil de #{postulant.user.adherent.prenom} #{postulant.user.adherent.nom} pour la mission" %>
-                        </div>
-                        <div class="button">
-                            <%= f.button :submit, "Evaluer le postulant" %>
-                        </div>
-                    </div>
-                <% end %>
-            </div>
-        </div>
-    </div>
-<% end %>
-
-
-<% # ==========================================================================================================================%>
-<% # créer intervenant%>
-<% @campagne_selection.postulants.each do |postulant| %>
-    <div class="hex_modal" id="create_intervenant_<%= postulant.id %>">
-        <div class="background">
-            <div class="header">
-                <div class="modal-close" id="create_intervenant_<%= postulant.id %>">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @etude, @phase, @new_intervenant] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <div class="input">
-                            <%= f.hidden_field :phase_id, value: @phase.id %>
-                            <%= f.hidden_field :user_id, value: postulant.user.id %>
-                            <%= f.input :ref_rm, label: "Référence du récapitulatif du mission", placeholder: "RM_1" %>
-                        </div>
-                        <div class="button">
-                            <%= f.button :submit, "Ajouter un intervenant" %>
-                        </div>
-                    </div>
-                <% end %>
-            </div>
-        </div>
-    </div>
-<% end %>
-
-<% # ==========================================================================================================================%>
-<% # Ajouter document postulant %>
-<% @campagne_selection.postulants.each do |postulant| %>
-    <div class="hex_modal" id="add_doc_postulant_<%= postulant.id %>">
-        <div class="background">
-            <div class="header">
-                <div class="modal-close" id="add_doc_postulant_<%= postulant.id %>">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant, DocumentPostulant.new] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <div class="input">
-                            <%= f.hidden_field :postulant_id, value: postulant.id %>
-                            <%= f.input :nom, required: true, label: "Nom du document", collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "postulant", interne: false), :label_method => lambda { |doc| "#{doc.nom}" }, value_method: :nom %>
-                            <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
-                        </div>
-                        <div class="input">
-                            <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
-                        </div>
-                        <div class="button">
-                            <%= f.button :submit, "Ajouter un document" %>
-                        </div>
-                    </div>
-                <% end %>
-            </div>
-        </div>
-    </div>
-<% end %>
-
-<% # ==========================================================================================================================%>
-<% # Ajouter document interne postulant %>
-<% @campagne_selection.postulants.each do |postulant| %>
-    <div class="hex_modal" id="add_doc_interne_postulant_<%= postulant.id %>">
-        <div class="background">
-            <div class="header">
-                <div class="modal-close" id="add_doc_interne_postulant_<%= postulant.id %>">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant, DocumentPostulant.new] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <div class="input">
-                            <%= f.hidden_field :postulant_id, value: postulant.id %>
-                            <%= f.input :nom, required: true, label: "Nom du document", collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "postulant", interne: true), :label_method => lambda { |doc| "#{doc.nom}" }, value_method: :nom %>
-                            <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
-                        </div>
-                        <div class="input">
-                            <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
-                        </div>
-                        <div class="button">
-                            <%= f.button :submit, "Ajouter un document" %>
-                        </div>
-                    </div>
-                <% end %>
-            </div>
-        </div>
-    </div>
-<% end %>
-
-<% # Modifier document postulant %>
-<% @campagne_selection.postulants.each do |postulant| %>
-    <% postulant.document_postulants.each do |doc_postulant| %>
-        <div class="hex_modal" id="edit_doc_postulant_<%= postulant.id %>_<%= doc_postulant.id %>">
+<% if !@campagne_selection.nil? %>
+    <% # Evaluer le postulant%>
+    <% @campagne_selection.postulants.each do |postulant| %>
+        <div class="hex_modal" id="evaluer_postulant_<%= postulant.id %>">
             <div class="background">
                 <div class="header">
-                    <div class="modal-close" id="edit_doc_postulant_<%= postulant.id %>_<%= doc_postulant.id %>">
+                    <div class="modal-close" id="evaluer_postulant_<%= postulant.id %>">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
                 <div class="content">
-                    <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant, doc_postulant] do |f| %>
+                    <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant] do |f| %>
                         <%= f.error_notification %>
                         <div class="formulaire">
                             <div class="input">
+                                <%= f.input :note, collection: ["Bon profil", "Profil moyen", "Profil inadapté"], label: "Evaluation du profil de #{postulant.user.adherent.prenom} #{postulant.user.adherent.nom} pour la mission" %>
+                            </div>
+                            <div class="button">
+                                <%= f.button :submit, "Evaluer le postulant" %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+
+    <% # ==========================================================================================================================%>
+    <% # créer intervenant%>
+    <% @campagne_selection.postulants.each do |postulant| %>
+        <div class="hex_modal" id="create_intervenant_<%= postulant.id %>">
+            <div class="background">
+                <div class="header">
+                    <div class="modal-close" id="create_intervenant_<%= postulant.id %>">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude, @phase, @new_intervenant] do |f| %>
+                        <%= f.error_notification %>
+                        <div class="formulaire">
+                            <div class="input">
+                                <%= f.hidden_field :phase_id, value: @phase.id %>
+                                <%= f.hidden_field :user_id, value: postulant.user.id %>
+                                <%= f.input :ref_rm, label: "Référence du récapitulatif du mission", placeholder: "RM_1" %>
+                            </div>
+                            <div class="button">
+                                <%= f.button :submit, "Ajouter un intervenant" %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+    <% # ==========================================================================================================================%>
+    <% # Ajouter document postulant %>
+    <% @campagne_selection.postulants.each do |postulant| %>
+        <div class="hex_modal" id="add_doc_postulant_<%= postulant.id %>">
+            <div class="background">
+                <div class="header">
+                    <div class="modal-close" id="add_doc_postulant_<%= postulant.id %>">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant, DocumentPostulant.new] do |f| %>
+                        <%= f.error_notification %>
+                        <div class="formulaire">
+                            <div class="input">
+                                <%= f.hidden_field :postulant_id, value: postulant.id %>
+                                <%= f.input :nom, required: true, label: "Nom du document", collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "postulant", interne: false), :label_method => lambda { |doc| "#{doc.nom}" }, value_method: :nom %>
                                 <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
-                                <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
                             </div>
                             <div class="input">
-                                <%= f.input :validite, label: "Validité du document", collection: [["Document valide", "valide"], ["Document invalide", "invalide"]] %>
-                                <%= f.input :document, as: :file, label: 'Document signé :' %>
+                                <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
                             </div>
                             <div class="button">
                                 <%= f.button :submit, "Ajouter un document" %>
@@ -459,6 +396,71 @@
                 </div>
             </div>
         </div>
+    <% end %>
+
+    <% # ==========================================================================================================================%>
+    <% # Ajouter document interne postulant %>
+    <% @campagne_selection.postulants.each do |postulant| %>
+        <div class="hex_modal" id="add_doc_interne_postulant_<%= postulant.id %>">
+            <div class="background">
+                <div class="header">
+                    <div class="modal-close" id="add_doc_interne_postulant_<%= postulant.id %>">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant, DocumentPostulant.new] do |f| %>
+                        <%= f.error_notification %>
+                        <div class="formulaire">
+                            <div class="input">
+                                <%= f.hidden_field :postulant_id, value: postulant.id %>
+                                <%= f.input :nom, required: true, label: "Nom du document", collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "postulant", interne: true), :label_method => lambda { |doc| "#{doc.nom}" }, value_method: :nom %>
+                                <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
+                            </div>
+                            <div class="input">
+                                <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
+                            </div>
+                            <div class="button">
+                                <%= f.button :submit, "Ajouter un document" %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+
+    <% # Modifier document postulant %>
+    <% @campagne_selection.postulants.each do |postulant| %>
+        <% postulant.document_postulants.each do |doc_postulant| %>
+            <div class="hex_modal" id="edit_doc_postulant_<%= postulant.id %>_<%= doc_postulant.id %>">
+                <div class="background">
+                    <div class="header">
+                        <div class="modal-close" id="edit_doc_postulant_<%= postulant.id %>_<%= doc_postulant.id %>">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @etude, @phase, @campagne_selection, postulant, doc_postulant] do |f| %>
+                            <%= f.error_notification %>
+                            <div class="formulaire">
+                                <div class="input">
+                                    <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
+                                    <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
+                                </div>
+                                <div class="input">
+                                    <%= f.input :validite, label: "Validité du document", collection: [["Document valide", "valide"], ["Document invalide", "invalide"]] %>
+                                    <%= f.input :document, as: :file, label: 'Document signé :' %>
+                                </div>
+                                <div class="button">
+                                    <%= f.button :submit, "Ajouter un document" %>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
     <% end %>
 <% end %>
 
