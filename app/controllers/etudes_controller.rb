@@ -10,6 +10,8 @@ class EtudesController < ApplicationController
     @junior = @etude.junior
     @new_client = Client.new
     @phases = @etude.phases.order("date_debut ASC")
+    @document_etudes = @etude.document_etudes.order("date_signature ASC")
+    @etapes = order_by_date(@phases, @document_etudes)
     @new_phase = Phase.new
     authorize @etude
   end
@@ -81,5 +83,21 @@ class EtudesController < ApplicationController
     else
       Date.today.strftime("%y") + "001"
     end
+  end
+
+  def order_by_date(phases, docs)
+    etapes = phases + docs
+    resultat = []
+    etapes.each do |etape|
+      date = nil
+      case etape.class.to_s
+      when "Phase"
+        date = etape.date_debut
+      when "DocumentEtude"
+        date = etape.date_signature
+      end
+      resultat << { date: date, etape: etape }
+    end
+    return resultat.sort_by! { |etape| etape[:date] }
   end
 end

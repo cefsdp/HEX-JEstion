@@ -205,67 +205,87 @@
     <% # Phases et documents %>
     <div class="content">
         <div class="h3 modal-button" id="add_etape">Ajouter une phase ou un document</div>
-        <div class="mise_en_page1">
-            <% @phases.each do |phase| %>
-                <div class="part reductible">
-                    <div class="titre_reducteur">
-                        <h2><%= phase.nom %></h2>
-                        <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
-                        <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
-                    </div>
-                    <div class="content_reducteur">
-                        <div class="display_donnee">
-                            <div>
-                                <div class="label_donnee">Date de début</div>
-                                <div class="donnee"><%= phase.date_debut.strftime("%d/%m/%Y") %></div>
-                            </div>
-                            <div>
-                                <div class="label_donnee">Date de fin</div>
-                                <div class="donnee"><%= phase.date_fin.strftime("%d/%m/%Y") %></div>
-                            </div>
+        <% @etapes.each do |etape| %>
+            <% case etape[:etape].class.to_s%>
+            <% when "Phase"%>
+                <% phase = etape[:etape] %>
+                <div class="mise_en_page1">
+                    <div class="part reductible">
+                        <div class="titre_reducteur">
+                            <h2><%= phase.nom %></h2>
+                            <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                            <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
                         </div>
-                        <div class="display_donnee">
-                            <div>
-                                <div class="label_donnee">Nombre d'intervenants</div>
-                                <div class="donnee"><%= phase.nombre_intervenant %></div>
+                        <div class="content_reducteur">
+                            <div class="display_donnee">
+                                <div>
+                                    <div class="label_donnee">Date de début</div>
+                                    <div class="donnee"><%= phase.date_debut.strftime("%d/%m/%Y") %></div>
+                                </div>
+                                <div>
+                                    <div class="label_donnee">Date de fin</div>
+                                    <div class="donnee"><%= phase.date_fin.strftime("%d/%m/%Y") %></div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="label_donnee">Nombre de JEH par intervenant</div>
-                                <div class="donnee"><%= phase.jeh_par_intervenant %></div>
+                            <div class="display_donnee">
+                                <div>
+                                    <div class="label_donnee">Nombre d'intervenants</div>
+                                    <div class="donnee"><%= phase.nombre_intervenant %></div>
+                                </div>
+                                <div>
+                                    <div class="label_donnee">Nombre de JEH par intervenant</div>
+                                    <div class="donnee"><%= phase.jeh_par_intervenant %></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="display_donnee">
-                            <div>
-                                <div class="label_donnee">Frais sur la phase</div>
-                                <div class="donnee"><%= phase.frais %></div>
+                            <div class="display_donnee">
+                                <div>
+                                    <div class="label_donnee">Frais sur la phase</div>
+                                    <div class="donnee"><%= phase.frais %></div>
+                                </div>
+                                <div>
+                                    <div class="label_donnee">Montant brut par JEH</div>
+                                    <div class="donnee"><%= phase.remuneration_par_jeh %></div>
+                                </div>
+                                <div>
+                                    <div class="label_donnee">Indémnisation par JEH</div>
+                                    <div class="donnee"><%= phase.indemnisation_par_jeh %></div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="label_donnee">Montant brut par JEH</div>
-                                <div class="donnee"><%= phase.remuneration_par_jeh %></div>
+                            <div class="display_donnee">
+                                <div>
+                                    <div class="label_donnee">Description de la phase</div>
+                                    <div class="donnee"><%= phase.description_phase %></div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="label_donnee">Indémnisation par JEH</div>
-                                <div class="donnee"><%= phase.indemnisation_par_jeh %></div>
+                            <div class="display_donnee">
+                                <div>
+                                    <div class="label_donnee">Description de la mission des intervenants</div>
+                                    <div class="donnee"><%= phase.description_mission_intervenant %></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="display_donnee">
-                            <div>
-                                <div class="label_donnee">Description de la phase</div>
-                                <div class="donnee"><%= phase.description_phase %></div>
-                            </div>
-                        </div>
-                        <div class="display_donnee">
-                            <div>
-                                <div class="label_donnee">Description de la mission des intervenants</div>
-                                <div class="donnee"><%= phase.description_mission_intervenant %></div>
-                            </div>
-                        </div>
 
-                        <div class="h3"><%= link_to "Gérer la phase", junior_etude_phase_path(phase.etude.junior, phase.etude, phase) %></div>
+                            <div class="h3"><%= link_to "Gérer la phase", junior_etude_phase_path(phase.etude.junior, phase.etude, phase) %></div>
+                        </div>
+                    </div>
+                </div>
+            <% when "DocumentEtude"%>
+                <% doc_etude = etape[:etape] %>
+                <div class="mise_en_page2">
+                    <% case doc_etude.validite; when "invalide" then couldocphase = "border_rouge"; when "valide" then couldocphase = "border_vert"; when nil then couldocphase = "border_jaune"; end %>
+                    <div class="part <%=couldocphase%> reductible">
+                        <div class="titre_reducteur">
+                            <h2><%= doc_etude.ref_doc%> - <%= doc_etude.nom%></h2>
+                            <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>
+                            <div class="i_developpe"><i class="fas fa-angle-down fa-2x"></i></div>
+                        </div>
+                        <div class="content_reducteur">
+                            <%if doc_etude.document.url%><%= link_to doc_etude.document.url, target: :_blank do %> <div style='color: var(--bleu-hex)'>Voir le document <i class="fas fa-eye"></i></div><% end %><% end %>
+                            <div class="modal-button3 modal-button" id="edit_doc_etude_<%= doc_etude.id %>">Modifier le document</div>
+                        </div>
                     </div>
                 </div>
             <% end %>
-        </div>
+        <% end %>
     </div>
   </div>
 </div>
@@ -399,9 +419,71 @@
                     <div class="btn1"><%= link_to "Nouvelle Phase", new_junior_etude_phase_path(@junior, @etude, @new_phase) %></div>
                 </div>
                 <div class="buttons_line">
-                    <div class="btn1">Nouveau document d'étude</div>
+                    <div class="btn1 modal-button" id="add_doc_etude">Nouveau document d'étude</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<% # ==========================================================================================================================%>
+<% # Ajouter document phase %>
+<div class="hex_modal" id="add_doc_etude">
+    <div class="background">
+        <div class="header">
+            <div class="modal-close" id="add_doc_etude">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="content">
+            <%= simple_form_for [@junior, @etude, @phase, DocumentEtude.new] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <div class="input">
+                        <%= f.hidden_field :etude_id, value: @etude.id %>
+                        <%= f.input :nom, required: true, label: "Nom du document", collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "etude"), :label_method => lambda { |doc| "#{doc.nom}" }, value_method: :nom %>
+                        <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
+                    </div>
+                    <div class="input">
+                        <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
+                    </div>
+                    <div class="button">
+                        <%= f.button :submit, "Ajouter un document" %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<% # Modifier document phase %>
+<% @document_etudes.each do |doc_etude| %>
+    <div class="hex_modal" id="edit_doc_etude_<%= doc_etude.id %>">
+        <div class="background">
+            <div class="header">
+                <div class="modal-close" id="edit_doc_etude_<%= doc_etude.id %>">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="content">
+                <%= simple_form_for [@junior, @etude, @phase, doc_etude] do |f| %>
+                    <%= f.error_notification %>
+                    <div class="formulaire">
+                        <div class="input">
+                            <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
+                            <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
+                        </div>
+                        <div class="input">
+                            <%= f.input :validite, label: "Validité du document", collection: [["Document valide", "valide"], ["Document invalide", "invalide"]] %>
+                            <%= f.input :document, as: :file, label: 'Document signé :' %>
+                        </div>
+                        <div class="button">
+                            <%= f.button :submit, "Ajouter un document" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+<% end %>
