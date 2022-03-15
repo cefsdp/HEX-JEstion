@@ -1,4 +1,4 @@
-<h1><%= @etude.ref_etude %><%= @etude.client.nil? ? "" : " - " + @etude.client.entreprise %><%= " - " + @phase.nom %></h1>
+<h1><%= @etude.ref_etude %><%= @etude.client.nil? ? "" : " - " + @etude.client.entreprise %><%= " - " + @phase.nom + " - " %><%= @phase.statut.nil? ? "En cours" : @phase.statut %></h1>
 
 <div class="menu">
   <div class="tabs">
@@ -78,6 +78,36 @@
         
 
         <div class="h3"><%= link_to "Modifier les informations de la phase", edit_junior_etude_phase_path(@phase.etude.junior, @phase.etude, @phase) %></div>
+        <div class="inline_list3">
+            <%= simple_form_for [@junior, @etude, @phase] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :statut, value: "Terminée" %>
+                    <div class="button">
+                        <%= f.button :submit, "Phase Terminée", class: "vert" %>
+                    </div>
+                </div>
+            <% end %>
+            <%= simple_form_for [@junior, @etude, @phase] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :statut, value: "En cours" %>
+                    <div class="button">
+                        <%= f.button :submit, "Phase En Cours", class: "jaune" %>
+                    </div>
+                </div>
+            <% end %>
+            <%= simple_form_for [@junior, @etude, @phase] do |f| %>
+                <%= f.error_notification %>
+                <div class="formulaire">
+                    <%= f.hidden_field :statut, value: "Stand-by" %>
+                    <div class="button">
+                        <%= f.button :submit, "Phase en Stand-by", class: "rouge" %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    
     </div>      
 
     <% # Menu 2 %>
