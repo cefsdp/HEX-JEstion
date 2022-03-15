@@ -209,8 +209,9 @@
             <% case etape[:etape].class.to_s%>
             <% when "Phase"%>
                 <% phase = etape[:etape] %>
-                <div class="mise_en_page1">
-                    <div class="part reductible">
+                <div class="mise_en_page2">
+                    <% case phase.statut; when "En cours" then coulphase = "border_jaune"; when "Terminée" then coulphase = "border_vert"; when nil then coulphase = "border_jaune"; when "Stand-by" then coulphase = "border_rouge"; end %>
+                    <div class="part <%=coulphase%> reductible">
                         <div class="titre_reducteur">
                             <h2><%= phase.nom %></h2>
                             <div class="i_reduit"><i class="fas fa-angle-right fa-2x"></i></div>

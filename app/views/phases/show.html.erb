@@ -93,7 +93,7 @@
                 <div class="formulaire">
                     <%= f.hidden_field :statut, value: "En cours" %>
                     <div class="button">
-                        <%= f.button :submit, "Phase En Cours" %>
+                        <%= f.button :submit, "Phase En Cours", class: "jaune" %>
                     </div>
                 </div>
             <% end %>
@@ -102,7 +102,7 @@
                 <div class="formulaire">
                     <%= f.hidden_field :statut, value: "Stand-by" %>
                     <div class="button">
-                        <%= f.button :submit, "Phase en Stand-by", class: "jaune" %>
+                        <%= f.button :submit, "Phase en Stand-by", class: "rouge" %>
                     </div>
                 </div>
             <% end %>
