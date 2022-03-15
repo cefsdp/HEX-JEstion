@@ -7,4 +7,5 @@ class Etude < ApplicationRecord
   belongs_to :junior
 
   has_many :phases, dependent: :destroy
+  has_many :document_etudes, dependent: :destroy
 end

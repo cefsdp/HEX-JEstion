@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_03_195816) do
+ActiveRecord::Schema.define(version: 2022_03_06_123518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,7 +98,30 @@ ActiveRecord::Schema.define(version: 2022_03_03_195816) do
     t.index ["junior_configuration_id"], name: "index_config_doc_adherents_on_junior_configuration_id"
   end
 
+  create_table "config_doc_etudes", force: :cascade do |t|
+    t.string "nom"
+    t.boolean "obligatoire"
+    t.boolean "interne", default: true
+    t.boolean "archive"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "junior_configuration_id", null: false
+    t.string "type_doc"
+    t.index ["junior_configuration_id"], name: "index_config_doc_etudes_on_junior_configuration_id"
+  end
+
   create_table "document_adherents", force: :cascade do |t|
+    t.bigint "adherent_id", null: false
+    t.string "nom"
+    t.string "ref_doc"
+    t.string "validite"
+    t.date "date_signature"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
+  end
+
+  create_table "document_adhesions", force: :cascade do |t|
     t.bigint "adherent_id", null: false
     t.string "nom"
     t.boolean "obligatoire"
@@ -109,7 +132,51 @@ ActiveRecord::Schema.define(version: 2022_03_03_195816) do
     t.date "date_debut_validite"
     t.string "raison_invalid"
     t.date "date_fin_validite"
-    t.index ["adherent_id"], name: "index_document_adherents_on_adherent_id"
+    t.index ["adherent_id"], name: "index_document_adhesions_on_adherent_id"
+  end
+
+  create_table "document_etudes", force: :cascade do |t|
+    t.bigint "etude_id", null: false
+    t.string "ref_doc"
+    t.string "validite"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "date_signature"
+    t.string "nom"
+    t.index ["etude_id"], name: "index_document_etudes_on_etude_id"
+  end
+
+  create_table "document_intervenants", force: :cascade do |t|
+    t.string "ref_doc"
+    t.string "validite"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "intervenant_id", null: false
+    t.date "date_signature"
+    t.string "nom"
+    t.index ["intervenant_id"], name: "index_document_intervenants_on_intervenant_id"
+  end
+
+  create_table "document_phases", force: :cascade do |t|
+    t.string "ref_doc"
+    t.string "validite"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "phase_id", null: false
+    t.date "date_signature"
+    t.string "nom"
+    t.index ["phase_id"], name: "index_document_phases_on_phase_id"
+  end
+
+  create_table "document_postulants", force: :cascade do |t|
+    t.string "ref_doc"
+    t.string "validite"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "postulant_id", null: false
+    t.date "date_signature"
+    t.string "nom"
+    t.index ["postulant_id"], name: "index_document_postulants_on_postulant_id"
   end
 
   create_table "etudes", force: :cascade do |t|
@@ -135,12 +202,25 @@ ActiveRecord::Schema.define(version: 2022_03_03_195816) do
     t.index ["prestation_id"], name: "index_etudes_on_prestation_id"
   end
 
+  create_table "intervenants", force: :cascade do |t|
+    t.bigint "phase_id", null: false
+    t.string "ref_rm"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["phase_id"], name: "index_intervenants_on_phase_id"
+    t.index ["user_id"], name: "index_intervenants_on_user_id"
+  end
+
   create_table "junior_configurations", force: :cascade do |t|
     t.bigint "junior_id", null: false
     t.text "niveau_etude", default: [], array: true
     t.text "specialisation_etude", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "types_entreprises", default: [], array: true
+    t.string "provenances_clients", default: [], array: true
+    t.string "methodes_premier_contact", default: [], array: true
     t.index ["junior_id"], name: "index_junior_configurations_on_junior_id"
   end
 
@@ -295,13 +375,21 @@ ActiveRecord::Schema.define(version: 2022_03_03_195816) do
   add_foreign_key "adherents", "users"
   add_foreign_key "clients", "juniors"
   add_foreign_key "config_doc_adherents", "junior_configurations"
+  add_foreign_key "config_doc_etudes", "junior_configurations"
   add_foreign_key "document_adherents", "adherents"
+  add_foreign_key "document_adhesions", "adherents"
+  add_foreign_key "document_etudes", "etudes"
+  add_foreign_key "document_intervenants", "intervenants"
+  add_foreign_key "document_phases", "phases"
+  add_foreign_key "document_postulants", "postulants"
   add_foreign_key "etudes", "clients"
   add_foreign_key "etudes", "juniors"
   add_foreign_key "etudes", "prestations"
   add_foreign_key "etudes", "users", column: "charge_etude_id"
   add_foreign_key "etudes", "users", column: "charge_qualite_id"
   add_foreign_key "etudes", "users", column: "charge_rh_id"
+  add_foreign_key "intervenants", "phases"
+  add_foreign_key "intervenants", "users"
   add_foreign_key "junior_configurations", "juniors"
   add_foreign_key "mandat_requests", "membres"
   add_foreign_key "mandat_requests", "poles"

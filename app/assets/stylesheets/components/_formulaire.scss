@@ -65,8 +65,9 @@
           gap: 1%;
           .array_item_input {
             margin-top: 1%;
-            width: 19%;
+            width: auto;
             display: flex;
+            flex-grow: 1;
             flex-direction: row;
             .array_item_delete_btn {
               position: relative;

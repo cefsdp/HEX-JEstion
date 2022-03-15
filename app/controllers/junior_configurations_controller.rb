@@ -6,6 +6,8 @@ class JuniorConfigurationsController < ApplicationController
     @configuration = JuniorConfiguration.find(params[:id])
     @newConfigDocAdherent = ConfigDocAdherent.new
     @configDocAdherents = @configuration.config_doc_adherents.where(archive: false).order(id: 'ASC')
+    @newConfigDocEtude = ConfigDocEtude.new
+    @configDocEtudes = @configuration.config_doc_etudes.where(archive: false).order(type_doc: 'ASC')
     @pole = Pole.new
     @poles = Pole.where(junior_configuration: @configuration)
     @poste = Poste.new
@@ -43,6 +45,7 @@ class JuniorConfigurationsController < ApplicationController
   private
 
   def configuration_params
-    params.require(:junior_configuration).permit(:id, niveau_etude: [], specialisation_etude: [])
+    params.require(:junior_configuration).permit(:id, niveau_etude: [], specialisation_etude: [],
+                                                      types_entreprises: [], provenances_clients: [], methodes_premier_contact: [])
   end
 end

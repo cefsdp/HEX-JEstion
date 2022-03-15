@@ -35,6 +35,20 @@ a {
   }
 }
 
+.lien_jaune {
+  a,
+  div {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--jaune-hex);
+    border-bottom: none !important;
+  }
+  :hover {
+    color: var(--hover-blue);
+    text-decoration: none;
+  }
+}
+
 h1 {
   color: var(--noir);
   font-size: 24px;
@@ -71,6 +85,16 @@ h2 {
   }
 }
 
+.h4 {
+  color: var(--jaune-hex);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  a {
+    color: var(--bleu-hex);
+  }
+}
+
 .margin_top_3 {
   margin-top: 3vh;
 }
@@ -86,4 +110,16 @@ h2 {
 
 .h_align_self {
   align-self: center;
+}
+
+.txt_vert {
+  color: var(--vert);
+}
+
+.txt_rouge {
+  color: var(--rouge);
+}
+
+.txt_bleu {
+  color: var(--bleu-hex);
 }
