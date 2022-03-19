@@ -158,21 +158,14 @@
                     <div class="modal-button inline_list_item" id="edit_poste_<%= poste.id %>"><%= poste.nom %></div>
                 <% end %>
             </div>
-        <h2>Permission</h2>
-            <div class="inline_list2">
-                <div class="modal-button inline_list_item bleu" id="add_permission">Ajouter une classe</div>
-                <% @permissions.each_with_index do |permission, index| %>
-                    <div class="modal-button inline_list_item" id="edit_permission_<%= permission.id %>"><%= permission.nom %></div>
-                <% end %>
-            </div>
     </div>
 
     <div class="content">
         <h2>Permission</h2>
         <div class="inline_list2">
-            <div class="modal-button inline_list_item bleu" id="add_permission">Ajouter une classe</div>
+            <div class="h3"><%= link_to new_junior_junior_configuration_permission_path(@junior, @configuration) do %>Ajouter une classe d'autorisation<% end %></div>
             <% @permissions.each_with_index do |permission, index| %>
-                <div class="modal-button inline_list_item" id="edit_permission_<%= permission.id %>"><%= permission.nom %></div>
+                <div class="inline_list_item"><%= link_to edit_junior_junior_configuration_permission_path(@junior, @configuration, permission) do %><%= permission.nom %><% end %></div>
             <% end %>
         </div>
     </div>

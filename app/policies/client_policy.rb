@@ -6,7 +6,25 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def show?
-    create?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.show_client
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 
   def new?
@@ -14,29 +32,46 @@ class ClientPolicy < ApplicationPolicy
   end
 
   def create?
-    if user.admin == true
-      # Admin JEstion
+    if @user.admin
+      # Super Admin
       return true
-    elsif user.membre.nil?
-      if user == adherent.user
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.create_client
+          end
+        end
+      else
         # Adherent
-        return true
-      else
-        # Autre Junior
         return false
-      end
-    elsif user.membre
-      if user.membre.admin?
-        # Admin JE
-        return true
-      else
-        # Membre JE
-        return true
       end
     end
   end
 
   def update?
-    create?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.update_client
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 end

@@ -1,6 +1,13 @@
 class PermissionsController < ApplicationController
   before_action :authenticate_user!
 
+  def new
+    @permission = Permission.new()
+    @junior_configuration = JuniorConfiguration.find(junior_config_id_params.to_i)
+    @junior = Junior.find(junior_id_params.to_i)
+    authorize @permission
+  end
+  
   def create
     @permission = Permission.new(permission_params)
     @permission.junior_configuration_id = junior_config_id_params.to_i
@@ -14,8 +21,15 @@ class PermissionsController < ApplicationController
     end
   end
 
+  def edit
+    @permission = Permission.find(permission_id_params.to_i)
+    @junior_configuration = JuniorConfiguration.find(junior_config_id_params.to_i)
+    @junior = Junior.find(junior_id_params.to_i)
+    authorize @permission
+  end
+
   def update
-    @permission = Permission.find(permission_params[:id])
+    @permission = Permission.find(permission_id_params.to_i)
     authorize @permission
     if @permission.update(permission_params)
       flash[:success] = "Object was successfully updated"
@@ -30,7 +44,11 @@ class PermissionsController < ApplicationController
 
   def permission_params
     defaults = { archive: false }
-    params.require(:permission).permit(:id, :nom)
+    params.require(:permission).permit!
+  end
+
+  def permission_id_params
+    params.require(:id)
   end
 
   def junior_id_params

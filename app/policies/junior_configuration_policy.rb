@@ -6,32 +6,50 @@ class JuniorConfigurationPolicy < ApplicationPolicy
   end
 
   def edit?
-    if user.admin == true
-      # Admin JEstion
+    update?
+  end
+
+  def update?
+    if @user.admin
+      # Super Admin
       return true
-    elsif user.membre.nil?
-      if user == adherent.user
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.update_junior_config
+          end
+        end
+      else
         # Adherent
-        return false
-      else
-        # Autre Junior
-        return false
-      end
-    elsif user.membre
-      if user.membre.admin?
-        # Admin JE
-        return true
-      else
         return false
       end
     end
   end
 
-  def update?
-    edit?
-  end
-
   def archives?
-    edit?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.archive_junior_config
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 end

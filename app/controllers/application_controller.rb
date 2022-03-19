@@ -1,3 +1,12 @@
+class AuthorizationContext
+  attr_reader :user, :junior
+
+  def initialize(user, junior)
+    @user = user
+    @junior = Junior.find(junior.to_i)
+  end
+end
+
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_user
@@ -15,6 +24,10 @@ class ApplicationController < ActionController::Base
   #   redirect_to(root_path)
   # end
 
+  def pundit_user
+    AuthorizationContext.new(current_user, current_junior)
+  end
+
   private
 
   def skip_pundit?
@@ -23,5 +36,9 @@ class ApplicationController < ActionController::Base
 
   def set_user
     current_user ? cookies[:token] = current_user.authentication_token : cookies[:token] = 'guest'
+  end
+
+  def current_junior
+    current_junior = params[:junior_id] || params[:id] || nil
   end
 end

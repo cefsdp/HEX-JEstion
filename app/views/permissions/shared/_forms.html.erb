@@ -1,0 +1,96 @@
+<%= simple_form_for [@junior, @junior_configuration, @permission] do |f| %>
+    <%= f.error_notification %>
+    <div class="formulaire">
+        <div class="input">
+            <%= f.input :nom, autofocus: true, required: true, label: "Nom de la classe de permission" %>
+        </div>
+        <div class="input">
+            <%= f.input :show_adherent, autofocus: true, required: true, label: "Voir le profil des adherents", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :edit_adherent, autofocus: true, required: true, label: "Modifier le profil des adherents", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :show_client, autofocus: true, required: true, label: "Voir le profil d'un client", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :create_client, autofocus: true, required: true, label: "Créer un profil client", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_client, autofocus: true, required: true, label: "Modifier un profil client", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :show_etude, autofocus: true, required: true, label: "Voir une étude", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_etude, autofocus: true, required: true, label: "Créer une étude", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :create_etude, autofocus: true, required: true, label: "Modifier une étude", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_intervenant, autofocus: true, required: true, label: "Créer un intervenant", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_intervenant, autofocus: true, required: true, label: "Modifier un intervenant", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :update_junior, autofocus: true, required: true, label: "Modifier la junior", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :update_mandat_membre, autofocus: true, required: true, label: "Modifier le mandat d'un membre", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_mandat_request, autofocus: true, required: true, label: "Accepter/Modifier une demande de mandat", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :destroy_mandat_request, autofocus: true, required: true, label: "Refuser une demande de mandat", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :index_membre, autofocus: true, required: true, label: "Voir la liste des membres", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :show_membre_request, autofocus: true, required: true, label: "Voir les demandes de membres", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_membre_request, autofocus: true, required: true, label: "Accepter les demandes de membres", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :destroy_membre_request, autofocus: true, required: true, label: "Refuser les demandes de membres", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_pole, autofocus: true, required: true, label: "Créer un pôle", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_pole, autofocus: true, required: true, label: "Modifier un pôle", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_poste, autofocus: true, required: true, label: "Créer un poste", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_poste, autofocus: true, required: true, label: "Modifier un poste", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_permission, autofocus: true, required: true, label: "Créer une permission", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_permission, autofocus: true, required: true, label: "Modifier une permission", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_mandat, autofocus: true, required: true, label: "Créer un mandat de membre", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_mandat, autofocus: true, required: true, label: "Modifier un mandat de membre", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_prestation, autofocus: true, required: true, label: "Créer une prestation", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_prestation, autofocus: true, required: true, label: "Modifier une prestation", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_selection_intervenant, autofocus: true, required: true, label: "Créer une campagne de recrutement", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_selection_intervenant, autofocus: true, required: true, label: "Modifier une campagne de recrutement", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_postulant, autofocus: true, required: true, label: "Accepter/Modifier un postulant", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_config_doc_adherent, autofocus: true, required: true, label: "Créer un doc type d'adhesion", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_config_doc_adherent, autofocus: true, required: true, label: "Modifier un doc type d'adhesion", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :create_config_doc_etude, autofocus: true, required: true, label: "Créer un doc type d'étude", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_config_doc_etude, autofocus: true, required: true, label: "Modifier un doc type d'étude", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_document_adhesion, autofocus: true, required: true, label: "Créer un document d'adhésion", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_document_adhesion, autofocus: true, required: true, label: "Modifier un document d'adhésion", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_document_adherent, autofocus: true, required: true, label: "Créer un document d'adhérent", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_document_adherent, autofocus: true, required: true, label: "Modifier un document d'adhérent", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_document_postulant, autofocus: true, required: true, label: "Créer un document de postulant", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_document_postulant, autofocus: true, required: true, label: "Modifier un document de postulant", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :create_document_intervenant, autofocus: true, required: true, label: "Créer un document d'intervenant", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_document_intervenant, autofocus: true, required: true, label: "Modifier un document d'intervenant", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+        <div class="input">
+            <%= f.input :create_document_etude, autofocus: true, required: true, label: "Créer un document d'étude", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_document_etude, autofocus: true, required: true, label: "Modifier un document d'étude", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :create_document_phase, autofocus: true, required: true, label: "Créer un document de phase", as: :boolean, checked_value: true, unchecked_value: false %>
+            <%= f.input :update_document_phase, autofocus: true, required: true, label: "Modifier un document de phase", as: :boolean, checked_value: true, unchecked_value: false %>
+        </div>
+
+    </div>
+
+    <div class="button">
+        <%= f.button :submit, "Enregistrer la phase" %>
+    </div>
+<% end %>

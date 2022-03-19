@@ -6,7 +6,27 @@ class EtudePolicy < ApplicationPolicy
   end
 
   def show?
-    create?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            if permission.show_etude
+              return true
+            end
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 
   def new?
@@ -14,33 +34,54 @@ class EtudePolicy < ApplicationPolicy
   end
 
   def create?
-    if user.admin == true
-      # Admin JEstion
+    if @user.admin
+      # Super Admin
       return true
-    elsif user.membre.nil?
-      if user == adherent.user
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            if permission.create_etude
+              return true
+            end
+          end
+        end
+      else
         # Adherent
-        return true
-      else
-        # Autre Junior
         return false
-      end
-    elsif user.membre
-      if user.membre.admin?
-        # Admin JE
-        return true
-      else
-        # Membre JE
-        return true
       end
     end
   end
 
   def update?
-    create?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            if permission.update_etude
+              return true
+            end
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 
   def edit?
-    create?
+    update?
   end
 end

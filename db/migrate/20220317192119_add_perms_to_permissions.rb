@@ -1,0 +1,56 @@
+class AddPermsToPermissions < ActiveRecord::Migration[6.1]
+  def change
+    add_column :permissions, :show_adherent, :boolean
+    add_column :permissions, :edit_adherent, :boolean
+    add_column :permissions, :show_client, :boolean
+    add_column :permissions, :create_client, :boolean
+    add_column :permissions, :update_client, :boolean
+    add_column :permissions, :show_etude, :boolean
+    add_column :permissions, :update_etude, :boolean
+    add_column :permissions, :create_etude, :boolean
+    add_column :permissions, :create_intervenant, :boolean
+    add_column :permissions, :update_intervenant, :boolean
+    add_column :permissions, :show_junior, :boolean
+    add_column :permissions, :create_junior, :boolean
+    add_column :permissions, :update_junior, :boolean
+    add_column :permissions, :update_mandat_membre, :boolean
+    add_column :permissions, :update_mandat_request, :boolean
+    add_column :permissions, :destroy_mandat_request, :boolean
+    add_column :permissions, :index_membre, :boolean
+    add_column :permissions, :show_membre_request, :boolean
+    add_column :permissions, :update_membre_request, :boolean
+    add_column :permissions, :destroy_membre_request, :boolean
+    add_column :permissions, :create_pole, :boolean
+    add_column :permissions, :update_pole, :boolean
+    add_column :permissions, :create_poste, :boolean
+    add_column :permissions, :update_poste, :boolean
+    add_column :permissions, :update_postulant, :boolean
+    add_column :permissions, :create_prestation, :boolean
+    add_column :permissions, :update_prestation, :boolean
+    add_column :permissions, :create_selection_intervenant, :boolean
+    add_column :permissions, :update_selection_intervenant, :boolean
+    add_column :permissions, :create_config_doc_adherent, :boolean
+    add_column :permissions, :update_config_doc_adherent, :boolean
+    add_column :permissions, :create_config_doc_etude, :boolean
+    add_column :permissions, :update_config_doc_etude, :boolean
+    add_column :permissions, :create_document_adherent, :boolean
+    add_column :permissions, :update_document_adherent, :boolean
+    add_column :permissions, :create_document_adhesion, :boolean
+    add_column :permissions, :update_document_adhesion, :boolean
+    add_column :permissions, :create_document_etude, :boolean
+    add_column :permissions, :update_document_etude, :boolean
+    add_column :permissions, :create_document_intervenant, :boolean
+    add_column :permissions, :update_document_intervenant, :boolean
+    add_column :permissions, :create_document_phase, :boolean
+    add_column :permissions, :update_document_phase, :boolean
+    add_column :permissions, :create_document_postulant, :boolean
+    add_column :permissions, :update_document_postulant, :boolean
+    add_column :permissions, :archive_junior_config, :boolean
+    add_column :permissions, :update_junior_config, :boolean
+    add_column :permissions, :create_mandat, :boolean
+    add_column :permissions, :update_mandat, :boolean
+    add_column :permissions, :create_permission, :boolean
+    add_column :permissions, :update_permission, :boolean
+    
+  end
+end

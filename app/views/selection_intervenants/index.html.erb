@@ -37,7 +37,7 @@
                 <div class="colone">
                   <div class="label">Où ?</div>
                   <div class="courttext">
-                    <%= "A ajouter" %>
+                    <%= selection_actif.phase.lieux_mission.nil? ? "N/A" : selection_actif.phase.lieux_mission  %>
                   </div>
                 </div>
                 <div class="colone">

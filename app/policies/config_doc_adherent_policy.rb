@@ -25,29 +25,46 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
   end
 
   def create?
-    if user.admin == true
-      # Admin JEstion
+    if @user.admin
+      # Super Admin
       return true
-    elsif user.membre.nil?
-      if user == adherent.user
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.create_config_doc_adherent
+          end
+        end
+      else
         # Adherent
-        return false
-      else
-        # Autre Junior
-        return false
-      end
-    elsif user.membre
-      if user.membre.admin?
-        # Admin JE
-        return true
-      else
-        # Membre JE
         return false
       end
     end
   end
 
   def update?
-    create?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.update_config_doc_adherent
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 end

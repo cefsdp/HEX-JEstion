@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_one :membre, through: :membre_request
   has_many :mandat_requests, through: :membre
   has_many :mandats, through: :mandat_requests
+  has_many :permissions, through: :mandats
   has_one :adherent, dependent: :destroy
   has_one :document_adhesion, through: :adherent
   has_many :postulants, dependent: :destroy

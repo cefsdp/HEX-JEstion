@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_15_202807) do
+ActiveRecord::Schema.define(version: 2022_03_17_192119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,57 @@ ActiveRecord::Schema.define(version: 2022_03_15_202807) do
     t.string "nom"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "show_adherent"
+    t.boolean "edit_adherent"
+    t.boolean "show_client"
+    t.boolean "create_client"
+    t.boolean "update_client"
+    t.boolean "show_etude"
+    t.boolean "update_etude"
+    t.boolean "create_etude"
+    t.boolean "create_intervenant"
+    t.boolean "update_intervenant"
+    t.boolean "show_junior"
+    t.boolean "create_junior"
+    t.boolean "update_junior"
+    t.boolean "update_mandat_membre"
+    t.boolean "update_mandat_request"
+    t.boolean "destroy_mandat_request"
+    t.boolean "index_membre"
+    t.boolean "show_membre_request"
+    t.boolean "update_membre_request"
+    t.boolean "destroy_membre_request"
+    t.boolean "create_pole"
+    t.boolean "update_pole"
+    t.boolean "create_poste"
+    t.boolean "update_poste"
+    t.boolean "update_postulant"
+    t.boolean "create_prestation"
+    t.boolean "update_prestation"
+    t.boolean "create_selection_intervenant"
+    t.boolean "update_selection_intervenant"
+    t.boolean "create_config_doc_adherent"
+    t.boolean "update_config_doc_adherent"
+    t.boolean "create_config_doc_etude"
+    t.boolean "update_config_doc_etude"
+    t.boolean "create_document_adherent"
+    t.boolean "update_document_adherent"
+    t.boolean "create_document_adhesion"
+    t.boolean "update_document_adhesion"
+    t.boolean "create_document_etude"
+    t.boolean "update_document_etude"
+    t.boolean "create_document_intervenant"
+    t.boolean "update_document_intervenant"
+    t.boolean "create_document_phase"
+    t.boolean "update_document_phase"
+    t.boolean "create_document_postulant"
+    t.boolean "update_document_postulant"
+    t.boolean "archive_junior_config"
+    t.boolean "update_junior_config"
+    t.boolean "create_mandat"
+    t.boolean "update_mandat"
+    t.boolean "create_permission"
+    t.boolean "update_permission"
     t.index ["junior_configuration_id"], name: "index_permissions_on_junior_configuration_id"
   end
 
