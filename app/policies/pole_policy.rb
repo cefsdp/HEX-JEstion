@@ -9,7 +9,7 @@ class PolePolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -17,9 +17,7 @@ class PolePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            if permission.create_pole
-              return true
-            end
+            return true if permission.create_pole
           end
         end
       else
@@ -33,7 +31,7 @@ class PolePolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -41,9 +39,7 @@ class PolePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            if permission.update_pole
-              return true
-            end
+            return true if permission.update_pole
           end
         end
       else

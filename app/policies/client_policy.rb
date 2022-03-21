@@ -9,7 +9,7 @@ class ClientPolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -35,7 +35,7 @@ class ClientPolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -57,7 +57,7 @@ class ClientPolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin

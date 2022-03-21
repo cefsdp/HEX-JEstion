@@ -9,7 +9,7 @@ class EtudePolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -17,9 +17,7 @@ class EtudePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            if permission.show_etude
-              return true
-            end
+            return true if permission.show_etude
           end
         end
       else
@@ -37,7 +35,7 @@ class EtudePolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -45,9 +43,7 @@ class EtudePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            if permission.create_etude
-              return true
-            end
+            return true if permission.create_etude
           end
         end
       else
@@ -61,7 +57,7 @@ class EtudePolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -69,9 +65,7 @@ class EtudePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            if permission.update_etude
-              return true
-            end
+            return true if permission.update_etude
           end
         end
       else

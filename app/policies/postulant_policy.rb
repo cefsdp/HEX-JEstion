@@ -9,14 +9,14 @@ class PostulantPolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
           return true
         else
           # Membre Junior
-          @user.permissions.each do |permission|
+          @user.permissions.each do |_permission|
             return true
           end
         end
@@ -31,7 +31,7 @@ class PostulantPolicy < ApplicationPolicy
     if @user.admin
       # Super Admin
       return true
-    elsif @user.junior_id == @junior.to_i
+    elsif @user.junior_id == @junior.id.to_i
       if @user.membre
         if @user.membre.admin
           # Junior Admin
@@ -39,9 +39,7 @@ class PostulantPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            if permission.update_postulant
-              return true
-            end
+            return true if permission.update_postulant
           end
         end
       else
