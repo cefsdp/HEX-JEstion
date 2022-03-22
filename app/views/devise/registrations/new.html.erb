@@ -1,45 +1,36 @@
-<div class="login_bg">
-  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= f.error_notification %>
-    <div class="mainLoginDiv">
-      <div class="loginDiv">
-        <div class="login">
-          <div class="titre">
-            <div class="logoDiv">
-              <%= render 'components/logo' %>
-            </div>
-            <div class="Text">
-              CREER UN COMPTE
-            </div>
+<div class="session_background">
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="content_div">
+      <div class="content_background">
+        <div class="content_main">
+          <div class="main_title">
+            <div class="title_line">Bienvenue</div>
+            <div class="title_line">dans l'équipe !</div>
           </div>
-          <div class="form">
-            <div class="form_line">
-              <div class="icone"><i class="fas fa-user"></i></div>
+          <div class="main_form">
+            <div class="form_input_line">
               <%= f.input :email,
                           required: true,
                           label: false,
                           autofocus: true,
-                          placeholder: "jestion@hex-agency.fr",
+                          placeholder: "E-mail",
                           input_html: { autocomplete: "email", class: 'form_input' } %>
             </div>
-            <div class="form_line">
-              <div class="icone"><i class="fas fa-key"></i></div>
+            <div class="form_input_line">
               <%= f.input :password,
                           required: true,
-                          label: false, 
-                          hint: ("Mot de passe - #{@minimum_password_length} characters minimum" if @minimum_password_length),
+                          label: false,
+                          placeholder: "Mot de Passe",
                           input_html: { autocomplete: "new-password", class: 'form_input' }%>
             </div>
-            <div class="form_line">
-              <div class="icone"><i class="fas fa-key"></i></div>
+            <div class="form_input_line">
               <%= f.input :password_confirmation,
                           required: true,
                           label: false, 
-                          hint: ("Confirmation mot de passe"),
+                          placeholder: "Confirmation Mot de Passe",
                           input_html: { autocomplete: "new-password", class: 'form_input' }%>
             </div>
-            <div class="form_line">
-              <div class="icone"><i class="fas fa-building"></i></div>
+            <div class="form_input_line">
               <%= f.input :junior,
                           required: true,
                           label: false, 
@@ -47,24 +38,21 @@
                           input_html: { class: 'form_input' } %>
             </div>
             <div class="form_btn">
-              <%= f.button :submit, "Sign up" %>
+              <%= f.button :button do %>
+                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                Inscription
+              <% end %>
             </div>
           </div>
-          <div class="links">
-            <div class="link">
-              <%- if controller_name != 'sessions' %>
-                <%= link_to "Log in", new_session_path(resource_name) %><br />
+        </div>
+        <div class="content_footer">
+          <div class="footer_links">
+            <%- if controller_name != 'sessions' %>
+                <%= link_to new_session_path(resource_name) do%>Déjà un compte ? Se connecter <span class="emoji">&#128075</span><%end%>
               <% end %>
-              <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-                <%= link_to "Inscription", new_registration_path(resource_name) %>
-              <% end %>
-            </div>
-            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-              <div class="separator"> | </div>
-              <div class="link">
-                  <%= link_to "Mot de passe oublié ?", new_password_path(resource_name) %>
-              </div>
-            <% end %>
+          </div>
+          <div class="footer_logo">
+            <%= image_tag 'HEX_BLANC', style: 'height:10vh; width: auto;'%>
           </div>
         </div>
       </div>

@@ -1,18 +1,43 @@
-<h2>Forgot your password?</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+<div class="session_background">
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="content_div">
+      <div class="content_background">
+        <div class="content_main">
+          <div class="space_bottom_2p main_title">
+            <div class="title_line">Un oubli ?</div>
+            <div class="title_line">Ça arrive !</div>
+          </div>
+          <div class="main_form">
+            <div class="space_bottom_2p form_input_line">
+              <%= f.input :email,
+                          required: false,
+                          label: false,
+                          autofocus: true,
+                          placeholder: "E-mail",
+                          input_html: { autocomplete: "email", class: 'form_input' } %>
+            </div>
+            <div class="form_btn">
+              <%= f.button :button do %>
+                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                Reçevoir l'email de récupération  
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="content_footer">
+          <div class="footer_links">
+            <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+              <%= link_to new_registration_path(resource_name) do%>Inscription <span class="emoji">&#128075</span><%end%>
+            <% end %>
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <%= link_to new_password_path(resource_name) do%>Mot de passe oublié <span class="emoji">&#129300</span><%end%>
+            <% end %>
+          </div>
+          <div class="footer_logo">
+            <%= image_tag 'HEX_BLANC', style: 'height:10vh; width: auto;'%>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
