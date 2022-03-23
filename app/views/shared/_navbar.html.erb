@@ -3,30 +3,29 @@
     <%= image_tag 'HEX_BLEU', style: 'height:4vh; width: auto;'%>
   </div>
   <div class='navbar_links'>
-    <div class='active nav_link'>
-      <%= link_to junior_selection_intervenants_path(current_user.junior_id) do %>Nouvelles Missions<% end %>
-      <div class="active inner">&nbsp;</div>
+    <div class='<%= current_page?(junior_path(current_user.junior)) ? "active" : "" %> nav_link'>
+      <%= link_to junior_path(current_user.junior_id) do %>Accueil<% end %>
+      <div class="<%= current_page?(junior_path(current_user.junior)) ? "active" : "" %> inner">&nbsp;</div>
     </div>
-    <div class='nav_link'>
+    <div class='<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
       <%= link_to junior_selection_intervenants_path(current_user.junior_id) do %>Nouvelles Missions<% end %>
-      <div class="inner">&nbsp;</div>
+      <div class="<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
     </div>
   </div>
-  <div class='navbar_selector'>
-    <select name="profile" id="profil-selector">
-      <option value="adherent">Adherent</option>
-      <option value="membre">Membre</option>
-      <option value="admin">Admin</option>
-  </select>
-  </div>
-  <div class='navbar_profile'>
+  <div class='navbar_profile dropdown'>
     <div class="profile_name">Yuna Boudier</div>
-    <div class="profile_dropdown">
+    <div class="profile_dropdown dropbtn" id="profile">
       <div class="profile_avatar">
         <% if current_user.adherent.avatar.attached? %><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %> <% else %> <%= image_tag("logo_hex.png", class: 'avatar') %> <% end %>
       </div>
       <i class="fas fa-sort-down"></i>
     </div>
-    
+    <div class="drop_content" id="profile">
+      <div class='line'><%= link_to edit_user_registration_path do %>Mon Profil<% end %></div>
+      <div class="line"><%= link_to destroy_user_session_path, method: :delete do %>Déconnexion <% end %></div>
+
+    </div>
   </div>
 </div>
+
+<div id="background_overlay"></div>

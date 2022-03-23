@@ -27,9 +27,11 @@ import { initNavSelector } from "../components/nav_selector"
 import { initMenuSelector } from "../components/menu_selector"
 import { initArrayInput } from "../components/array_input"
 import { initHEXModal } from "../components/hex_modal"
+import { initHEXModal2 } from "../components/hex_modal2"
 import { initTableauHexSearchBar } from "../components/tableau_hex_search_bar"
 import { initReducteur } from "../components/reducteur"
 import { initBasicMultiple } from "../components/basic_multiple"
+import { initDropdown } from "../components/dropdown"
 
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
@@ -38,7 +40,9 @@ document.addEventListener('turbolinks:load', () => {
   initMenuSelector();
   initArrayInput();
   initHEXModal();
+  initHEXModal2();
   initTableauHexSearchBar();
   initReducteur();
   initBasicMultiple();
+  initDropdown();
 });

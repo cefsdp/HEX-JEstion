@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       resources :postulants, only: :create
     end
 
+    get '/mes_missions', to: 'selection_intervenants#mes_missions', as: 'mes_missions'
+
     resources :clients
     resources :adherents do
       resources :document_adherents

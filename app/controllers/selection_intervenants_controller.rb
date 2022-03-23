@@ -7,6 +7,11 @@ class SelectionIntervenantsController < ApplicationController
     @junior = Junior.find(junior_id_params.to_i)
   end
 
+  def mes_missions
+    @mes_missions = current_user.intervenants
+    @junior = Junior.find(junior_id_params.to_i)
+  end
+
   def create
     @junior = Junior.find(junior_id_params)
     @etude = Etude.find(etude_id_params)

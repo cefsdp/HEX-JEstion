@@ -1,99 +1,114 @@
-<div class="menu">
-  <div class="tabs">
-    <div class="tab active">Nouvelles missions</div>
-    <div class="tab">Mes missions</div>
-    <div class="tab">Missions Inactives</div>
+<div class="junior_title">
+  <div class="junior_logo">
+    <% if current_user.junior.junior_configuration.logo.attached? %><%= image_tag current_user.junior.junior_configuration.logo.url, class: 'logo' %> <% else %> <%= image_tag("logo_hex.png", class: 'logo') %> <% end %>
   </div>
-  <div class="contents">
-    <% # Menu 1 %>
-    <div class="content active">      
-      <% @selections_actifs.each do |selection_actif| %>
-        <% if selection_actif.postulants.find_by(user_id: current_user.id).nil? %>
-          <div class="cards_mission">
-            <div class="card">
-              <div class="ligne">
-                <div class="colone">
-                  <div class="label">Mission :</div>
-                  <div class="longtext">
-                    <%= selection_actif.phase.description_mission_intervenant %>
-                  </div>
-                </div>
-              </div>
-              <div class="ligne">
-                <div class="colone">
-                  <div class="label">Du :</div>
-                  <div class="courttext">
-                    <%= selection_actif.phase.date_debut.strftime("%d/%m/%Y") %>
-                  </div>
-                </div>
-                <div class="colone">
-                  <div class="label">Au :</div>
-                  <div class="courttext">
-                    <%= selection_actif.phase.date_fin.strftime("%d/%m/%Y") %>
-                  </div>
-                </div>
-              </div>
-              <div class="ligne">
-                <div class="colone">
-                  <div class="label">Où ?</div>
-                  <div class="courttext">
-                    <%= selection_actif.phase.lieux_mission.nil? ? "N/A" : selection_actif.phase.lieux_mission  %>
-                  </div>
-                </div>
-                <div class="colone">
-                  <div class="label">Combien ?</div>
-                  <div class="courttext">
-                    <%= (selection_actif.phase.indemnisation_par_jeh * selection_actif.phase.jeh_par_intervenant).to_s + " € brut" %>
-                  </div>
-                </div>
-              </div>
-              <div class="ligne">
-                <div class="colone">
-                </div>
-                <div class="colone">
-                    <div class="button modal-button" id="add_postulant_<%= selection_actif.id %>">Postuler</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-
-    <% # Menu 2 %>
-    <div class="content">
-    </div>
-
-    <% # Menu 3 %>
-    <div class="content">
-    </div>
+  <div class="junior_name">
+   <%= current_user.junior.nom %>
   </div>
 </div>
 
+<% if @selections_actifs.count.zero? %>
+
+  <div class="middle_message">
+    <div class="reduce_margin_bottom_2 jaune bigtext">
+      Pas de mission
+    </div>
+    <div class="add_margin_bottom_1 jaune bigtext">
+      pour le moment !
+    </div>
+    <div class="bleu smalltext">
+      Mais on travaille dur pour y remedier !
+    </div>
+  </div>
+
+<% else %>
+  <div class="mission_cards">
+    <% @selections_actifs.each do |selection_actif| %>
+      <% if selection_actif.postulants.find_by(user_id: current_user.id).nil? %>
+        <div class="card">
+          <div class="title_line">
+            Mission :
+          </div>
+          <div class="gap_bottom content_line">
+            <%= selection_actif.phase.description_mission_intervenant %>
+          </div>
+
+          <div class="title_line">
+            Quand ? :
+          </div>
+          <div class="gap_bottom content_line">
+            Du <%= selection_actif.phase.date_debut.strftime("%d/%m/%Y") %> au <%= selection_actif.phase.date_fin.strftime("%d/%m/%Y") %>
+          </div>
+
+          <div class="title_line">
+            Où ? :
+          </div>
+          <div class="gap_bottom content_line">
+            <%= selection_actif.phase.lieux_mission.nil? ? "N/A" : selection_actif.phase.lieux_mission  %>
+          </div>
+
+          <div class="title_line">
+            Combien ? :
+          </div>
+          <div class="content_line">
+            <%= (selection_actif.phase.indemnisation_par_jeh * selection_actif.phase.jeh_par_intervenant) %>€ brut
+          </div>
+          
+          <div class="circle_text_button modal-button" id="add_postulant_<%= selection_actif.id %>">
+            <div class="button">
+              <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+              Je candidate !
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
 
 <% @selections_actifs.each do |selection_actif| %>
-  <div class="hex_modal" id="add_postulant_<%= selection_actif.id %>">
-      <div class="background">
-          <div class="header">
-              <div class="modal-close" id="add_postulant_<%= selection_actif.id %>">
-                  <i class="fas fa-times"></i>
-              </div>
-          </div>
-          <div class="content">
-              <%= simple_form_for [@junior, selection_actif, @new_postulant] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <%= f.hidden_field :selection_intervenant_id, value: selection_actif.id %>
-                    <%= f.hidden_field :user_id, value: current_user.id %>
-                    <div class="input">
-                      <%= f.input :commentaire_postulant, as: :text, label: "Ajoutez un commentaire :", wrapper_html: { class: "text-area-wrapper"} %>
-                    </div>
-                    <div class="button">
-                      <%= f.button :submit, "Postuler à la mission !" %>
-                    </div>
-                  </div>
-              <% end %>
+  <div class="hex_modal2" id="add_postulant_<%= selection_actif.id %>">
+    <div class="modal_content">
+      <div class="header">
+          <div class="modal-close" id="add_postulant_<%= selection_actif.id %>">
+              <i class="fas fa-times"></i>
           </div>
       </div>
+      <div class="main">
+        <div class="formulaire">
+          <div class="title">
+            <div class="ligne">Alors comme ça,</div>
+            <div class="ligne">cette mission</div>
+            <div class="ligne">t'intéresse ?</div>
+          </div>
+          <div class="content">
+            <%= simple_form_for [@junior, selection_actif, @new_postulant] do |f| %>
+              <%= f.error_notification %>
+              <%= f.hidden_field :selection_intervenant_id, value: selection_actif.id %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+              <div class="long_input_line">
+                <%= f.input :commentaire_postulant,
+                            label: false, 
+                            as: :text,
+                            placeholder: "Un message à ajouter ?",
+                            input_html: { class: 'form_input', rows: 10 } %>
+              </div>
+
+              <div class="button_line">
+                <%= f.button :button do %>
+                  <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                  Envoyer
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+      </div>
+    </div>
   </div>
 <% end %>
