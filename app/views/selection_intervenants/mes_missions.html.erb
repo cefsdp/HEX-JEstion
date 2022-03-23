@@ -1,1 +1,10 @@
+<div class="junior_title">
+  <div class="junior_logo">
+    <% if current_user.junior.junior_configuration.logo.attached? %><%= image_tag current_user.junior.junior_configuration.logo.url, class: 'logo' %> <% else %> <%= image_tag("logo_hex.png", class: 'logo') %> <% end %>
+  </div>
+  <div class="junior_name">
+   <%= current_user.junior.nom %>
+  </div>
+</div>
+
 Mes missions

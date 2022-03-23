@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class='navbar_profile dropdown'>
-    <div class="profile_name">Yuna Boudier</div>
+    <div class="profile_name"><%= (current_user.adherent.prenom + " " + current_user.adherent.nom).truncate(33) %></div>
     <div class="profile_dropdown dropbtn" id="profile">
       <div class="profile_avatar">
         <% if current_user.adherent.avatar.attached? %><%= image_tag current_user.adherent.avatar.url, class: 'avatar' %> <% else %> <%= image_tag("logo_hex.png", class: 'avatar') %> <% end %>
