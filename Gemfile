@@ -36,6 +36,8 @@ gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass', '~> 5.15.1'
 gem 'simple_form'
 
+gem "chartkick"
+
 gem "select2-rails"
 gem 'select2_simple_form', github: 'lndl/select2_simple_form', tag: '0.7.3'
 

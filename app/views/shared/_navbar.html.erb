@@ -3,14 +3,43 @@
     <%= image_tag 'HEX_BLEU', style: 'height:4vh; width: auto;'%>
   </div>
   <div class='navbar_links'>
-    <div class='<%= current_page?(junior_path(current_user.junior)) ? "active" : "" %> nav_link'>
-      <%= link_to junior_path(current_user.junior_id) do %>Accueil<% end %>
-      <div class="<%= current_page?(junior_path(current_user.junior)) ? "active" : "" %> inner">&nbsp;</div>
-    </div>
-    <div class='<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
-      <%= link_to junior_selection_intervenants_path(current_user.junior_id) do %>Nouvelles Missions<% end %>
-      <div class="<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
-    </div>
+      <%# accueil %>
+      <div class='<%= current_page?(junior_path(current_user.junior)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_path(current_user.junior_id) do %>Accueil<% end %>
+        <div class="<%= current_page?(junior_path(current_user.junior)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
+  <%# Menu Membre %>
+    <% if cookies.encrypted[:navbar_type] == "membre" && current_user.membre %>
+      <%# Etudes %>
+      <div class='<%= current_page?(junior_etudes_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_etudes_path(current_user.junior_id) do %>Etudes<% end %>
+        <div class="<%= current_page?(junior_etudes_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
+      <%# Adherents %>
+      <div class='<%= current_page?(junior_adherents_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_adherents_path(current_user.junior_id) do %>Adhérents<% end %>
+        <div class="<%= current_page?(junior_adherents_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
+      <%# Membres %>
+      <div class='<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_membres_path(current_user.junior_id) do %>Membres<% end %>
+        <div class="<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
+      <%# Configuration %>
+      <div class='<%= current_page?(edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id)) ? "active" : "" %> nav_link'>
+        <%= link_to edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id) do %>Paramètres<% end %>
+        <div class="<%= current_page?(edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
+    <% end %>
+
+  <%# Menu Adherent %>
+    <% if cookies.encrypted[:navbar_type] == "adherent" && current_user.adherent %>
+      <%# Nouvelles missions %>
+      <div class='<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_selection_intervenants_path(current_user.junior_id) do %>Nouvelles Missions<% end %>
+        <div class="<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
+    <% end %>
   </div>
   <div class='navbar_profile dropdown'>
     <div class="profile_name"><%= (current_user.adherent.prenom + " " + current_user.adherent.nom).truncate(33) %></div>
@@ -21,9 +50,19 @@
       <i class="fas fa-sort-down"></i>
     </div>
     <div class="drop_content" id="profile">
+      <% if cookies.encrypted[:navbar_type] != "membre" && current_user.membre %>
+        <div class='line'>
+          <%= link_to junior_update_mode_path(current_user.junior, cookies.encrypted[:mode_affichage] = "membre") do %>Mode membre<% end %>
+        </div>
+      <% end %>
+      <% if cookies.encrypted[:navbar_type] != "adherent" && current_user.adherent %>
+        <div class='line'>
+          <%= link_to junior_update_mode_path(current_user.junior, cookies.encrypted[:mode_affichage] = "adherent") do %>Mode adherent<% end %>
+        </div>
+      <% end %>
       <div class='line'><%= link_to edit_user_registration_path do %>Mon Profil<% end %></div>
       <div class="line"><%= link_to destroy_user_session_path, method: :delete do %>Déconnexion <% end %></div>
-
+      <div class="small_line"><%= "Actuellement en mode " + cookies.encrypted[:navbar_type] %></div>
     </div>
   </div>
 </div>

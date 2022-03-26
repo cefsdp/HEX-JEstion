@@ -24,4 +24,8 @@ class JuniorPolicy < ApplicationPolicy
   def update?
     user.admin == true
   end
+
+  def update_mode?
+    user.admin == true
+  end
 end

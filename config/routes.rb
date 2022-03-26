@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     end
 
     get '/mes_missions', to: 'selection_intervenants#mes_missions', as: 'mes_missions'
+    get '/update_mode', to: 'juniors#update_mode', as: 'update_mode'
 
     resources :clients
     resources :adherents do

@@ -25,7 +25,15 @@
         text-decoration: none;
       }
     }
-    :hover {
+    .small_line {
+      width: 100%;
+      padding: 1% 3%;
+      background-color: white;
+      text-align: center;
+      font-style: italic;
+      font-size: 14px;
+    }
+    .line:hover {
       background-color: var(--gris);
     }
   }

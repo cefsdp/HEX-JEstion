@@ -7,8 +7,80 @@
   </div>
 </div>
 
-Nombre Etudes signés année
-CA signé année
-Nbre Adherents
-Nbre JEH année
-Gantt Etudes sur 2 mois
+<% if cookies.encrypted[:navbar_type] == "adherent" && current_user.adherent %>
+  <div class="middle_message">
+    <div class="reduce_margin_bottom_2 jaune bigtext">
+      Tes statistiques ne sont pas
+    </div>
+    <div class="add_margin_bottom_1 jaune bigtext">
+      disponibles pour le moment !
+    </div>
+    <div class="bleu smalltext">
+      Mais on travaille dur pour y remedier !
+    </div>
+  </div>
+<% end %>
+<% if cookies.encrypted[:navbar_type] == "membre" && current_user.membre %>
+
+  <div class="group_charts_line midvh margin1_0">
+    <div class="charts_space middlewidth">
+      <div class="chart_title">Nombre d'études en <%= Date.today.year %> :</div>
+      <div class="charts_line">
+        <div class="chart_item">
+          <% data_keys = ["Signé", "En négociation"] %>
+          <% data_values =  [
+                              ["label", ["Signé", "En négociation"]], ["data", [@data_nombre_etudes[:signer], @data_nombre_etudes[:negocier]]], ["backgroundColor", ["#0000ff", "#FFBA09"]],
+                            ]%>
+          <canvas id="halfdoughnutchart" width="350px" height="100px" data-labels="<%= data_keys %>" data-data="<%= data_values %>" ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts_square middlewidth">
+      <div class="charts_square_row fullheigth fullwidth">
+        <div class="charts_space middlewidth">
+          <div class="text_chart">
+            <div class="Value"><%= current_user.junior.adherents.count %></div>
+            <div class="Label">Adhérents inscrits</div>
+          </div>
+        </div>
+        <div class="charts_space middlewidth">
+          <div class="text_chart">
+            <div class="Value"><%= current_user.junior.membres.count %></div>
+            <div class="Label">Membres actifs</div>
+          </div>
+        </div>
+      </div>
+      <div class="charts_square_row fullheigth fullwidth">
+        <div class="charts_space middlewidth">
+          <div class="text_chart">
+            <div class="Value">165</div>
+            <div class="Label">JEH signés en 2022</div>
+          </div>
+        </div>
+        <div class="charts_space middlewidth">
+          <div class="text_chart">
+            <div class="Value">165</div>
+            <div class="Label">IEA signés en 2022</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="charts_space">
+    <div class="chart_title">Chiffre d'Affaire cumulé des 12 derniers mois :</div>
+    <div class="charts_line">
+      <div class="chart_item fullwidth">
+        <% data_keys = @data_chiffre_affaire[:label] %>
+        <% data_values =  [
+                            [["label", "Signé"], ["data", @data_chiffre_affaire[:ca_signer].inject([]) { |x, y| x + [(x.last || 0) + y] }], ["borderColor", "#0000ff"], ["backgroundColor", "#0000ff"], ["tension", 0.4]],
+                            [["label", "En négociation"], ["data", @data_chiffre_affaire[:ca_negocier].inject([]) { |x, y| x + [(x.last || 0) + y] }], ["borderColor", ], ["backgroundColor", "#FFBA09"], ["tension", 0.4]],
+                          ]%>
+        <canvas id="stackedBarChart" width="400px" height="100px" data-labels="<%= data_keys %>" data-data="<%= data_values %>" ></canvas>
+      </div>
+    </div>
+  </div>
+    
+<% end %>
