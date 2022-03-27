@@ -1,10 +1,20 @@
 class SelectionIntervenantsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:mes_missions]
+
   def index
     @selections = policy_scope(SelectionIntervenant)
     @selections_actifs = @selections.where(active: true)
     @selections_inactif = @selections.where(active: true)
     @new_postulant = Postulant.new
     @junior = Junior.find(junior_id_params.to_i)
+  end
+
+  def mes_missions
+    @mes_missions = current_user.intervenants
+    @missions_en_attente = current_user.postulants.where(statut: "pending")
+    @missions_refusees = current_user.postulants.where(statut: "refusé")
+    @junior = Junior.find(junior_id_params.to_i)
+    skip_authorization
   end
 
   def create

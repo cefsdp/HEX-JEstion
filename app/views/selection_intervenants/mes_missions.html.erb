@@ -1,0 +1,169 @@
+<div class="junior_title">
+  <div class="junior_logo">
+    <% if current_user.junior.junior_configuration.logo.attached? %><%= image_tag current_user.junior.junior_configuration.logo.url, class: 'logo' %> <% else %> <%= image_tag("logo_hex.png", class: 'logo') %> <% end %>
+  </div>
+  <div class="junior_name">
+   <%= current_user.junior.nom %>
+  </div>
+</div>
+
+<div class="menu">
+  <div class="tabs">
+    <div class="tab active">Mes Mission</div>
+    <div class="tab">Missions en attente</div>
+  </div>
+  <div class="contents">
+    <% # Mes Missions %>
+    <div class="content active">
+      <% if @mes_missions.count.zero? %>
+        <div class="middle_message">
+          <div class="reduce_margin_bottom_2 jaune bigtext">
+            Tu n'as été sélectionné pour aucune mission
+          </div>
+        </div>
+      <% else %>
+        <div class="mission_cards">
+          <% @mes_missions.each do |intervenant| %>
+            <% mission = intervenant.phase%>
+              <div class="card">
+                <div class="title_line">
+                  Mission <%= mission.etude.ref_etude %> - <%= mission.nom %> :
+                </div>
+                <div class="gap_bottom content_line">
+                  <%= mission.description_mission_intervenant %>
+                </div>
+
+                <div class="title_line">
+                  Quand ? :
+                </div>
+                <div class="gap_bottom content_line">
+                  Du <%= mission.date_debut.strftime("%d/%m/%Y") %> au <%= mission.date_fin.strftime("%d/%m/%Y") %>
+                </div>
+
+                <div class="title_line">
+                  Où ? :
+                </div>
+                <div class="gap_bottom content_line">
+                  <%= mission.lieux_mission.nil? ? "N/A" : mission.lieux_mission  %>
+                </div>
+
+                <div class="title_line">
+                  Combien ? :
+                </div>
+                <div class="content_line">
+                  <%= (mission.indemnisation_par_jeh * mission.jeh_par_intervenant) %>€ brut
+                </div>
+                
+                <div class="circle_text_button modal-button" id="suivi_mission_<%= mission.id %>">
+                  <div class="button">
+                    <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                    Voir plus
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% # Missions en attente %>
+    <div class="content">
+      <% if @missions_en_attente.count.zero? %>
+        <div class="middle_message">
+          <div class="reduce_margin_bottom_2 jaune bigtext">
+            Tu n'as postulé à aucune mission
+          </div>
+        </div>
+      <% else %>
+        <div class="mission_cards">
+          <% @missions_en_attente.each do |postulant| %>
+            <% mission = postulant.selection_intervenant%>
+              <div class="card">
+                <div class="title_line">
+                  Mission <%= mission.phase.etude.ref_etude %> - <%= mission.phase.nom %> :
+                </div>
+                <div class="gap_bottom content_line">
+                  <%= mission.phase.description_mission_intervenant %>
+                </div>
+
+                <div class="title_line">
+                  Quand ? :
+                </div>
+                <div class="gap_bottom content_line">
+                  Du <%= mission.phase.date_debut.strftime("%d/%m/%Y") %> au <%= mission.phase.date_fin.strftime("%d/%m/%Y") %>
+                </div>
+
+                <div class="title_line">
+                  Où ? :
+                </div>
+                <div class="gap_bottom content_line">
+                  <%= mission.phase.lieux_mission.nil? ? "N/A" : mission.phase.lieux_mission  %>
+                </div>
+
+                <div class="title_line">
+                  Combien ? :
+                </div>
+                <div class="content_line">
+                  <%= (mission.phase.indemnisation_par_jeh * mission.phase.jeh_par_intervenant) %>€ brut
+                </div>
+                
+                <div class="circle_text_button modal-button" id="suivi_mission_<%= mission.id %>">
+                  <div class="button">
+                    <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                    Tu as déjà postulé !
+                  </div>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% # ============================================================================================================================%>
+
+
+<% @mes_missions.each do |intervenant| %>
+  <div class="hex_modal2" id="suivi_mission_<%= intervenant.id %>">
+    <div class="modal_content">
+      <div class="header">
+          <div class="modal-close" id="suivi_mission_<%= intervenant.id %>">
+              <i class="fas fa-times"></i>
+          </div>
+      </div>
+      <div class="main">
+        <div class="formulaire">
+          <div class="title">
+            <div class="ligne">Tu cherches</div>
+            <div class="ligne">des informations</div>
+            <div class="ligne">sur ta mission ?</div>
+          </div>
+          <div class="content">
+            c
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+      </div>
+    </div>
+  </div>
+<% end %>

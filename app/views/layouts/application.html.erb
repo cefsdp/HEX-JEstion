@@ -13,7 +13,16 @@
   </head>
 
   <body>
-  <% if @no_navbar.class == FalseClass || !current_user.nil? %>
+  <% if @no_navbar.class == TrueClass || current_user.nil? %>
+    <div class='options'>
+      <%= render 'shared/flashes' %>
+      <div class="">
+        <%= yield %>
+      </div>
+    </div>
+
+  <% else %>
+  <% # If Navbar %>
     <div class='page_main options'>
       <%= render 'shared/navbar' %>
       <%= render 'shared/flashes' %>
@@ -25,15 +34,6 @@
       </div>
       <div class='version_jestion'>
         Dev-1.1 
-      </div>
-    </div>
-
-  <% else %>
-  <% # If No Navbar %>
-    <div class='options'>
-      <%= render 'shared/flashes' %>
-      <div class="">
-        <%= yield %>
       </div>
     </div>
   <% end %>

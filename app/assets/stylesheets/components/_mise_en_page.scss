@@ -142,3 +142,53 @@
     }
   }
 }
+
+.junior_title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2%;
+  margin-bottom: 1%;
+  .junior_logo {
+    .logo {
+      height: 75px;
+      width: auto;
+    }
+  }
+  .junior_name {
+    font-size: 35px;
+    font-weight: 700;
+  }
+}
+
+.middle_message {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .bigtext {
+    font-size: 100px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .smalltext {
+    font-size: 30px;
+    font-weight: 400;
+  }
+
+  .jaune {
+    color: var(--jaune-hex);
+  }
+  .bleu {
+    color: var(--bleu-hex);
+  }
+  .reduce_margin_bottom_2 {
+    margin-bottom: -2%;
+  }
+  .add_margin_bottom_1 {
+    margin-bottom: 1%;
+  }
+}

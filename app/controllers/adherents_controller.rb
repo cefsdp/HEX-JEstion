@@ -5,6 +5,14 @@ class AdherentsController < ApplicationController
     @adherents = policy_scope(Adherent)
   end
 
+  def signup_step2
+    @no_navbar = true
+    @user = current_user
+    @junior = current_user.junior
+    @adherent = current_user.adherent
+    authorize @adherent
+  end
+
   def show
     @adherent = Adherent.find(params[:id])
     authorize @adherent

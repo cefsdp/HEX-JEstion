@@ -5,53 +5,55 @@ class AdherentPolicy < ApplicationPolicy
     end
   end
 
+  def signup_step2?
+    return true
+  end
+
   def show?
-    if user.admin == true
-      # Admin JEstion
+    if @user.admin == false
+      # Super Admin
       return true
-    elsif user.membre.nil?
-      if user.adherent
+    elsif @user.junior_id == @junior.id.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.show_adherent
+          end
+        end
+      else
         # Adherent
         return false
-      else
-        # Autre Junior
-        return true
-      end
-    elsif user.membre
-      if user.membre.admin?
-        # Admin JE
-        return true
-      else
-        # Membre JE
-        return true
       end
     end
   end
 
   def edit?
-    if user.admin == true
-      # Admin JEstion
-      return true
-    elsif user.membre.nil?
-      if user.adherent
-        # Adherent
-        return false
-      else
-        # Autre Junior
-        return true
-      end
-    elsif user.membre
-      if user.membre.admin?
-        # Admin JE
-        return true
-      else
-        # Membre JE
-        return true
-      end
-    end
+    update?
   end
 
   def update?
-    edit?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.id.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.update_adherent
+          end
+        end
+      else
+        # Adherent
+        return true
+      end
+    end
   end
 end

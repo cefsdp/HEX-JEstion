@@ -1,8 +1,9 @@
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :request_junior, :user, :record
 
-  def initialize(user, record)
-    @user = user
+  def initialize(authorization_context, record)
+    @user = authorization_context.user
+    @junior = authorization_context.junior
     @record = record
   end
 
@@ -38,7 +39,8 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
-      @user = user
+      @user = user.user
+      @junior = user.junior
       @scope = scope
     end
 

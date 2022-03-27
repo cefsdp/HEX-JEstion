@@ -1,51 +1,50 @@
-<div class="login_bg">
+<div class="session_background">
   <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="mainLoginDiv">
-      <div class="loginDiv">
-        <div class="login">
-          <div class="titre">
-            <div class="logoDiv">
-              <%= render 'components/logo' %>
-            </div>
-            <div class="Text">
-              CONNEXION
-            </div>
+    <div class="content_div">
+      <div class="content_background">
+        <div class="content_main">
+          <div class="main_title">
+            <div class="title_line">Content de te</div>
+            <div class="title_line">revoir ici !</div>
           </div>
-          <div class="form">
-            <div class="form_line">
-              <div class="icone"><i class="fas fa-user"></i></div>
+          <div class="main_form">
+            <div class="form_input_line">
               <%= f.input :email,
                           required: false,
                           label: false,
                           autofocus: true,
+                          placeholder: "E-mail",
                           input_html: { autocomplete: "email", class: 'form_input' } %>
             </div>
-            <div class="form_line">
-              <div class="icone"><i class="fas fa-key"></i></div>
+            <div class="form_input_line">
               <%= f.input :password,
                           required: false,
-                          label: false, 
+                          label: false,
+                          placeholder: "Mot de Passe",
                           input_html: { autocomplete: "current-password", class: 'form_input' }%>
             </div>
-            <div class="form_txt">
+            <div class="form_txt_line">
               <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
             </div>
             <div class="form_btn">
-              <%= f.button :submit, "Log in" %>
+              <%= f.button :button do %>
+                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                Connexion  
+              <% end %>
             </div>
           </div>
-          <div class="links">
-            <div class="link">
-              <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-                <%= link_to "Inscription", new_registration_path(resource_name) %>
-              <% end %>
-            </div>
-            <div class="separator"> | </div>
-            <div class="link">
-              <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-                <%= link_to "Mot de passe oublié ?", new_password_path(resource_name) %>
-              <% end %>
-            </div>
+        </div>
+        <div class="content_footer">
+          <div class="footer_links">
+            <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+              <%= link_to new_registration_path(resource_name) do%>Inscription <span class="emoji">&#128075</span><%end%>
+            <% end %>
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <%= link_to new_password_path(resource_name) do%>Mot de passe oublié <span class="emoji">&#129300</span><%end%>
+            <% end %>
+          </div>
+          <div class="footer_logo">
+            <%= image_tag 'HEX_BLANC', style: 'height:10vh; width: auto;'%>
           </div>
         </div>
       </div>

@@ -45,11 +45,11 @@ class PostulantsController < ApplicationController
   end
 
   def phase_id_params
-    params[:phase_id]
+    SelectionIntervenant.find(selection_id_params).phase.id
   end
 
   def etude_id_params
-    params[:etude_id]
+    SelectionIntervenant.find(selection_id_params).phase.etude.id
   end
 
   def junior_id_params

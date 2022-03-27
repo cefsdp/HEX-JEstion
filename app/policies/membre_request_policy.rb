@@ -10,7 +10,25 @@ class MembreRequestPolicy < ApplicationPolicy
   end
 
   def show?
-    return true
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.id.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.show_membre_request
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 
   def new?
@@ -18,7 +36,25 @@ class MembreRequestPolicy < ApplicationPolicy
   end
 
   def create?
-    return true
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.id.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |_permission|
+            return false
+          end
+        end
+      else
+        # Adherent
+        return true
+      end
+    end
   end
 
   def edit?
@@ -26,10 +62,46 @@ class MembreRequestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.membre.admin == true
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.id.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.update_membre_request
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 
   def destroy?
-    update?
+    if @user.admin
+      # Super Admin
+      return true
+    elsif @user.junior_id == @junior.id.to_i
+      if @user.membre
+        if @user.membre.admin
+          # Junior Admin
+          return true
+        else
+          # Membre Junior
+          @user.permissions.each do |permission|
+            return true if permission.destroy_membre_request
+          end
+        end
+      else
+        # Adherent
+        return false
+      end
+    end
   end
 end

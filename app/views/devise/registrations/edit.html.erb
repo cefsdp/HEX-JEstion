@@ -188,101 +188,206 @@
 </div>
 
 
-<% # MODALS %>
+
+
+<% # MODALS ======================================================================================================================= %>
 <% # Nouveau Document %>
-<div class="hex_modal" id="add_new_document_adherent">
-    <div class="background">
+<div class="hex_modal2" id="add_new_document_adherent">
+  <div class="modal_content">
+      <div class="header">
+          <div class="modal-close" id="add_new_document_adherent">
+              <i class="fas fa-times"></i>
+          </div>
+      </div>
+      <div class="main">
+          <div class="formulaire">
+              <div class="title">
+                  <div class="ligne">Tu veux ajouter</div>
+                  <div class="ligne">un document</div>
+                  <div class="ligne">à ton profil ?</div>
+              </div>
+              <div class="content">
+                  <%= simple_form_for [@junior, @user, @adherent, @document] do |f| %>
+                      <%= f.error_notification %>
+                        <div class="input_line">
+                          <%= f.input :nom,
+                                      required: true,
+                                      label: false,
+                                      collection: @junior.junior_configuration.config_doc_adherents,
+                                      label_method: lambda { |document| "#{document.nom}" },
+                                      value_method: :nom,
+                                      include_blank: "Nom du document",
+                                      selected: "Nom du document",
+                                      input_html: { class: 'form_input' } %>
+                      </div>
+                      <div class="input_line">
+                          <%= f.input :date_debut_validite,
+                                      label: "Date de début de validité ?",
+                                      as: :date,
+                                      html5: true,
+                                      placeholder: "Date de début de validité ?",
+                                      input_html: { class: 'form_input' } %>
+                      </div>
+                      <div class="input_line">
+                          <%= f.input :document,
+                                      label: false, 
+                                      as: :file,
+                                      label: 'Document :',
+                                      placeholder: "Document",
+                                      input_html: { class: 'form_input' } %>
+                      </div>
+                      <div class="button_line">
+                          <%= f.button :button do %>
+                          <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                          Ajouter le document
+                          <% end %>
+                      </div>
+                  <% end %>
+              </div>
+          </div>
+      </div>
+      <div class="footer">
+          <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+      </div>
+  </div>
+</div>
+
+
+<% # ================================================================================================================================%>
+<% # Modifier Document %>
+<% @documents.each_with_index do |document, index| %>
+  <div class="hex_modal2" id="edit_adherent_document_<%= index %>">
+    <div class="modal_content">
         <div class="header">
-            <div class="modal-close" id="add_new_document_adherent">
+            <div class="modal-close" id="edit_adherent_document_<%= index %>">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-          <%= simple_form_for [@junior, @user, @adherent, @document] do |f| %>
-            <%= f.error_notification %>
+        <div class="main">
             <div class="formulaire">
-                <div class="input">
-                  <%= f.input :nom, required: true, value_method: :nom, collection: @junior.junior_configuration.config_doc_adherents, :label_method => lambda { |document| "#{document.nom}" }  %>
-                  <%= f.input :date_debut_validite, as: :date, html5: true %>
+                <div class="title">
+                    <div class="ligne">Tu veux modifier</div>
+                    <div class="ligne">un document ?</div>
                 </div>
-                <div class="input">
-                  <%= f.file_field :document, required: true  %>
-                </div>
-                <div class="input">
-                </div>
-                <div class="input">
+                <div class="content">
+                    <%= simple_form_for [@junior, @user, @adherent, @document] do |f| %>
+                        <%= f.error_notification %>
+                          <div class="input_line">
+                            <%= f.input :nom,
+                                        required: true,
+                                        label: false,
+                                        collection: @junior.junior_configuration.config_doc_adherents,
+                                        label_method: lambda { |document| "#{document.nom}" },
+                                        value_method: :nom,
+                                        include_blank: "Nom du document",
+                                        selected: "Nom du document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :date_debut_validite,
+                                        label: "Date de début de validité ?", 
+                                        as: :date,
+                                        html5: true,
+                                        placeholder: "Date de début de validité ?",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :document,
+                                        label: false, 
+                                        as: :file,
+                                        label: 'Document :',
+                                        placeholder: "Document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Modifier le document
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
             </div>
-            <div class="button">
-                <%= f.button :submit, "Ajouter le document" %>
-            </div>
-          <% end %>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
-</div>
-<% # Modifier Document %>
-<% @documents.each_with_index do |document, index| %>
-  <div class="hex_modal" id="edit_adherent_document_<%= index %>">
-      <div class="background">
-          <div class="header">
-              <div class="modal-close" id="edit_adherent_document_<%= index %>">
-                  <i class="fas fa-times"></i>
-              </div>
-          </div>
-          <div class="content">
-            <%= simple_form_for [@junior, @user, @adherent, document] do |f| %>
-              <%= f.error_notification %>
-              <div class="formulaire">
-                  <div class="input">
-                    <%= f.input :nom, required: true, value_method: :nom, collection: @junior.junior_configuration.config_doc_adherents, :label_method => lambda { |document| "#{document.nom}" }  %>
-                    <%= f.input :date_debut_validite, as: :date, html5: true %>
-                  </div>
-                  <div class="input">
-                    <%= f.file_field :document, required: true  %>
-                  </div>
-                  <div class="input">
-                  </div>
-                  <div class="input">
-                  </div>
-              </div>
-
-              <div class="button">
-                  <%= f.button :submit, "Ajouter le document" %>
-              </div>
-            <% end %>
-          </div>
-      </div>
   </div>
 <% end %>
 
+
+<% # ================================================================================================================================%>
 <% # Nouveau Mandat %>
 <% if @membre %>
-  <div class="hex_modal" id="add_new_mandat">
-      <div class="background">
-          <div class="header">
-              <div class="modal-close" id="add_new_mandat">
-                  <i class="fas fa-times"></i>
-              </div>
-          </div>
-          <div class="content">
-            <%= simple_form_for [@junior, @membre, @mandat] do |f| %>
-              <%= f.error_notification %>
-              <div class="formulaire">
-                <div class="input">
-                  <%= f.input :pole, required: true, value_method: :id, collection: @junior.junior_configuration.poles, :label_method => lambda { |pole| "#{pole.nom}" } %>
-                  <%= f.input :poste, required: true, value_method: :id, collection: @junior.junior_configuration.postes, :label_method => lambda { |poste| "#{poste.nom}" }  %>
+  <div class="hex_modal2" id="add_new_mandat">
+    <div class="modal_content">
+        <div class="header">
+            <div class="modal-close" id="add_new_mandat">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Demander un</div>
+                    <div class="ligne">poste !</div>
                 </div>
-                <div class="input">
-                  <%= f.input :date_debut, required: true, as: :date, html5: true  %>
-                  <%= f.input :date_fin, required: true, as: :date, html5: true  %>
+                <div class="content">
+                    <%= simple_form_for [@junior, @membre, @mandat] do |f| %>
+                        <%= f.error_notification %>
+                          <div class="input_line">
+                            <%= f.input :pole,
+                                        required: true,
+                                        label: false,
+                                        collection: @junior.junior_configuration.poles,
+                                        label_method: lambda { |pole| "#{pole.nom}" },
+                                        value_method: :id,
+                                        include_blank: "Pole",
+                                        selected: "Pole",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :poste,
+                                        required: true,
+                                        label: false,
+                                        collection: @junior.junior_configuration.postes,
+                                        label_method: lambda { |poste| "#{poste.nom}" },
+                                        value_method: :id,
+                                        include_blank: "Poste",
+                                        selected: "Poste",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :date_debut,
+                                        label: "Date de début",
+                                        as: :date,
+                                        html5: true,
+                                        placeholder: "Date de début",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :date_fin,
+                                        label: "Date de fin",
+                                        as: :date,
+                                        html5: true,
+                                        placeholder: "Date de fin",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Envoyer la demande
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-              </div>
-
-              <div class="button">
-                  <%= f.button :submit, "Demander l'ajout d'un mandat" %>
-              </div>
-            <% end %>
-          </div>
-      </div>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+        </div>
+    </div>
   </div>
 <% end %>
