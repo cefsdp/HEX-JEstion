@@ -27,7 +27,7 @@
       <% if selection_actif.postulants.find_by(user_id: current_user.id).nil? %>
         <div class="card">
           <div class="title_line">
-            Mission :
+            Mission <%= selection_actif.phase.etude.ref_etude %> - <%= selection_actif.phase.nom %> :
           </div>
           <div class="gap_bottom content_line">
             <%= selection_actif.phase.description_mission_intervenant %>

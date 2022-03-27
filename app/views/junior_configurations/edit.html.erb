@@ -176,377 +176,541 @@
   </div>
 </div>
 
+
+
+
+<% # =========================================================================================================================== %>
 <% # Nouveau document Adherent %>
-<div class="hex_modal" id="add_adherent_document">
-    <div class="background">
+<div class="hex_modal2" id="add_adherent_document">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="add_adherent_document">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @configuration, @newConfigDocAdherent] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom du document' %>
-                    </div>
-                    <div class="label">Durée de validite</div>
-                    <div class="input">
-                        <%= f.input :duree_validite, label: false, value: 0, hint: "laisser 0 si pas de durée de validité" %>
-                        <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
-                    </div>
-                    <div class="input">
-                        <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
-                        <%= f.input :archive, as: :boolean, label: 'Archiver le document', value: false, checked_value: true, unchecked_value: false %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Tu veux ajouter</div>
+                    <div class="ligne">un document type</div>
+                    <div class="ligne">d'étude ?</div>
                 </div>
-
-                <div class="button">
-                    <%= f.button :submit, "Ajouter le document" %>
+                <div class="content">
+                    <%= simple_form_for [@junior, @configuration, @newConfigDocAdherent] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.hidden_field :id %>
+                        <div class="input_line">
+                            <%= f.input :nom,
+                                        label: false,
+                                        placeholder: "Nom du document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :duree_validite,
+                                        label: "Durée de validité",
+                                        placeholder: "Durée de validité",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :format_duree_validite,
+                                        placeholder: "Format durée de validité",
+                                        collection: ['jours', 'mois', 'an'],
+                                        default: 'jours',
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :obligatoire,
+                                        label: false,
+                                        include_blank: "Obligation",
+                                        collection: [["Document Obligatoire", true], ["Document non obligatoire", false]],
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :archive,
+                                        label: false,
+                                        include_blank: "Archivage",
+                                        collection: [["Document archivé", true], ["Document non archivé", false]],
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter le document d'adhésion
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-            <% end %>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
 <% # Modifier document Adherent %>
 <% @configDocAdherents.each_with_index do |configDocAdherent, index_modal| %>
-    <div class="hex_modal" id="edit_adherent_document_<%= configDocAdherent.id %>">
-        <div class="background">
+    <div class="hex_modal2" id="edit_adherent_document_<%= configDocAdherent.id %>">
+        <div class="modal_content">
             <div class="header">
                 <div class="modal-close" id="edit_adherent_document_<%= configDocAdherent.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @configuration, configDocAdherent] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <%= f.hidden_field :id %>
-                        <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom du document' %>
-                        </div>
-                        <div class="label">Durée de validite</div>
-                        <div class="input">
-                            <%= f.input :duree_validite, label: false, hint: "Mettre 0 si pas de durée de validité" %>
-                            <%= f.input :format_duree_validite, collection: ['jours', 'mois', 'an'], default: 'jours', label: false, hint: "Jours, Mois, Années" %>
-                        </div>
-                        <div class="input">
-                            <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
-                            <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
-                        </div>
+            <div class="main">
+                <div class="formulaire">
+                    <div class="title">
+                        <div class="ligne">Tu veux modifier</div>
+                        <div class="ligne">un document type</div>
+                        <div class="ligne">d'étude ?</div>
                     </div>
-
-                    <div class="button">
-                        <%= f.button :submit, "Mettre à jour le document" %>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @configuration, configDocAdherent] do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.hidden_field :id %>
+                            <div class="input_line">
+                                <%= f.input :nom,
+                                            label: false,
+                                            placeholder: "Nom du document",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :duree_validite,
+                                            label: "Durée de validité",
+                                            placeholder: "Durée de validité",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :format_duree_validite,
+                                            placeholder: "Format durée de validité",
+                                            collection: ['jours', 'mois', 'an'],
+                                            default: 'jours',
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :obligatoire,
+                                            label: false, 
+                                            collection: [["Document Obligatoire", true], ["Document non obligatoire", false]],
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :archive,
+                                            label: false, 
+                                            collection: [["Document archivé", true], ["Document non archivé", false]],
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="button_line">
+                                <%= f.button :button do %>
+                                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                Modifier le document d'adhésion
+                                <% end %>
+                            </div>
+                        <% end %>
                     </div>
-                <% end %>
+                </div>
+            </div>
+            <div class="footer">
+                <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
             </div>
         </div>
     </div>
 <% end %>
 
+
+<% # =========================================================================================================================== %>
 <% # Nouveau Pole %>
-<div class="hex_modal" id="add_pole">
-    <div class="background">
+<div class="hex_modal2" id="add_pole">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="add_pole">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @configuration, @pole] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <%= f.hidden_field :id %>
-                    <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom du Pole' %>
-                    </div>
-                    <div class="input">
-                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Tu veux ajouter</div>
+                    <div class="ligne">un pole ?</div>
                 </div>
-                <div class="button">
-                    <%= f.button :submit, "Créer le pole" %>
+                <div class="content">
+                    <%= simple_form_for [@junior, @configuration, Pole.new] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.hidden_field :id %>
+                        <div class="input_line">
+                            <%= f.input :nom,
+                                        label: false,
+                                        placeholder: "Nom du pole",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter le pole
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-            <% end %>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
+
 <% # Modifier Pole %>
 <% @poles.each do |pole| %>
-    <div class="hex_modal" id="edit_pole_<%= pole.id %>">
-        <div class="background">
+    <div class="hex_modal2" id="edit_pole_<%= pole.id %>">
+        <div class="modal_content">
             <div class="header">
                 <div class="modal-close" id="edit_pole_<%= pole.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @configuration, pole] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <%= f.hidden_field :id %>
-                        <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom du Pole' %>
-                        </div>
-                        <div class="input">
-                            <% # f.input :archive, as: :boolean, label: 'Archiver le pole', checked_value: true, unchecked_value: false %>
-                        </div>
+            <div class="main">
+                <div class="formulaire">
+                    <div class="title">
+                        <div class="ligne">Tu veux modifier</div>
+                        <div class="ligne">un pole ?</div>
                     </div>
-                    <div class="button">
-                        <%= f.button :submit, "Modifier le pole" %>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @configuration, pole] do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.hidden_field :id %>
+                            <div class="input_line">
+                                <%= f.input :nom,
+                                            label: false,
+                                            placeholder: "Nom du pole",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="button_line">
+                                <%= f.button :button do %>
+                                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                Modifier le pole
+                                <% end %>
+                            </div>
+                        <% end %>
                     </div>
-                <% end %>
+                </div>
+            </div>
+            <div class="footer">
+                <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
             </div>
         </div>
     </div>
 <% end %>
 
+
+<% # =========================================================================================================================== %>
 <% # Nouveau Poste %>
-<div class="hex_modal" id="add_poste">
-    <div class="background">
+<div class="hex_modal2" id="add_poste">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="add_poste">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @configuration, @poste] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <%= f.hidden_field :id %>
-                    <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom du Poste' %>
-                    </div>
-                    <div class="input">
-                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Tu veux ajouter</div>
+                    <div class="ligne">un poste ?</div>
                 </div>
-                <div class="button">
-                    <%= f.button :submit, "Créer le poste" %>
+                <div class="content">
+                    <%= simple_form_for [@junior, @configuration, @poste] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.hidden_field :id %>
+                        <div class="input_line">
+                            <%= f.input :nom,
+                                        label: false,
+                                        placeholder: "Nom du poste",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter le poste
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-            <% end %>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
+
 <% # Modifier Poste %>
 <% @postes.each do |poste| %>
-    <div class="hex_modal" id="edit_poste_<%= poste.id %>">
-        <div class="background">
+    <div class="hex_modal2" id="edit_poste_<%= poste.id %>">
+        <div class="modal_content">
             <div class="header">
                 <div class="modal-close" id="edit_poste_<%= poste.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @configuration, poste] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <%= f.hidden_field :id %>
-                        <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom du Poste' %>
-                        </div>
-                        <div class="input">
-                            <% # f.input :archive,  as: :boolean, label: 'Archiver le poste', checked_value: true, unchecked_value: false %>
-                        </div>
-                    </div>
-                    <div class="button">
-                        <%= f.button :submit, "Modifier le poste" %>
-                    </div>
-                <% end %>
-            </div>
-        </div>
-    </div>
-<% end %>
-
-
-<% # Nouveau Permission %>
-<div class="hex_modal" id="add_permission">
-    <div class="background">
-        <div class="header">
-            <div class="modal-close" id="add_permission">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @configuration, @permission] do |f| %>
-                <%= f.error_notification %>
+            <div class="main">
                 <div class="formulaire">
-                    <%= f.hidden_field :id %>
-                    <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom de la classe de permissions' %>
+                    <div class="title">
+                        <div class="ligne">Tu veux modifier</div>
+                        <div class="ligne">un poste ?</div>
                     </div>
-                    <div class="input">
-                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @configuration, poste] do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.hidden_field :id %>
+                            <div class="input_line">
+                                <%= f.input :nom,
+                                            label: false,
+                                            placeholder: "Nom du poste",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="button_line">
+                                <%= f.button :button do %>
+                                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                Modifier le poste
+                                <% end %>
+                            </div>
+                        <% end %>
                     </div>
-                </div>
-                <div class="button">
-                    <%= f.button :submit, "Créer la classe de permissions" %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-</div>
-
-<% # Modifier Permission %>
-<% @permissions.each do |permission| %>
-    <div class="hex_modal" id="edit_permission_<%= permission.id %>">
-        <div class="background">
-            <div class="header">
-                <div class="modal-close" id="edit_permission_<%= permission.id %>">
-                    <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @configuration, permission] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <%= f.hidden_field :id %>
-                        <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom du Permission' %>
-                        </div>
-                        <div class="input">
-                            <% # f.input :archive,  as: :boolean, label: 'Archiver le permission', checked_value: true, unchecked_value: false %>
-                        </div>
-                    </div>
-                    <div class="button">
-                        <%= f.button :submit, "Modifier le permission" %>
-                    </div>
-                <% end %>
+            <div class="footer">
+                <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
             </div>
         </div>
     </div>
 <% end %>
 
+
+<% # =========================================================================================================================== %>
 <% # Nouveau Prestation %>
-<div class="hex_modal" id="add_prestation">
-    <div class="background">
+<div class="hex_modal2" id="add_prestation">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="add_prestation">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @configuration, @new_prestation] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <%= f.hidden_field :id %>
-                    <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom de la prestations' %>
-                    </div>
-                    <div class="input">
-                        <% # f.hidden_field :archive, as: :boolean, label: 'Archiver le poste', value: false, checked_value: true, unchecked_value: false %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Tu veux ajouter</div>
+                    <div class="ligne">une prestation ?</div>
                 </div>
-                <div class="button">
-                    <%= f.button :submit, "Créer la prestations" %>
+                <div class="content">
+                    <%= simple_form_for [@junior, @configuration, @new_prestation] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.hidden_field :id %>
+                        <div class="input_line">
+                            <%= f.input :nom,
+                                        label: false,
+                                        placeholder: "Nom de la prestation",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter la prestation
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-            <% end %>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
+
 <% # Modifier prestation %>
 <% @prestations.each do |prestation| %>
-    <div class="hex_modal" id="edit_prestation_<%= prestation.id %>">
-        <div class="background">
+    <div class="hex_modal2" id="edit_prestation_<%= prestation.id %>">
+        <div class="modal_content">
             <div class="header">
                 <div class="modal-close" id="edit_prestation_<%= prestation.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @configuration, prestation] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <%= f.hidden_field :id %>
-                        <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom du prestation' %>
-                        </div>
-                        <div class="input">
-                            <% # f.input :archive,  as: :boolean, label: 'Archiver le prestation', checked_value: true, unchecked_value: false %>
-                        </div>
+            <div class="main">
+                <div class="formulaire">
+                    <div class="title">
+                        <div class="ligne">Tu veux modifier</div>
+                        <div class="ligne">une prestation ?</div>
                     </div>
-                    <div class="button">
-                        <%= f.button :submit, "Modifier la prestation" %>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @configuration, prestation] do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.hidden_field :id %>
+                            <div class="input_line">
+                                <%= f.input :nom,
+                                            label: false,
+                                            placeholder: "Nom de la prestation",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="button_line">
+                                <%= f.button :button do %>
+                                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                Modifier la prestation
+                                <% end %>
+                            </div>
+                        <% end %>
                     </div>
-                <% end %>
+                </div>
+            </div>
+            <div class="footer">
+                <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
             </div>
         </div>
     </div>
 <% end %>
 
-<% # Nouveau document Adherent %>
-<div class="hex_modal" id="add_etude_document">
-    <div class="background">
+
+<% # =========================================================================================================================== %>
+<% # Nouveau document Etude %>
+<div class="hex_modal2" id="add_etude_document">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="add_etude_document">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @configuration, @newConfigDocEtude] do |f| %>
-                <%= f.error_notification %>
-                <%= f.hidden_field :junior_configuration_id, value: @configuration.id %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.input :nom, required: true, label: 'Nom du document' %>
-                    </div>
-                    <div class="input">
-                        <%= f.input :type_doc, label: "Type de document", collection: [["Document d'adherent", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]], hint: "A quoi/qui est rattaché le document ?" %>
-                        <%= f.input :interne, collection: [['Document à usage interne', true], ['Document à usage externe', false]], label: "Accessibilité" %>                    </div>
-                    <div class="input">
-                        <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
-                        <%= f.input :archive, as: :boolean, label: 'Archiver le document', value: false, checked_value: true, unchecked_value: false %>
-                    </div>
-                    <div class="input" style="margin-bottom: 10px;">
-                        <%= f.input :document_type, as: :file, label: 'Document type' %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Tu veux ajouter</div>
+                    <div class="ligne">un document type</div>
+                    <div class="ligne">d'étude ?</div>
                 </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @configuration, @newConfigDocEtude] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.hidden_field :junior_configuration_id, value: @configuration.id %>
+                        <div class="input_line">
+                            <%= f.input :type_doc,
+                                        label: false,
+                                        collection: [["Document d'adherent", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]],
+                                        include_blank: "Type de document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>       
+                        <div class="input_line">
+                            <%= f.input :nom,
+                                        label: false,
+                                        placeholder: "Nom du document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :obligatoire,
+                                        label: false, 
+                                        collection: [["Document Obligatoire", true], ["Document non obligatoire", false]],
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :archive,
+                                        label: false, 
+                                        collection: [["Document archivé", true], ["Document non archivé", false]],
+                                        input_html: { class: 'form_input' } %>
+                        </div>
 
-                <div class="button">
-                    <%= f.button :submit, "Ajouter le document" %>
+                        <div class="input_line">
+                            <%= f.input :document_type,
+                                        label: false, 
+                                        as: :file,
+                                        label: 'Document signé :',
+                                        placeholder: "Document signé",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter le document type
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-            <% end %>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
+
 <% # Modifier document Etude %>
 <% @configDocEtudes.each_with_index do |configDocEtude, index_modal| %>
-    <div class="hex_modal" id="edit_etude_document_<%= configDocEtude.id %>">
-        <div class="background">
+    <div class="hex_modal2" id="edit_etude_document_<%= configDocEtude.id %>">
+        <div class="modal_content">
             <div class="header">
                 <div class="modal-close" id="edit_etude_document_<%= configDocEtude.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @configuration, configDocEtude] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <%= f.hidden_field :id %>
-                        <div class="input">
-                            <%= f.input :nom, required: true, label: 'Nom du document' %>
-                        </div>
-                    <div class="input">
-                        <%= f.input :type_doc, label: "Type de document", collection: [["Document d'adherent", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]], hint: "A quoi/qui est rattaché le document ?" %>
-                        <%= f.input :interne, collection: [['Document à usage interne', true], ['Document à usage externe', false]], label: "Accessibilité" %>
+            <div class="main">
+                <div class="formulaire">
+                    <div class="title">
+                        <div class="ligne">Tu veux modifier</div>
+                        <div class="ligne">un document type</div>
+                        <div class="ligne">d'étude ?</div>
                     </div>
-                        <div class="input">
-                            <%= f.input :obligatoire, as: :boolean, label: 'Rendre le document obligatoire', checked_value: true, unchecked_value: false %>
-                            <%= f.input :archive, as: :boolean, label: 'Archiver le document', checked_value: true, unchecked_value: false %>
-                        </div>
-                    </div>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @configuration, configDocEtude] do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.hidden_field :id %>
+                            <div class="input_line">
+                                <%= f.input :type_doc,
+                                            label: false,
+                                            collection: [["Document d'adherent", "adherent"], ["Document d'étude", "etude"], ["Document de phase", "phase"], ["Document de postulant", "postulant"], ["Document concernant l'intervenant", "intervenant"]],
+                                            include_blank: "Type de document",
+                                            input_html: { class: 'form_input' } %>
+                            </div>       
+                            <div class="input_line">
+                                <%= f.input :nom,
+                                            label: false,
+                                            placeholder: "Nom du document",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :obligatoire,
+                                            label: false, 
+                                            collection: [["Document Obligatoire", true], ["Document non obligatoire", false]],
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :archive,
+                                            label: false, 
+                                            collection: [["Document archivé", true], ["Document non archivé", false]],
+                                            input_html: { class: 'form_input' } %>
+                            </div>
 
-                    <div class="button">
-                        <%= f.button :submit, "Mettre à jour le document" %>
+                            <div class="input_line">
+                                <%= f.input :document_type,
+                                            label: false, 
+                                            as: :file,
+                                            label: 'Document signé :',
+                                            placeholder: "Document signé",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+
+                            <div class="button_line">
+                                <%= f.button :button do %>
+                                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                Modifier le document type
+                                <% end %>
+                            </div>
+                        <% end %>
                     </div>
-                <% end %>
+                </div>
+            </div>
+            <div class="footer">
+                <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
             </div>
         </div>
     </div>

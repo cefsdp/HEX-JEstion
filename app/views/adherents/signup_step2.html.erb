@@ -1,0 +1,77 @@
+<div class="session_background">
+  <%= simple_form_for [current_user.junior, current_user.adherent] do |f| %>
+    <div class="content_div">
+      <div class="content_background">
+        <div class="content_main">
+          <div class="main_title">
+            <div class="title_line">Parle-nous</div>
+            <div class="title_line">un peu de toi !</div>
+          </div>
+          <div class="main_form">
+            <div class="form_input_line">
+                <%= f.input :prenom,
+                          required: true,
+                          label: false,
+                          placeholder: "Prénom",
+                          input_html: { class: 'form_input' } %>
+            </div>
+            <div class="form_input_line">
+                <%= f.input :nom,
+                          required: true,
+                          label: false,
+                          placeholder: "Nom",
+                          input_html: { class: 'form_input' } %>
+            </div>
+            <div class="form_input_line">
+                <%= f.input :telephone,
+                          label: false,
+                          placeholder: "Téléphone",
+                          input_html: { class: 'form_input' } %>
+            </div>
+            <div class="form_input_line">
+                <%= f.input :niveau_etude,
+                          required: true,
+                          label: false,
+                          include_blank: "Niveau d'étude",
+                          selected: "Niveau d'étude",
+                          collection: @junior.junior_configuration.niveau_etude,
+                          label_method: lambda { |niveau_etude| "#{niveau_etude}" },
+                          input_html: { class: 'form_input' } %>
+            </div>
+            <div class="form_input_line">
+                <%= f.input :specialisation_etude,
+                          required: true,
+                          label: false,
+                          include_blank: "Spécialisation d'étude",
+                          selected: "Spécialisation d'étude",
+                          collection: @junior.junior_configuration.specialisation_etude,
+                          label_method: lambda { |spe| "#{spe}" },
+                          input_html: { class: 'form_input' } %>
+            </div>
+            <div class="form_input_line">
+                <%= f.input :annee_diplome,
+                          required: true,
+                          label: false,
+                          as: :numeric,
+                          placeholder: "Année d'obtention du diplôme",
+                          input_html: { min: Date.today.year,class: 'form_input' } %>
+            </div>
+            <div class="form_btn">
+              <%= f.button :button do %>
+                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                Continuer
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="content_footer">
+          <div class="footer_links">
+          </div>
+          <div class="footer_logo">
+            <%= image_tag 'HEX_BLANC', style: 'height:10vh; width: auto;'%>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

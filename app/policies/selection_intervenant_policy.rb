@@ -5,6 +5,10 @@ class SelectionIntervenantPolicy < ApplicationPolicy
     end
   end
 
+  def mes_missions?
+    return true
+  end
+
   def create?
     if @user.admin
       # Super Admin

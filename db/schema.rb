@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_17_192119) do
+ActiveRecord::Schema.define(version: 2022_03_27_123507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -377,6 +377,7 @@ ActiveRecord::Schema.define(version: 2022_03_17_192119) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "commentaire_choix"
+    t.string "statut", default: "pending"
     t.index ["selection_intervenant_id"], name: "index_postulants_on_selection_intervenant_id"
     t.index ["user_id"], name: "index_postulants_on_user_id"
   end

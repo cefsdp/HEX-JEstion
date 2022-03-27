@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }
   root to: 'pages#home'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  
   #APP 
   resources :juniors do 
-
+    
+    get '/sign_up_step2', to: 'adherents#signup_step2', as: 'signup_step2'
     resources :membre_requests
     
     resources :membres do

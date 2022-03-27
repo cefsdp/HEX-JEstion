@@ -4,9 +4,11 @@ class IntervenantsController < ApplicationController
     @junior = Junior.find(junior_id_params)
     @etude = Etude.find(etude_id_params)
     @phase = Phase.find(phase_id_params)
+    @postulant = Postulant.find(postulant_params[:postulant_id])
     authorize @intervenant
     if @intervenant.save
       flash[:success] = "Intervenant successfully created"
+      @postulant.update(statut: "accepté")
       redirect_to junior_etude_phase_path(@junior, @etude, @phase)
     else
       flash[:error] = "Something went wrong"
@@ -45,6 +47,10 @@ class IntervenantsController < ApplicationController
 
   def intervenant_params
     params.require(:intervenant).permit!
+  end
+
+  def postulant_params
+    params.require(:postulant).permit!
   end
 
   def intervenant_id_params

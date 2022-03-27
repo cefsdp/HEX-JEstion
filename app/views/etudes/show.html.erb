@@ -8,15 +8,17 @@
   <div class="contents">
     <% # Tableau de bord %>
     <div class="content active">   
-        Informations sur l'étude
-        Prochaines étapes
-        Selections en cours
-        Gantt
-        Camembert suivi phases (cloturé, passé non cloturé, futures)
-        Camembert suivi documents (futures, passé + preuves, passé sans preuves)
-        Camembert JEH signé / facturé / reversé / déclaré 
-        Camembert Facture émis / payé / en attente
-        Camembert Avenants
+        <div class="middle_message">
+            <div class="reduce_margin_bottom_2 jaune bigtext">
+            Tes statistiques ne sont pas
+            </div>
+            <div class="add_margin_bottom_1 jaune bigtext">
+            disponibles pour le moment !
+            </div>
+            <div class="bleu smalltext">
+            Mais on travaille dur pour y remedier !
+            </div>
+        </div>
     </div>
 
     <% # Informations %>
@@ -292,198 +294,402 @@
 </div>
 
 
+<% # ==========================================================================================================================%>
 <% # Modifier l'étude %>
-<div class="hex_modal" id="modifier_etude">
-    <div class="background">
+<div class="hex_modal2" id="modifier_etude">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="modifier_etude">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @etude] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.input :ref_etude, autofocus: true, required: true, label: "Référence de l'étude", placeholder: @new_reference %>
-                        <%= f.input :confidentielle, autofocus: true, required: true, label: "Confidentialité", as: :select, collection: [["Etude confidentielle", true], ["Etude non confidentielle", false]] %>
-                    </div>
-                    <div class="input">
-                        <%= f.association :prestation, required: true, autofocus: true, label: "Prestation", collection: @junior.junior_configuration.prestations, :label_method => lambda { |prestation| "#{prestation.nom}" } %>
-                        <%= f.input :statut, autofocus: true, label: 'statut', required: true, collection: ["En négociation", "Signé", "Terminé", "Avorté", "Stand by"]%>
-                    </div>
-                    <div class="input">
-                        <%= f.input :date_debut, as: :date, html5: true, required: true, autofocus: true, label: "Début des négociations" %>
-                        <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date de Signature" %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Modifier</div>
+                    <div class="ligne">Les informations</div>
+                    <div class="ligne">de l'étude ?</div>
                 </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude] do |f| %>
+                        <%= f.error_notification %>
+                        <div class="input_line">
+                            <%= f.input :ref_etude,
+                                        label: "Référence de l'étude",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :statut,
+                                        as: :select,
+                                        include_blank: "Statut de l'étude",
+                                        collection: ["En négociation", "Signé", "Terminé", "Avorté", "Stand by"],
+                                        label: false, 
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :confidentielle,
+                                        as: :select,
+                                        include_blank: "Confidentialité",
+                                        collection: [["Etude confidentielle", true], ["Etude non confidentielle", false]],
+                                        label: false, 
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :prestation,
+                                        collection: @junior.junior_configuration.prestations,
+                                        label: false,
+                                        include_blank: "Prestation",
+                                        label_method: lambda { |prestation| "#{prestation.nom}" },
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :date_debut,
+                                        label:  "Date de début des négociations",
+                                        as: :date,
+                                        html5: true,
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :date_signature,
+                                        label:  "Date de signature",
+                                        as: :date,
+                                        html5: true,
+                                        input_html: { class: 'form_input' } %>
+                        </div>
 
-                <div class="button">
-                    <%= f.button :submit, "Modifier l'étude" %>
+
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Modifier l'étude
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
-            <% end %>
-        </div>
-    </div>
-</div>
-
-<% # Ajouter un client existant %>
-<div class="hex_modal" id="add_client_existant">
-    <div class="background">
-        <div class="header">
-            <div class="modal-close" id="add_client_existant">
-                <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @etude] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.association :client, autofocus: true, required: true, label: "Nom | Entreprise du client", collection: @junior.clients, :label_method => lambda { |client| "#{client.nom} | #{client.entreprise}" } %>
-                    </div>
-                </div>
-
-                <div class="button">
-                    <%= f.button :submit, "Ajouter le client" %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-</div>
-
-<% # Retirer le client de l'étude %>
-<div class="hex_modal" id="remove_client">
-    <div class="background">
-        <div class="header">
-            <div class="modal-close" id="remove_client">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @etude] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.input :client, as: :hidden, input_html: { :value => "remove" }  %>
-                    </div>
-                </div>
-
-                <div class="button">
-                    <%= f.button :submit, "Supprimer le client de l'étude" %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-</div>
-
-<% # Modifier CdP %>
-<div class="hex_modal" id="modifier_CdP">
-    <div class="background">
-        <div class="header">
-            <div class="modal-close" id="modifier_CdP">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @etude] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.input :charge_etude_id, required: true, autofocus: true, label: "Chargé d'étude", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" } %>
-                        <%= f.input :charge_qualite_id, autofocus: true, label: "Chargé de qualité", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" }  %>
-                    </div>
-                    <div class="input">
-                        <%= f.input :charge_rh_id, autofocus: true, label: "Chargé des R.H.", collection: @junior.membres, :label_method => lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" }  %>
-                    </div>
-                </div>
-
-                <div class="button">
-                    <%= f.button :submit, "Modifier les CdP" %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-</div>
-
-<% # Add Etape %>
-<div class="hex_modal" id="add_etape">
-    <div class="background">
-        <div class="header">
-            <div class="modal-close" id="add_etape">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="content">
-            <h1>Souhaitez-vous ajouter une phase ou un document d'étude ?</h1>
-            <div class="buttons_column">
-                <div class="buttons_line">
-                    <div class="btn1"><%= link_to "Nouvelle Phase", new_junior_etude_phase_path(@junior, @etude, @new_phase) %></div>
-                </div>
-                <div class="buttons_line">
-                    <div class="btn1 modal-button" id="add_doc_etude">Nouveau document d'étude</div>
-                </div>
-            </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
 
 <% # ==========================================================================================================================%>
-<% # Ajouter document phase %>
-<div class="hex_modal" id="add_doc_etude">
-    <div class="background">
+<% # Ajouter un client existant %>
+<div class="hex_modal2" id="add_client_existant">
+    <div class="modal_content">
+        <div class="header">
+            <div class="modal-close" id="add_client_existant">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Modifier</div>
+                    <div class="ligne">Les informations</div>
+                    <div class="ligne">de l'étude ?</div>
+                </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude] do |f| %>
+                        <%= f.error_notification %>
+                        <div class="input_line">
+                            <%= f.association :client,
+                                        collection: @junior.clients,
+                                        label: false,
+                                        include_blank: "Client | Entreprise",
+                                        label_method: lambda { |client| "#{client.nom} | #{client.entreprise}" },
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter le client sur l'étude
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+        </div>
+    </div>
+</div>
+
+
+<% # Retirer le client de l'étude %>
+<div class="hex_modal2" id="remove_client">
+    <div class="modal_content">
+        <div class="header">
+            <div class="modal-close" id="remove_client">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Modifier</div>
+                    <div class="ligne">Les informations</div>
+                    <div class="ligne">de l'étude ?</div>
+                </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.input :client, as: :hidden, input_html: { :value => "remove" }  %>
+
+
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Supprimer le client de l'étude
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+        </div>
+    </div>
+</div>
+
+
+<% # ==========================================================================================================================%>
+<% # Modifier CdP %>
+<div class="hex_modal2" id="modifier_CdP">
+    <div class="modal_content">
+        <div class="header">
+            <div class="modal-close" id="modifier_CdP">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Modifier</div>
+                    <div class="ligne">Les Chargés</div>
+                    <div class="ligne">de l'étude ?</div>
+                </div>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude] do |f| %>
+                        <%= f.error_notification %>
+                        <div class="input_line">
+                            <%= f.input :charge_etude_id,
+                                        collection: @junior.membres,
+                                        label: false,
+                                        include_blank: "Chargé d'étude",
+                                        label_method: lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" },
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :charge_qualite_id,
+                                        collection: @junior.membres,
+                                        label: false,
+                                        include_blank: "Chargé de qualité",
+                                        label_method: lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" },
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :charge_rh_id,
+                                        collection: @junior.membres,
+                                        label: false,
+                                        include_blank: "Chargé des RH",
+                                        label_method: lambda { |membre| "#{membre.user.adherent.nom} #{membre.user.adherent.prenom}" },
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter le client sur l'étude
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+        </div>
+    </div>
+</div>
+
+
+<% # ==========================================================================================================================%>
+<% # Add Etape %>
+<div class="hex_modal2" id="add_etape">
+    <div class="modal_content">
+        <div class="header">
+            <div class="modal-close" id="add_etape">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Modifier</div>
+                    <div class="ligne">Les Chargés</div>
+                    <div class="ligne">de l'étude ?</div>
+                </div>
+                <div class="content">
+                    <div class="button_line">
+                        <%= button_to new_junior_etude_phase_path(@junior, @etude, @new_phase), method: :get do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter une Nouvelle Phase
+                        <% end %>
+                    </div>
+                    <div class="button_line modal-button"  id="add_doc_etude">
+                        <button>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter un Nouveau Document
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
+        </div>
+    </div>
+</div>
+
+
+<% # ==========================================================================================================================%>
+<% # Ajouter document étude %>
+<div class="hex_modal2" id="add_doc_etude">
+    <div class="modal_content">
         <div class="header">
             <div class="modal-close" id="add_doc_etude">
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <div class="content">
-            <%= simple_form_for [@junior, @etude, @phase, DocumentEtude.new] do |f| %>
-                <%= f.error_notification %>
-                <div class="formulaire">
-                    <div class="input">
-                        <%= f.hidden_field :etude_id, value: @etude.id %>
-                        <%= f.input :nom, required: true, label: "Nom du document", collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "etude"), :label_method => lambda { |doc| "#{doc.nom}" }, value_method: :nom %>
-                        <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
-                    </div>
-                    <div class="input">
-                        <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
-                    </div>
-                    <div class="button">
-                        <%= f.button :submit, "Ajouter un document" %>
-                    </div>
+        <div class="main">
+            <div class="formulaire">
+                <div class="title">
+                    <div class="ligne">Tu veux ajouter</div>
+                    <div class="ligne">un document</div>
+                    <div class="ligne">à l'étude ?</div>
                 </div>
-            <% end %>
+                <div class="content">
+                    <%= simple_form_for [@junior, @etude, @phase, DocumentEtude.new] do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.hidden_field :etude_id, value: @etude.id %>
+                        <div class="input_line">
+                            <%= f.input :nom,
+                                        label: false,
+                                        collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "etude"),
+                                        :label_method => lambda { |doc| "#{doc.nom}" },
+                                        value_method: :nom,
+                                        include_blank: "Nom du document",
+                                        selected: "Nom du document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :ref_doc,
+                                        label: false, 
+                                        placeholder: "Référence du document",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :date_signature,
+                                        label: "Date d'émission", 
+                                        as: :date,
+                                        html5: true,
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+                        <div class="input_line">
+                            <%= f.input :document,
+                                        label: false, 
+                                        as: :file,
+                                        label: 'Document signé :',
+                                        placeholder: "Document signé",
+                                        input_html: { class: 'form_input' } %>
+                        </div>
+
+                        <div class="button_line">
+                            <%= f.button :button do %>
+                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                            Ajouter un document
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
         </div>
     </div>
 </div>
 
-<% # Modifier document phase %>
+
+<% # Modifier document étude %>
 <% @document_etudes.each do |doc_etude| %>
-    <div class="hex_modal" id="edit_doc_etude_<%= doc_etude.id %>">
-        <div class="background">
+    <div class="hex_modal2" id="edit_doc_etude_<%= doc_etude.id %>">
+        <div class="modal_content">
             <div class="header">
                 <div class="modal-close" id="edit_doc_etude_<%= doc_etude.id %>">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-            <div class="content">
-                <%= simple_form_for [@junior, @etude, @phase, doc_etude] do |f| %>
-                    <%= f.error_notification %>
-                    <div class="formulaire">
-                        <div class="input">
-                            <%= f.input :ref_doc, required: true, label: "Référence du document", placeholder: "RM_1" %>
-                            <%= f.input :date_signature, as: :date, html5: true, autofocus: true, label: "Date d'émission/signature du document" %>
-                        </div>
-                        <div class="input">
-                            <%= f.input :validite, label: "Validité du document", collection: [["Document valide", "valide"], ["Document invalide", "invalide"]] %>
-                            <%= f.input :document, as: :file, label: 'Document signé :' %>
-                        </div>
-                        <div class="button">
-                            <%= f.button :submit, "Ajouter un document" %>
-                        </div>
+            <div class="main">
+                <div class="formulaire">
+                    <div class="title">
+                        <div class="ligne">Tu veux ajouter</div>
+                        <div class="ligne">un document</div>
+                        <div class="ligne">à l'étude ?</div>
                     </div>
-                <% end %>
+                    <div class="content">
+                        <%= simple_form_for [@junior, @etude, @phase, doc_etude] do |f| %>
+                            <%= f.error_notification %>
+                            <div class="input_line">
+                                <%= f.input :ref_doc,
+                                            label: false, 
+                                            placeholder: "Référence du document",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :date_signature,
+                                            label: "Date d'émission", 
+                                            as: :date,
+                                            html5: true,
+                                            placeholder: "Date d'émission ?",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :validite,
+                                            label: false,
+                                            include_blank: "Validité du document",
+                                            selected: "Validité du document",
+                                            collection: [["Document valide", "valide"], ["Document invalide", "invalide"]],
+                                            placeholder: "Validité du document",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+                            <div class="input_line">
+                                <%= f.input :document,
+                                            label: false, 
+                                            as: :file,
+                                            label: 'Document signé :',
+                                            placeholder: "Document signé",
+                                            input_html: { class: 'form_input' } %>
+                            </div>
+
+                            <div class="button_line">
+                                <%= f.button :button do %>
+                                <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                Modifier le document
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <%= image_tag 'HEX_BLANC', style: 'height:5vh; width: auto;'%>
             </div>
         </div>
     </div>

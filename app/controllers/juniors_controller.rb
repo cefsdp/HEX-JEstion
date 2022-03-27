@@ -6,11 +6,13 @@ class JuniorsController < ApplicationController
   end
 
   def show
+    redirect_to junior_signup_step2_path(current_user.junior) if current_user.adherent.prenom.nil?
     @junior = Junior.find(params[:id])
     authorize @junior
     AdherentSingleUpdateFileStatusJob.perform_now current_user.adherent
     @data_chiffre_affaire = data_chiffre_affaire_mensuel
     @data_nombre_etudes = data_nombre_etude_statut
+    @data_jeh_rem_adherent = data_jeh_rem_adherent
   end
 
   def new
@@ -122,6 +124,24 @@ class JuniorsController < ApplicationController
     negocier = @junior.etudes.where("EXTRACT(YEAR FROM date_signature) = ? AND statut = 'En négociation'",
                                     Date.today.year)
     { signer: signer.count, negocier: negocier.count }
+  end
+
+  def data_jeh_rem_adherent
+    etudes_signees = @junior.etudes.where("EXTRACT(YEAR FROM date_signature) = ? AND statut = 'Signé'", Date.today.year)
+    hashes = []
+    etudes_signees.map do |etude|
+      etude.phases.each do |phase|
+        jeh = phase.jeh_par_intervenant * phase.nombre_intervenant
+        iea = phase.indemnisation_par_jeh * jeh
+        hashes.push << { jeh: jeh, iea: iea }
+      end
+    end
+    result = { jeh: 0, iea: 0 }
+    hashes.each do |hash|
+      result[:jeh] += hash[:jeh]
+      result[:iea] += hash[:iea]
+    end
+    return result
   end
 end
 

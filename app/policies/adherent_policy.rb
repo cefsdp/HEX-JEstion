@@ -5,6 +5,10 @@ class AdherentPolicy < ApplicationPolicy
     end
   end
 
+  def signup_step2?
+    return true
+  end
+
   def show?
     if @user.admin == false
       # Super Admin
@@ -48,7 +52,7 @@ class AdherentPolicy < ApplicationPolicy
         end
       else
         # Adherent
-        return false
+        return true
       end
     end
   end

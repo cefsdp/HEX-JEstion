@@ -41,10 +41,10 @@ import { initHalfDoughnutChart } from "../components/half_doughnut_chart";
 document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   initSelect2();
-  //initNavSelector();
+  // initNavSelector();
   initMenuSelector();
   initArrayInput();
-  initHEXModal();
+  // initHEXModal();
   initHEXModal2();
   initTableauHexSearchBar();
   initReducteur();

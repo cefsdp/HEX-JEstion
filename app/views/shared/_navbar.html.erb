@@ -39,6 +39,10 @@
         <%= link_to junior_selection_intervenants_path(current_user.junior_id) do %>Nouvelles Missions<% end %>
         <div class="<%= current_page?(junior_selection_intervenants_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
       </div>
+      <div class='<%= current_page?(junior_mes_missions_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_mes_missions_path(current_user.junior_id) do %>Mes Missions<% end %>
+        <div class="<%= current_page?(junior_mes_missions_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
     <% end %>
   </div>
   <div class='navbar_profile dropdown'>
