@@ -65,6 +65,15 @@
         <div class='line'>
           <%= link_to junior_update_mode_path(current_user.junior, cookies.encrypted[:mode_affichage] = "adherent") do %>Mode adherent<% end %>
         </div>
+        <div class='line'>
+          <% if current_user.membre_request.nil? %>
+            <div class='nav_item'>
+              <%= link_to junior_membre_requests_path(current_user.junior.id, membre_request: { junior: current_user.junior_id, user: current_user.id }), method: 'post' do %>
+                Devenir Membre
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
       <div class='line'><%= link_to edit_user_registration_path do %>Mon Profil<% end %></div>
       <div class="line"><%= link_to destroy_user_session_path, method: :delete do %>Déconnexion <% end %></div>
@@ -74,3 +83,5 @@
 </div>
 
 <div id="background_overlay"></div>
+
+
