@@ -106,7 +106,7 @@
                 <%= simple_fields_for :permission do |n| %>
                   <div class="formulaire">
                     <div class="input">
-                    <%= n.input :id, autofocus: true, label: "Autorisation :", collection: @junior.junior_configuration.permissions, :label_method => lambda { |autorisation| "#{autorisation.nom}" } %>
+                    <%= n.input :id, autofocus: true, required: true, label: "Autorisation :", collection: @junior.junior_configuration.permissions, :label_method => lambda { |autorisation| "#{autorisation.nom}" } %>
                     </div>
                   </div>
                 <% end %>
