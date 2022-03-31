@@ -26,6 +26,6 @@ class JuniorPolicy < ApplicationPolicy
   end
 
   def update_mode?
-    user.junior.membre == true if @user.junior.id == @junior.id.to_i
+    user.membre if @user.junior.id == @junior.id.to_i
   end
 end
