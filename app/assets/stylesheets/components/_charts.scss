@@ -2,6 +2,8 @@
   background-color: var(--blanc);
   border-radius: 20px;
   padding: 2% 3%;
+  width: 100%;
+  height: 100%;
   .chart_title {
     font-size: 24px;
     font-weight: 700;
@@ -38,34 +40,28 @@
     }
   }
 }
-.fullwidth {
-  width: 100%;
-}
-.middlewidth {
-  width: 48%;
-}
-.thirdwidth {
-  width: 30%;
-}
-.group_charts_line {
+
+.chart_group {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-wrap: wrap;
-}
-.charts_square {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  gap: 5%;
-  .charts_square_row {
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  .chart_group_item {
+    flex: 1 1 0;
+    min-width: 250px;
+    padding: 1% 1%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    @media only screen and (min-width: 641px) and (max-width: 1050px) {
+      min-width: 400px;
+    }
   }
 }
+
 .fullheigth {
   height: 95%;
 }
@@ -74,4 +70,17 @@
 }
 .margin1_0 {
   margin: 1% 0%;
+}
+
+.bar_chart, .bar_group {
+  width: 100%;
+  @media only screen and (max-width: 640px) {
+    display: none;
+  }
+  @media only screen and (min-width: 641px) and (max-width: 1050px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 1051px) and (max-width: 1500px) {
+    width: 100%;
+  }
 }

@@ -5,6 +5,9 @@
   gap: 1%;
   .inline_list_item {
     width: 9%;
+    @media only screen and (max-width: 640px) {
+      width: 25%;
+    }
     .valide {
       display: flex;
       justify-content: center;

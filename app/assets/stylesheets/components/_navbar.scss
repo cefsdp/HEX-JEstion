@@ -13,6 +13,9 @@
     gap: 1%;
     align-items: center;
     .navbar_logo {
+      @media only screen and (max-width: 800px) {
+        display: none;
+      }
     }
     .navbar_links {
       flex-grow: 0.7;
@@ -38,6 +41,12 @@
           font-size: 125%;
           height: 100%;
           text-align: center;
+          @media only screen and (max-width: 800px) {
+            font-size: 75%;
+          }
+          @media only screen and (min-width: 801px) and (max-width: 1050px) {
+            font-size: 100%;
+          }
         }
         .inner {
           display: none;
@@ -67,6 +76,12 @@
         font-weight: 700;
         color: var(--noir);
         font-size: 125%;
+        @media only screen and (max-width: 800px) {
+          display: none;
+        }
+        @media only screen and (min-width: 801px) and (max-width: 1050px) {
+          font-size: 75%;
+        }
       }
       .profile_dropdown {
         display: flex;

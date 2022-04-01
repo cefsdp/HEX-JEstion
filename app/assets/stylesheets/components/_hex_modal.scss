@@ -202,6 +202,10 @@
   width: 33%;
   height: 25px;
   font-size: 14px;
+  @media only screen and (max-width: 640px) {
+    width: 50%;
+    font-size: 12px;
+  }
 }
 
 .modal-button3 {

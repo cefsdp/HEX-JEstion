@@ -31,6 +31,12 @@
               font-weight: 700;
               margin-bottom: -3%;
               color: white;
+              @media only screen and (max-width: 640px) {
+                font-size: 250%;
+              }
+              @media only screen and (min-width: 641px) and (max-width: 1007px) {
+                font-size: 500%;
+              }
             }
           }
           .main_form {
@@ -93,9 +99,16 @@
                   height: 50px;
                   width: 50px;
                   background-color: var(--jaune-hex);
+                  @media only screen and (max-width: 640px) {
+                    height: 30px;
+                    width: 30px;
+                  }
                   i {
                     font-size: 125%;
                     color: var(--bleu-hex);
+                    @media only screen and (max-width: 640px) {
+                      font-size: 75%;
+                    }
                   }
                 }
               }
@@ -137,6 +150,9 @@
             display: flex;
             justify-content: flex-end;
             padding: 0% 3% 0% 0%;
+            @media only screen and (max-width: 640px) {
+              display: none;
+            }
           }
         }
       }
@@ -147,3 +163,5 @@
 .space_bottom_2p {
   margin-bottom: 5% !important;
 }
+
+
