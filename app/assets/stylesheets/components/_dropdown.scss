@@ -23,6 +23,12 @@
         font-size: 20px;
         color: var(--noir);
         text-decoration: none;
+        @media only screen and (max-width: 800px) {
+          font-size: 13px;
+        }
+        @media only screen and (min-width: 801px) and (max-width: 1050px) {
+          font-size: 18px;
+        }
       }
     }
     .small_line {
@@ -32,6 +38,12 @@
       text-align: center;
       font-style: italic;
       font-size: 14px;
+      @media only screen and (max-width: 800px) {
+        font-size: 10px;
+      }
+      @media only screen and (min-width: 801px) and (max-width: 1050px) {
+        font-size: 12px;
+      }
     }
     .line:hover {
       background-color: var(--gris);

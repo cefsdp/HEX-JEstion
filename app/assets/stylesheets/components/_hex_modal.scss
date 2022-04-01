@@ -38,6 +38,12 @@
           font-weight: 700;
           display: flex;
           flex-direction: column;
+          @media only screen and (max-width: 640px) {
+            font-size: 12px;
+          }
+          @media only screen and (min-width: 641px) and (max-width: 1050px) {
+            font-size: 20px;
+          }
           .ligne {
             margin-bottom: -2%;
           }
@@ -51,6 +57,7 @@
             width: 30%;
             min-width: 300px;
             color: var(--blanc);
+            label,
             input:-webkit-autofill,
             input:-webkit-autofill:hover,
             input:-webkit-autofill:focus,
@@ -61,6 +68,12 @@
               border: none;
               border-bottom: 1px solid var(--gris);
               font-size: 125%;
+              @media only screen and (max-width: 640px) {
+                font-size: 50%;
+              }
+              @media only screen and (min-width: 641px) and (max-width: 1050px) {
+                font-size: 100%;
+              }
             }
             .form_input {
               -webkit-box-shadow: 0 0 0px 1000px var(--bleu-hex-90-opacity)
@@ -69,11 +82,18 @@
               border: none;
               border-bottom: 2px solid var(--gris);
               font-size: 150%;
+              @media only screen and (max-width: 640px) {
+                font-size: 50%;
+              }
+              @media only screen and (min-width: 641px) and (max-width: 1050px) {
+                font-size: 100%;
+              }
             }
           }
           .long_input_line {
             width: 80%;
             color: var(--blanc);
+            label,
             input:-webkit-autofill,
             input:-webkit-autofill:hover,
             input:-webkit-autofill:focus,
@@ -84,6 +104,12 @@
               border-radius: 20px;
               font-size: 125%;
               padding: 2% 3%;
+              @media only screen and (max-width: 640px) {
+                font-size: 13px;
+              }
+              @media only screen and (min-width: 641px) and (max-width: 1050px) {
+                font-size: 20px;
+              }
             }
             .form_input {
               -webkit-box-shadow: 0 0 0px 1000px var(--dark-blue) inset !important;
@@ -92,6 +118,12 @@
               border-radius: 20px;
               font-size: 125%;
               padding: 2% 3%;
+              @media only screen and (max-width: 640px) {
+                font-size: 13px;
+              }
+              @media only screen and (min-width: 641px) and (max-width: 1050px) {
+                font-size: 20px;
+              }
             }
           }
           .file_input_line {
@@ -111,6 +143,9 @@
               color: var(--blanc);
               font-family: "Poppins", sans-serif;
               font-weight: 500;
+              @media only screen and (max-width: 640px) {
+                font-size: 75%;
+              }
               .circle_arrow1 {
                 display: flex;
                 align-items: center;
@@ -119,9 +154,16 @@
                 height: 50px;
                 width: 50px;
                 background-color: var(--jaune-hex);
+                @media only screen and (max-width: 640px) {
+                  height: 25px;
+                  width: 25px
+                }
                 i {
                   font-size: 125%;
                   color: var(--bleu-hex);
+                  @media only screen and (max-width: 640px) {
+                    font-size: 12px;
+                  }
                 }
               }
             }
@@ -202,6 +244,10 @@
   width: 33%;
   height: 25px;
   font-size: 14px;
+  @media only screen and (max-width: 640px) {
+    width: 50%;
+    font-size: 12px;
+  }
 }
 
 .modal-button3 {
