@@ -101,23 +101,58 @@ class DocumentGeneratorJob < ApplicationJob
   end
 
   def infos_adhesion(objects_data)
-    adherent_data = objects_data[:adherent]
-    data = {keyword: "% %", datum: " "}
+    adhesion_data = objects_data[:adhesion]
+    data = {keyword: "%%", datum: " ", }
   end
 
   def infos_adherent
-    adherent_data = objects_data[:adherent]
-    data = {keyword: "%nom%", datum: adherent.nom}
+    adherent = objects_data[:adherent]
+    data = [{keyword: "%nom%", datum: adherent.nom}, {keyword: "%prenom%", datum: adherent.prenom},
+            {keyword: "%TelephoneAdherent%", datum: adherent.telephone }, {keyword: "%AdressePostaleAdherent%", datum: adherent.adresse_postale },
+            {keyword: "%CodePostalAdherent%", datum: adherent.code_postale }, {keyword: "%VilleAdherent%", datum: adherent.ville },
+            {keyword: "%NiveauEtude%", datum: adherent.niveau_etude }, {keyword: "%AnneeDiplome%", datum: adherent.anneediplome },
+            {keyword: "%SpecialisationEtude%", datum: adherent.specialisation_etude }]
   end
 
   def infos_etude
-    etude_data = objects_data[:etude]
-    data = {keyword: "% %", datum: " "}
+    etude = objects_data[:etude]
+    client = objects_data[:client]
+    phases = etude.phases
+    data = [{keyword: "%SexeClient%", datum: client.sexe}, {keyword: "%LangueClient%", datum: client.langue},
+            {keyword: "%PrenomClient%", datum: client.prenom}, {keyword: "%NomClient%", datum: client.nom},
+            {keyword: "%EmailClient%", datum: client.email}, {keyword: "%TelephoneClient%", datum: client.telephone},
+            {keyword: "%EntrepriseClient%", datum: client.entreprise}, {keyword: "%PosteClient%", datum: client.poste},
+            {keyword: "%SiteWebClient%", datum: client.site_web}, {keyword: "%TelephoneEntrepriseClient%", datum: client.telephone_entreprise},
+            {keyword: "%SiretClient%", datum: client.siret}, {keyword: "%TypeEntrepriseClient%", datum: client.type_entreprise},
+            {keyword: "%ActiviteClient%", datum: client.activite}, {keyword: "%AdresseClient%", datum: client.adresse},
+            {keyword: "%VilleClient%", datum: client.ville}, {keyword: "%CodePostalClient%", datum: client.code_postal},
+            {keyword: "%PaysClient%", datum: client.pays}, {keyword: "%ProvenanceClient%", datum: client.provenance},
+            {keyword: "%PremierContactClient%", datum: client.premier_contact}, {keyword: "%PrestationEtude%", datum: etude.prestation.nom},
+            {keyword: "%ChargeEtude%", datum: etude.charge_etude.nom}, {keyword: "%ChargeQualiteEtude%", datum: etude.charge_qualite.nom},
+            {keyword: "%ChargeRHEtude%", datum: etude.charge_rh.nom}, {keyword: "%StatutEtude%", datum: etude.statut},
+            {keyword: "%DateDebutEtude%", datum: etude.date_debut}, {keyword: "%ReferenceEtude%", datum: etude.ref_etude},
+            {keyword: "%DateSignature%", datum: etude.date_signature}, {keyword: "%NomEtude%", datum: etude.nom},
+            {keyword: "%ConfidentialiteEtude%", datum: etude.confidentielle}]
+    phases.each_with_index do |phase, index|
+      data << [ {keyword: "%NomPhase#{index}%", datum: phase.nom}, {keyword: "%DateDebutPhase#{index}%", datum: phase.date_debut},
+                {keyword: "%DateFinPhase#{index}%", datum: phase.date_fin}, {keyword: "%NombreIntervenantPhase#{index}%", datum: phase.nombre_intervenant},
+                {keyword: "%JehParIntervenantPhase#{index}%", datum: phase.jeh_par_intervenant}, {keyword: "%FraisPhase#{index}%", datum: phase.frais},
+                {keyword: "%DescriptionPhase#{index}%", datum: phase.description_phase}, {keyword: "%DescriptionMissionIntervenantPhase#{index}%", datum: phase.description_mission_intervenant},
+                {keyword: "%IndemnisationParJehPhase#{index}%", datum: phase.indemnisation_par_jeh}, {keyword: "%MontantParJehPhase#{index}%", datum: phase.remuneration_par_jeh},
+                {keyword: "%LieuxMissionPhase#{index}%", datum: phase.lieux_mission}, {keyword: "%SpecialisationPostulantPhase#{index}%", datum: phase.specialisation_postulant},
+                {keyword: "%NiveauEtudePostulantPhase#{index}%", datum: phase.niveau_etude_postulant}, {keyword: "%StatutPhase#{index}%", datum: phase.statut}]
+    end
   end
 
   def infos_phase
     phase_data = objects_data[:phase]
-    data = {keyword: "% %", datum: " "}
+    data = [{keyword: "%NomPhase", datum: phase.nom}, {keyword: "%DateDebutPhase", datum: phase.date_debut},
+            {keyword: "%DateFinPhase", datum: phase.date_fin}, {keyword: "%NombreIntervenantPhase", datum: phase.nombre_intervenant},
+            {keyword: "%JehParIntervenantPhase", datum: phase.jeh_par_intervenant}, {keyword: "%FraisPhase", datum: phase.frais},
+            {keyword: "%DescriptionPhase", datum: phase.description_phase}, {keyword: "%DescriptionMissionIntervenantPhase", datum: phase.description_mission_intervenant},
+            {keyword: "%IndemnisationParJehPhase", datum: phase.indemnisation_par_jeh}, {keyword: "%MontantParJehPhase", datum: phase.remuneration_par_jeh},
+            {keyword: "%LieuxMissionPhase", datum: phase.lieux_mission}, {keyword: "%SpecialisationPostulantPhase", datum: phase.specialisation_postulant},
+            {keyword: "%NiveauEtudePostulantPhase", datum: phase.niveau_etude_postulant}, {keyword: "%StatutPhase", datum: phase.statut}]
   end
 
   def infos_postulant
