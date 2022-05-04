@@ -100,8 +100,8 @@ class DocumentGeneratorJob < ApplicationJob
     return result
   end
 
-  def infos_adhesion
-    adhesion_data = objects_data[:adhesion]
+  def infos_adhesion(objects_data)
+    adherent_data = objects_data[:adherent]
     data = {keyword: "% %", datum: " "}
   end
 
