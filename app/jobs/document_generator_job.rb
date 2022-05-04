@@ -1,15 +1,16 @@
 class DocumentGeneratorJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    raise
-    treatment_info = getting_document_and_data_info(document)
-    document_object = treatment_info[:document_object]
+  def perform(objectdocument, type_doc)
+    treatment_info = getting_document_and_data_info(objectdocument, type_doc)
+    document = treatment_info[:document]
     tempfile_type = treatment_info[:document_type]
-    temp_url = treatment_info[:document_url]
-    changes_to_do = treatment_info[:changes_to_do]
-    tempfile_name = downloading_document_from_db(document_url, tempfile_type)
-    pages_to_change = getting_document_content(file_name, tempfile_type)
+    tempfile_url = treatment_info[:document_url]
+    objects_data = preparing_data(objectdocument)
+    changes_to_do = getting_changes_to_do(type_doc, objects_data)
+    tempfile_name = downloading_document_from_db(tempfile_url, tempfile_type)
+    raise
+    pages_to_change = getting_document_content(tempfile_name, tempfile_type)
     changing_document_content(pages_to_change, changes_to_do)
     send_file "#{Rails.root}/app/assets/docs/#{file_name}.#{tempfile_type}", disposition: 'attachment'
   end
@@ -19,21 +20,119 @@ class DocumentGeneratorJob < ApplicationJob
 
   #=======================================================================================================================
 
-  def getting_document_and_data_info(document)
-    document_info = getting_document_object
-    document_object = document_info[:object]
-    document_url = document_info[:url]
-    changes_to_do = getting_changes_to_do
+  def getting_document_and_data_info(objectdocument, type_doc)
+    document = objectdocument.document
+    document_url = document.url
     document_type = document.filename.extension_without_delimiter
-    return {document_object: document_object, document_url: document_url, document_type: document_type, changes_to_do: changes_to_do}
+    return {document: document, document_url: document_url, document_type: document_type}
   end
 
+  #=======================================================================================================================
 
-  def getting_document_object
+  def preparing_data(objectdocument)
+    result = []
+    case objectdocument.class
+    when "DocumentAdhesion"
+      adherent = objectdocument.adherent
+      user = adherent.user
+    when "DocumentAdherent"
+      adherent = objectdocument.adherent
+      user = adherent.user
+    when "DocumentEtude"
+      etude = objectdocument.etude
+      client = etude.client
+      junior = etude.junior
+    when "DocumentPhase"
+      phase = objectdocument.phase
+      etude = phase.etude
+      client = etude.client
+      junior = etude.junior
+    when "DocumentPostulant"
+      postulant = objectdocument.postulant
+      adherent = postulant.adherent
+      user = adherent.user
+      phase = postulant.phase
+      etude = phase.etude
+      client = etude.client
+      junior = etude.junior
+    when "DocumentIntervenant"
+      intervenant = objectdocument.intervenant
+      adherent = intervenant.user.adherent
+      user = adherent.user
+      phase = intervenant.phase
+      etude = phase.etude
+      client = etude.client
+      junior = etude.junior
+    end
+    return {user: user, adherent: adherent, postulant: postulant, junior: junior, etude: etude,
+            client: client, phase: phase, intervenant: intervenant}
   end
 
+  #=======================================================================================================================
 
-  def getting_changes_to_do
+  def getting_changes_to_do(type_doc, corelated_objects_data)
+    result = []
+    case type_doc
+    when "adhesion"
+      result << infos_adherent(corelated_objects_data)
+      result << infos_adhesion(corelated_objects_data)
+    when "adherent"
+      result << infos_adherent(corelated_objects_data)
+    when "etude"
+      result << infos_etude(corelated_objects_data)
+    when "phase"
+      result << infos_etude(corelated_objects_data)
+      result << infos_phase(corelated_objects_data)
+    when "postulant"
+      result << infos_etude(corelated_objects_data)
+      result << infos_phase(corelated_objects_data)
+      result << infos_adherent(corelated_objects_data)
+      result << infos_adhesion(corelated_objects_data)
+      result << infos_postulant(corelated_objects_data)
+    when "intervenant"
+      result << infos_etude(corelated_objects_data)
+      result << infos_phase(corelated_objects_data)
+      result << infos_adherent(corelated_objects_data)
+      result << infos_adhesion(corelated_objects_data)
+      result << infos_intervenant(corelated_objects_data)
+    end
+    result << infos_junior
+    return result
+  end
+
+  def infos_adhesion
+    adhesion_data = objects_data[:adhesion]
+    data = {keyword: "% %", datum: " "}
+  end
+
+  def infos_adherent
+    adherent_data = objects_data[:adherent]
+    data = {keyword: "%nom%", datum: adherent.nom}
+  end
+
+  def infos_etude
+    etude_data = objects_data[:etude]
+    data = {keyword: "% %", datum: " "}
+  end
+
+  def infos_phase
+    phase_data = objects_data[:phase]
+    data = {keyword: "% %", datum: " "}
+  end
+
+  def infos_postulant
+    postulant_data = objects_data[:postulant]
+    data = {keyword: "% %", datum: " "}
+  end
+
+  def infos_intervenant
+    intervenant_data = objects_data[:intervenant]
+    data = {keyword: "% %", datum: " "}
+  end
+
+  def infos_junior
+    junior_data = objects_data[:junior]
+    data = {keyword: "% %", datum: " "}
   end
 
   #=======================================================================================================================
@@ -71,8 +170,8 @@ class DocumentGeneratorJob < ApplicationJob
       file = zip.find_entry(zip_file)
       doc = Nokogiri::XML.parse(file.get_input_stream)
       changes.each do |change|
-        doc.xpath("//text()[.='#{change[:title]}']").each do |part|
-          part.content = change[:content]
+        doc.xpath("//text()[.='#{changes_to_do[:keyword]}']").each do |part|
+          part.content = changes_to_do[:datum]
         end
       end
       zip.get_output_stream(zip_file) { |f| f << doc.to_s }

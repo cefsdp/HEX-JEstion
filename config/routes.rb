@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get '/sign_up_step2', to: 'adherents#signup_step2', as: 'signup_step2'
     resources :membre_requests
     
+    resources :generated_documents
+
     resources :membres do
       resources :mandat_requests
       resources :mandats

@@ -496,11 +496,11 @@
 
 <% # Modifier document intervenant %>
 <% @intervenants.each do |intervenant| %>
-    <% intervenant.document_intervenants.each do |intervenant| %>
-        <div class="hex_modal2" id="edit_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
+    <% intervenant.document_intervenants.each do |doc_intervenant| %>
+        <div class="hex_modal2" id="edit_doc_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
             <div class="modal_content">
                 <div class="header">
-                    <div class="modal-close" id="edit_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
+                    <div class="modal-close" id="edit_doc_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -551,6 +551,12 @@
                                     <%= f.button :button do %>
                                     <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
                                     Modifier le document
+                                    <% end %>
+                                </div>
+                                <div class="button_line">
+                                    <%= link_to new_junior_generated_document_path(@junior, generated_document: {document_class: doc_intervenant.class.to_s, document_id: doc_intervenant}), class: 'btn' do %>
+                                        <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                        Générer le template
                                     <% end %>
                                 </div>
                             <% end %>
