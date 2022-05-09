@@ -356,7 +356,7 @@
                             <div class="input_line">
                                 <%= f.input :nom,
                                             label: false,
-                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "phase", interne: false),
+                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "intervenant", interne: false),
                                             :label_method => lambda { |doc| "#{doc.nom}" },
                                             value_method: :nom,
                                             include_blank: "Nom du document",
@@ -437,7 +437,7 @@
                             <div class="input_line">
                                 <%= f.input :nom,
                                             label: false,
-                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "phase", interne: true),
+                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "intervenant", interne: true),
                                             :label_method => lambda { |doc| "#{doc.nom}" },
                                             value_method: :nom,
                                             include_blank: "Nom du document",

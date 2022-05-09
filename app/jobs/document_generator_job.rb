@@ -1,3 +1,7 @@
+require "open-uri"
+require 'rexml/document'
+require 'rexml/text'
+
 class DocumentGeneratorJob < ApplicationJob
   queue_as :default
 
@@ -9,29 +13,28 @@ class DocumentGeneratorJob < ApplicationJob
     objects_data = preparing_data(objectdocument)
     changes_to_do = getting_changes_to_do(type_doc, objects_data)
     tempfile_name = downloading_document_from_db(tempfile_url, tempfile_type)
-    raise
     pages_to_change = getting_document_content(tempfile_name, tempfile_type)
-    changing_document_content(pages_to_change, changes_to_do)
+    changing_document_content(pages_to_change, changes_to_do, tempfile_name, tempfile_type)
+    raise
     send_file "#{Rails.root}/app/assets/docs/#{file_name}.#{tempfile_type}", disposition: 'attachment'
   end
 
-  
   private
 
   #=======================================================================================================================
 
-  def getting_document_and_data_info(objectdocument, type_doc)
-    document = objectdocument.document
+  def getting_document_and_data_info(objectdocument, _type_doc)
+    document = ConfigDocEtude.find_by(nom: objectdocument.nom).document_type
     document_url = document.url
     document_type = document.filename.extension_without_delimiter
-    return {document: document, document_url: document_url, document_type: document_type}
+    return { document: document, document_url: document_url, document_type: document_type }
   end
 
   #=======================================================================================================================
 
   def preparing_data(objectdocument)
     result = []
-    case objectdocument.class
+    case objectdocument.class.to_s
     when "DocumentAdhesion"
       adherent = objectdocument.adherent
       user = adherent.user
@@ -64,8 +67,8 @@ class DocumentGeneratorJob < ApplicationJob
       client = etude.client
       junior = etude.junior
     end
-    return {user: user, adherent: adherent, postulant: postulant, junior: junior, etude: etude,
-            client: client, phase: phase, intervenant: intervenant}
+    return { user: user, adherent: adherent, postulant: postulant, junior: junior, etude: etude,
+             client: client, phase: phase, intervenant: intervenant }
   end
 
   #=======================================================================================================================
@@ -74,112 +77,139 @@ class DocumentGeneratorJob < ApplicationJob
     result = []
     case type_doc
     when "adhesion"
-      result << infos_adherent(corelated_objects_data)
-      result << infos_adhesion(corelated_objects_data)
+      result += infos_adherent(corelated_objects_data) unless infos_adherent(corelated_objects_data).nil?
+      result += infos_adhesion(corelated_objects_data) unless infos_adhesion(corelated_objects_data).nil?
     when "adherent"
-      result << infos_adherent(corelated_objects_data)
+      result += infos_adherent(corelated_objects_data) unless infos_adherent(corelated_objects_data).nil?
     when "etude"
-      result << infos_etude(corelated_objects_data)
+      result += infos_etude(corelated_objects_data) unless infos_etude(corelated_objects_data).nil?
     when "phase"
-      result << infos_etude(corelated_objects_data)
-      result << infos_phase(corelated_objects_data)
+      result += infos_etude(corelated_objects_data) unless infos_etude(corelated_objects_data).nil?
+      result += infos_phase(corelated_objects_data) unless infos_phase(corelated_objects_data).nil?
     when "postulant"
-      result << infos_etude(corelated_objects_data)
-      result << infos_phase(corelated_objects_data)
-      result << infos_adherent(corelated_objects_data)
-      result << infos_adhesion(corelated_objects_data)
-      result << infos_postulant(corelated_objects_data)
+      result += infos_etude(corelated_objects_data) unless infos_etude(corelated_objects_data).nil?
+      result += infos_phase(corelated_objects_data) unless infos_phase(corelated_objects_data).nil?
+      result += infos_adherent(corelated_objects_data) unless infos_adherent(corelated_objects_data).nil?
+      result += infos_adhesion(corelated_objects_data) unless infos_adhesion(corelated_objects_data).nil?
+      result += infos_postulant(corelated_objects_data) unless infos_postulant(corelated_objects_data).nil?
     when "intervenant"
-      result << infos_etude(corelated_objects_data)
-      result << infos_phase(corelated_objects_data)
-      result << infos_adherent(corelated_objects_data)
-      result << infos_adhesion(corelated_objects_data)
-      result << infos_intervenant(corelated_objects_data)
+      result += infos_etude(corelated_objects_data) unless infos_etude(corelated_objects_data).nil?
+      result += infos_phase(corelated_objects_data) unless infos_phase(corelated_objects_data).nil?
+      result += infos_adherent(corelated_objects_data) unless infos_adherent(corelated_objects_data).nil?
+      result += infos_adhesion(corelated_objects_data) unless infos_adhesion(corelated_objects_data).nil?
+      result += infos_intervenant(corelated_objects_data) unless infos_intervenant(corelated_objects_data).nil?
     end
-    result << infos_junior
+    result += infos_junior(corelated_objects_data) unless infos_junior(corelated_objects_data).nil?
     return result
   end
 
   def infos_adhesion(objects_data)
-    adhesion_data = objects_data[:adhesion]
-    data = {keyword: "%%", datum: " ", }
+    adhesion = objects_data[:adhesion]
+    data = [{ keyword: "HEXHEX", datum: " " }]
+    return data
   end
 
-  def infos_adherent
+  def infos_adherent(objects_data)
     adherent = objects_data[:adherent]
-    data = [{keyword: "%nom%", datum: adherent.nom}, {keyword: "%prenom%", datum: adherent.prenom},
-            {keyword: "%TelephoneAdherent%", datum: adherent.telephone }, {keyword: "%AdressePostaleAdherent%", datum: adherent.adresse_postale },
-            {keyword: "%CodePostalAdherent%", datum: adherent.code_postale }, {keyword: "%VilleAdherent%", datum: adherent.ville },
-            {keyword: "%NiveauEtude%", datum: adherent.niveau_etude }, {keyword: "%AnneeDiplome%", datum: adherent.anneediplome },
-            {keyword: "%SpecialisationEtude%", datum: adherent.specialisation_etude }]
+    if adherent.nil?
+      data = [{ keyword: "HEXNomAdherentHEX", datum: adherent.nom }, { keyword: "HEXPrenomAdherentHEX", datum: adherent.prenom },
+              { keyword: "HEXTelephoneAdherentHEX", datum: adherent.telephone }, { keyword: "HEXAdressePostaleAdherentHEX", datum: adherent.adresse_postale },
+              { keyword: "HEXCodePostalAdherentHEX", datum: adherent.code_postale }, { keyword: "HEXVilleAdherentHEX", datum: adherent.ville },
+              { keyword: "HEXNiveauEtudeHEX", datum: adherent.niveau_etude }, { keyword: "HEXAnneeDiplomeHEX", datum: adherent.anneediplome },
+              { keyword: "HEXSpecialisationEtudeHEX", datum: adherent.specialisation_etude }]
+    end
+    return data
   end
 
-  def infos_etude
+  def infos_etude(objects_data)
     etude = objects_data[:etude]
     client = objects_data[:client]
     phases = etude.phases
-    data = [{keyword: "%SexeClient%", datum: client.sexe}, {keyword: "%LangueClient%", datum: client.langue},
-            {keyword: "%PrenomClient%", datum: client.prenom}, {keyword: "%NomClient%", datum: client.nom},
-            {keyword: "%EmailClient%", datum: client.email}, {keyword: "%TelephoneClient%", datum: client.telephone},
-            {keyword: "%EntrepriseClient%", datum: client.entreprise}, {keyword: "%PosteClient%", datum: client.poste},
-            {keyword: "%SiteWebClient%", datum: client.site_web}, {keyword: "%TelephoneEntrepriseClient%", datum: client.telephone_entreprise},
-            {keyword: "%SiretClient%", datum: client.siret}, {keyword: "%TypeEntrepriseClient%", datum: client.type_entreprise},
-            {keyword: "%ActiviteClient%", datum: client.activite}, {keyword: "%AdresseClient%", datum: client.adresse},
-            {keyword: "%VilleClient%", datum: client.ville}, {keyword: "%CodePostalClient%", datum: client.code_postal},
-            {keyword: "%PaysClient%", datum: client.pays}, {keyword: "%ProvenanceClient%", datum: client.provenance},
-            {keyword: "%PremierContactClient%", datum: client.premier_contact}, {keyword: "%PrestationEtude%", datum: etude.prestation.nom},
-            {keyword: "%ChargeEtude%", datum: etude.charge_etude.nom}, {keyword: "%ChargeQualiteEtude%", datum: etude.charge_qualite.nom},
-            {keyword: "%ChargeRHEtude%", datum: etude.charge_rh.nom}, {keyword: "%StatutEtude%", datum: etude.statut},
-            {keyword: "%DateDebutEtude%", datum: etude.date_debut}, {keyword: "%ReferenceEtude%", datum: etude.ref_etude},
-            {keyword: "%DateSignature%", datum: etude.date_signature}, {keyword: "%NomEtude%", datum: etude.nom},
-            {keyword: "%ConfidentialiteEtude%", datum: etude.confidentielle}]
-    phases.each_with_index do |phase, index|
-      data << [ {keyword: "%NomPhase#{index}%", datum: phase.nom}, {keyword: "%DateDebutPhase#{index}%", datum: phase.date_debut},
-                {keyword: "%DateFinPhase#{index}%", datum: phase.date_fin}, {keyword: "%NombreIntervenantPhase#{index}%", datum: phase.nombre_intervenant},
-                {keyword: "%JehParIntervenantPhase#{index}%", datum: phase.jeh_par_intervenant}, {keyword: "%FraisPhase#{index}%", datum: phase.frais},
-                {keyword: "%DescriptionPhase#{index}%", datum: phase.description_phase}, {keyword: "%DescriptionMissionIntervenantPhase#{index}%", datum: phase.description_mission_intervenant},
-                {keyword: "%IndemnisationParJehPhase#{index}%", datum: phase.indemnisation_par_jeh}, {keyword: "%MontantParJehPhase#{index}%", datum: phase.remuneration_par_jeh},
-                {keyword: "%LieuxMissionPhase#{index}%", datum: phase.lieux_mission}, {keyword: "%SpecialisationPostulantPhase#{index}%", datum: phase.specialisation_postulant},
-                {keyword: "%NiveauEtudePostulantPhase#{index}%", datum: phase.niveau_etude_postulant}, {keyword: "%StatutPhase#{index}%", datum: phase.statut}]
+    data = []
+    unless client.nil?
+      data.concat([{ keyword: "HEXSexeClientHEX", datum: client.sexe }, { keyword: "HEXLangueClientHEX", datum: client.langue },
+                   { keyword: "HEXPrenomClientHEX", datum: client.prenom }, { keyword: "HEXNomClientHEX", datum: client.nom },
+                   { keyword: "HEXEmailClientHEX", datum: client.email }, { keyword: "HEXTelephoneClientHEX", datum: client.telephone },
+                   { keyword: "HEXEntrepriseClientHEX", datum: client.entreprise }, { keyword: "HEXPosteClientHEX", datum: client.poste },
+                   { keyword: "HEXSiteWebClientHEX", datum: client.site_web }, { keyword: "HEXTelephoneEntrepriseClientHEX", datum: client.telephone_entreprise },
+                   { keyword: "HEXSiretClientHEX", datum: client.siret }, { keyword: "HEXTypeEntrepriseClientHEX", datum: client.type_entreprise },
+                   { keyword: "HEXActiviteClientHEX", datum: client.activite }, { keyword: "HEXAdresseClientHEX", datum: client.adresse },
+                   { keyword: "HEXVilleClientHEX", datum: client.ville }, { keyword: "HEXCodePostalClientHEX", datum: client.code_postal },
+                   { keyword: "HEXPaysClientHEX", datum: client.pays }, { keyword: "HEXProvenanceClientHEX", datum: client.provenance },
+                   { keyword: "HEXPremierContactClientHEX", datum: client.premier_contact }])
     end
+    unless etude.nil?
+      unless etude.charge_etude.nil?
+        charge_etude = etude.charge_etude.adherent.prenom + " " + etude.charge_etude.adherent.nom
+      end
+      unless etude.charge_qualite.nil?
+        charge_qualite = etude.charge_qualite.adherent.prenom + " " + etude.charge_qualite.adherent.nom
+      end
+      charge_rh = etude.charge_rh.adherent.prenom + " " + etude.charge_rh.adherent.nom unless etude.charge_rh.nil?
+      data.concat([{ keyword: "HEXPrestationEtudeHEX", datum: etude.prestation.nom }, { keyword: "HEXConfidentialiteEtudeHEX", datum: etude.confidentielle },
+                   { keyword: "HEXChargeEtudeHEX", datum: charge_etude }, { keyword: "HEXChargeQualiteEtudeHEX", datum: charge_qualite },
+                   { keyword: "HEXChargeRHEtudeHEX", datum: charge_rh }, { keyword: "HEXStatutEtudeHEX", datum: etude.statut },
+                   { keyword: "HEXDateDebutEtudeHEX", datum: etude.date_debut }, { keyword: "HEXReferenceEtudeHEX", datum: etude.ref_etude },
+                   { keyword: "HEXDateSignatureHEX", datum: etude.date_signature }, { keyword: "HEXNomEtudeHEX", datum: etude.nom }])
+    end
+    unless phases.empty?
+      phases.each_with_index do |phase, index|
+        data.concat([{ keyword: "HEXNomPhase#{index}HEX", datum: phase.nom }, { keyword: "HEXDateDebutPhase#{index}HEX", datum: phase.date_debut },
+                     { keyword: "HEXDateFinPhase#{index}HEX", datum: phase.date_fin }, { keyword: "HEXNombreIntervenantPhase#{index}HEX", datum: phase.nombre_intervenant },
+                     { keyword: "HEXJehParIntervenantPhase#{index}HEX", datum: phase.jeh_par_intervenant }, { keyword: "HEXFraisPhase#{index}HEX", datum: phase.frais },
+                     { keyword: "HEXDescriptionPhase#{index}HEX", datum: phase.description_phase }, { keyword: "HEXDescriptionMissionIntervenantPhase#{index}HEX", datum: phase.description_mission_intervenant },
+                     { keyword: "HEXIndemnisationParJehPhase#{index}HEX", datum: phase.indemnisation_par_jeh }, { keyword: "HEXMontantParJehPhase#{index}HEX", datum: phase.remuneration_par_jeh },
+                     { keyword: "HEXLieuxMissionPhase#{index}HEX", datum: phase.lieux_mission }, { keyword: "HEXSpecialisationPostulantPhase#{index}HEX", datum: phase.specialisation_postulant },
+                     { keyword: "HEXNiveauEtudePostulantPhase#{index}HEX", datum: phase.niveau_etude_postulant }, { keyword: "HEXStatutPhase#{index}HEX", datum: phase.statut }])
+      end
+    end
+    return data
   end
 
-  def infos_phase
-    phase_data = objects_data[:phase]
-    data = [{keyword: "%NomPhase", datum: phase.nom}, {keyword: "%DateDebutPhase", datum: phase.date_debut},
-            {keyword: "%DateFinPhase", datum: phase.date_fin}, {keyword: "%NombreIntervenantPhase", datum: phase.nombre_intervenant},
-            {keyword: "%JehParIntervenantPhase", datum: phase.jeh_par_intervenant}, {keyword: "%FraisPhase", datum: phase.frais},
-            {keyword: "%DescriptionPhase", datum: phase.description_phase}, {keyword: "%DescriptionMissionIntervenantPhase", datum: phase.description_mission_intervenant},
-            {keyword: "%IndemnisationParJehPhase", datum: phase.indemnisation_par_jeh}, {keyword: "%MontantParJehPhase", datum: phase.remuneration_par_jeh},
-            {keyword: "%LieuxMissionPhase", datum: phase.lieux_mission}, {keyword: "%SpecialisationPostulantPhase", datum: phase.specialisation_postulant},
-            {keyword: "%NiveauEtudePostulantPhase", datum: phase.niveau_etude_postulant}, {keyword: "%StatutPhase", datum: phase.statut}]
+  def infos_phase(objects_data)
+    phase = objects_data[:phase]
+    unless phase.nil?
+      data = [{ keyword: "HEXNomPhaseHEX", datum: phase.nom }, { keyword: "HEXDateDebutPhaseHEX", datum: phase.date_debut },
+              { keyword: "HEXDateFinPhaseHEX", datum: phase.date_fin }, { keyword: "HEXNombreIntervenantPhaseHEX", datum: phase.nombre_intervenant },
+              { keyword: "HEXJehParIntervenantPhaseHEX", datum: phase.jeh_par_intervenant }, { keyword: "HEXFraisPhaseHEX", datum: phase.frais },
+              { keyword: "HEXDescriptionPhaseHEX", datum: phase.description_phase }, { keyword: "HEXDescriptionMissionIntervenantPhaseHEX", datum: phase.description_mission_intervenant },
+              { keyword: "HEXIndemnisationParJehPhaseHEX", datum: phase.indemnisation_par_jeh }, { keyword: "HEXMontantParJehPhaseHEX", datum: phase.remuneration_par_jeh },
+              { keyword: "HEXLieuxMissionPhaseHEX", datum: phase.lieux_mission }, { keyword: "HEXSpecialisationPostulantPhaseHEX", datum: phase.specialisation_postulant },
+              { keyword: "HEXNiveauEtudePostulantPhaseHEX", datum: phase.niveau_etude_postulant }, { keyword: "HEXStatutPhaseHEX", datum: phase.statut }]
+    end
+    return data
   end
 
-  def infos_postulant
-    postulant_data = objects_data[:postulant]
-    data = {keyword: "% %", datum: " "}
+  def infos_postulant(objects_data)
+    postulant = objects_data[:postulant]
+    data = [{ keyword: "HEXilnyarieniciHEX", datum: " " }]
+    return data
   end
 
-  def infos_intervenant
-    intervenant_data = objects_data[:intervenant]
-    data = {keyword: "% %", datum: " "}
+  def infos_intervenant(objects_data)
+    intervenant = objects_data[:intervenant]
+    data = [{ keyword: "HEXreference_rmHEX", datum: intervenant.ref_rm }]
+    return data
   end
 
-  def infos_junior
-    junior_data = objects_data[:junior]
-    data = {keyword: "% %", datum: " "}
+  def infos_junior(objects_data)
+    junior = objects_data[:junior]
+    data = [{ keyword: "HEXNomJuniorHEX", datum: junior.nom }] unless junior.nil?
+    return data
   end
 
   #=======================================================================================================================
 
   def downloading_document_from_db(temp_url, tempfile_type)
     tempfile_name = 20.times.map { rand(10) }.join
-    File.delete("app/assets/docs/#{tempfile_name}.#{tempfile_type}") if File.exist?("app/assets/docs/#{tempfile_name}.#{tempfile_type}")
+    if File.exist?("app/assets/docs/#{tempfile_name}.#{tempfile_type}")
+      File.delete("app/assets/docs/#{tempfile_name}.#{tempfile_type}")
+    end
     tempfile = Down.download(temp_url)
     FileUtils.mv(tempfile.path, "app/assets/docs/#{tempfile_name}.#{tempfile_type}")
     return(tempfile_name)
   end
-  
+
   #=======================================================================================================================
 
   def getting_document_content(file_name, tempfile_type)
@@ -192,7 +222,7 @@ class DocumentGeneratorJob < ApplicationJob
       buff = []
       buff << thing if thing.end_with?(".xml")
       buff.each do |object|
-      final << object if object.start_with?("word/")
+        final << object if object.start_with?("word/") || object.start_with?("ppt/")
       end
     end
     return final
@@ -200,13 +230,14 @@ class DocumentGeneratorJob < ApplicationJob
 
   #=======================================================================================================================
 
-  def changing_document_content(pages_to_change, changes_to_do)
+  def changing_document_content(pages_to_change, changes_to_do, file_name, tempfile_type)
+    zip = Zip::ZipFile.open("app/assets/docs/#{file_name}.#{tempfile_type}")
     pages_to_change.each do |zip_file|
       file = zip.find_entry(zip_file)
       doc = Nokogiri::XML.parse(file.get_input_stream)
-      changes.each do |change|
-        doc.xpath("//text()[.='#{changes_to_do[:keyword]}']").each do |part|
-          part.content = changes_to_do[:datum]
+      changes_to_do.each do |change|
+        doc.xpath("//text()[.='#{change[:keyword]}']").each do |part|
+          part.content = change[:datum]
         end
       end
       zip.get_output_stream(zip_file) { |f| f << doc.to_s }
