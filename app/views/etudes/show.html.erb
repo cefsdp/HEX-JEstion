@@ -338,7 +338,7 @@
                             <%= f.input :prestation,
                                         collection: @junior.junior_configuration.prestations,
                                         label: false,
-                                        include_blank: "Prestation",
+                                        prompt: true, 
                                         label_method: lambda { |prestation| "#{prestation.nom}" },
                                         input_html: { class: 'form_input' } %>
                         </div>
@@ -346,6 +346,7 @@
                             <%= f.input :date_debut,
                                         label:  "Date de début des négociations",
                                         as: :date,
+                                        prompt: true, 
                                         html5: true,
                                         input_html: { class: 'form_input' } %>
                         </div>
@@ -353,6 +354,7 @@
                             <%= f.input :date_signature,
                                         label:  "Date de signature",
                                         as: :date,
+                                        prompt: true, 
                                         html5: true,
                                         input_html: { class: 'form_input' } %>
                         </div>
