@@ -15,8 +15,8 @@ class DocumentGeneratorJob < ApplicationJob
     tempfile_name = downloading_document_from_db(tempfile_url, tempfile_type)
     pages_to_change = getting_document_content(tempfile_name, tempfile_type)
     changing_document_content(pages_to_change, changes_to_do, tempfile_name, tempfile_type)
-    raise
-    send_file "#{Rails.root}/app/assets/docs/#{file_name}.#{tempfile_type}", disposition: 'attachment'
+    save_generated_document(objectdocument, tempfile_name, tempfile_type)
+    File.delete("app/assets/docs/#{tempfile_name}.#{tempfile_type}")
   end
 
   private
@@ -244,4 +244,11 @@ class DocumentGeneratorJob < ApplicationJob
     end
     zip.close
   end
+end
+
+#=======================================================================================================================
+
+def save_generated_document(objectdocument, file_name, tempfile_type)
+  objectdocument.generated_document.attach(io: File.open("app/assets/docs/#{file_name}.#{tempfile_type}"),
+                                           filename: "#{file_name}.#{tempfile_type}")
 end

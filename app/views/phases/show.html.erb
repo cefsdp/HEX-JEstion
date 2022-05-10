@@ -556,9 +556,17 @@
                                 <div class="button_line">
                                     <%= link_to new_junior_generated_document_path(@junior, generated_document: {document_class: doc_intervenant.class.to_s, document_id: doc_intervenant}), class: 'btn' do %>
                                         <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
-                                        Générer le template
+                                        Générer un nouveau template
                                     <% end %>
                                 </div>
+                                <% if doc_intervenant.generated_document.url.nil? %>
+                                    <div class="button_line">
+                                        <%= link_to doc_intervenant.generated_document.url, class: 'btn' do %>
+                                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                            Telecharger le template généré
+                                        <% end %>
+                                    </div>
+                                <% end %>
                             <% end %>
                         </div>
                     </div>
