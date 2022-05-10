@@ -49,6 +49,13 @@ gem "aws-sdk-s3", require: false
 gem "down"
 gem "image_processing", ">= 1.2"
 
+# transform file via zip
+gem 'rubyzip', '>= 1.0.0'
+gem 'zip-zip'
+
+# XML reader
+gem 'nokogiri', '~> 1.6', '>= 1.6.6.2'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'

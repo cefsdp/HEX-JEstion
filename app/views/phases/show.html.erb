@@ -356,7 +356,7 @@
                             <div class="input_line">
                                 <%= f.input :nom,
                                             label: false,
-                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "phase", interne: false),
+                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "intervenant", interne: false),
                                             :label_method => lambda { |doc| "#{doc.nom}" },
                                             value_method: :nom,
                                             include_blank: "Nom du document",
@@ -437,7 +437,7 @@
                             <div class="input_line">
                                 <%= f.input :nom,
                                             label: false,
-                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "phase", interne: true),
+                                            collection: @junior.junior_configuration.config_doc_etudes.where(type_doc: "intervenant", interne: true),
                                             :label_method => lambda { |doc| "#{doc.nom}" },
                                             value_method: :nom,
                                             include_blank: "Nom du document",
@@ -496,11 +496,11 @@
 
 <% # Modifier document intervenant %>
 <% @intervenants.each do |intervenant| %>
-    <% intervenant.document_intervenants.each do |intervenant| %>
-        <div class="hex_modal2" id="edit_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
+    <% intervenant.document_intervenants.each do |doc_intervenant| %>
+        <div class="hex_modal2" id="edit_doc_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
             <div class="modal_content">
                 <div class="header">
-                    <div class="modal-close" id="edit_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
+                    <div class="modal-close" id="edit_doc_intervenant_<%= intervenant.id %>_<%= doc_intervenant.id %>">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -553,6 +553,20 @@
                                     Modifier le document
                                     <% end %>
                                 </div>
+                                <div class="button_line">
+                                    <%= link_to new_junior_generated_document_path(@junior, generated_document: {document_class: doc_intervenant.class.to_s, document_id: doc_intervenant}), class: 'btn' do %>
+                                        <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                        Générer un nouveau template
+                                    <% end %>
+                                </div>
+                                <% if !doc_intervenant.generated_document.url.nil? %>
+                                    <div class="button_line">
+                                        <%= link_to doc_intervenant.generated_document.url, class: 'btn' do %>
+                                            <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                            Telecharger le template généré
+                                        <% end %>
+                                    </div>
+                                <% end %>
                             <% end %>
                         </div>
                     </div>
@@ -693,6 +707,20 @@
                                 Modifier le document
                                 <% end %>
                             </div>
+                            <div class="button_line">
+                                <%= link_to new_junior_generated_document_path(@junior, generated_document: {document_class: doc_phase.class.to_s, document_id: doc_phase}), class: 'btn' do %>
+                                    <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                    Générer un nouveau template
+                                <% end %>
+                            </div>
+                            <% if !doc_phase.generated_document.url.nil? %>
+                                <div class="button_line">
+                                    <%= link_to doc_phase.generated_document.url, class: 'btn' do %>
+                                        <span class="circle_arrow1"><i class="fas fa-arrow-right"></i></span>
+                                        Telecharger le template généré
+                                    <% end %>
+                                </div>
+                            <% end %>
                         <% end %>
                     </div>
                 </div>
