@@ -1,4 +1,6 @@
 class GeneratedDocumentsController < ApplicationController
+  skip_after_action :verify_authorized
+
   def new
     generated_document_data = generated_document_params
     document_id = generated_document_data[:document_id]
@@ -12,6 +14,7 @@ class GeneratedDocumentsController < ApplicationController
       type_doc = ConfigDocEtude.find_by(nom: document.nom).type_doc
     end
     DocumentGeneratorJob.perform_now(document, type_doc)
+    redirect_to request.referer
   end
 
   private
