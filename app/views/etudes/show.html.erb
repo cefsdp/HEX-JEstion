@@ -335,7 +335,7 @@
                                         input_html: { class: 'form_input' } %>
                         </div>
                         <div class="input_line">
-                            <%= f.input :prestation,
+                            <%= f.association :prestation,
                                         collection: @junior.junior_configuration.prestations,
                                         label: false,
                                         prompt: true, 
