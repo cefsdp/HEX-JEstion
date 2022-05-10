@@ -27,6 +27,11 @@
         <%= link_to junior_membres_path(current_user.junior_id) do %>Membres<% end %>
         <div class="<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
       </div>
+      <%# Trésorerie %>
+      <div class='<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_membres_path(current_user.junior_id) do %>Trésorerie<% end %>
+        <div class="<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      </div>
       <%# Configuration %>
       <div class='<%= current_page?(edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id)) ? "active" : "" %> nav_link'>
         <%= link_to edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id) do %>Paramètres<% end %>

@@ -1,0 +1,2 @@
+class TresoreriesController < ApplicationController
+end
