@@ -27,8 +27,8 @@ class JuniorsController < ApplicationController
       @user = User.new(email: "admin@#{@junior.nom.delete(' ').downcase}.fr", password: "adminadmin", password_confirmation: "adminadmin",
                        junior_id: @junior.id, admin: false)
       @user.save
-      userparam = Userparam.create(user: user)
-      adherent = Adherent.create(user: user, prenom: 'Admin', nom: 'EJC')
+      userparam = Userparam.create(user: @user)
+      adherent = Adherent.create(user: @user, prenom: 'Admin', nom: 'EJC')
       membre_request = MembreRequest.create(junior_id: junior.id, user_id: user.id, status: 'approved')
       membre = Membre.create(membre_request_id: membre_request.id, admin: true)
 
