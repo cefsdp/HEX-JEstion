@@ -3,7 +3,7 @@ class AuthorizationContext
 
   def initialize(user, junior)
     @user = user
-    @junior = Junior.find(junior.to_i)
+    @junior = Junior.find(junior.to_i) unless junior.nil?
   end
 end
 

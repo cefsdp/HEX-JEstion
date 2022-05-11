@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_12_181306) do
+ActiveRecord::Schema.define(version: 2022_05_10_140511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -404,6 +404,15 @@ ActiveRecord::Schema.define(version: 2022_04_12_181306) do
     t.index ["phase_id"], name: "index_selection_intervenants_on_phase_id"
   end
 
+  create_table "tresoreries", force: :cascade do |t|
+    t.bigint "junior_id", null: false
+    t.date "debut_exercice"
+    t.date "fin_exercice"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["junior_id"], name: "index_tresoreries_on_junior_id"
+  end
+
   create_table "userparams", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "navbar_active", default: 0
@@ -466,6 +475,7 @@ ActiveRecord::Schema.define(version: 2022_04_12_181306) do
   add_foreign_key "postulants", "users"
   add_foreign_key "prestations", "junior_configurations"
   add_foreign_key "selection_intervenants", "phases"
+  add_foreign_key "tresoreries", "juniors"
   add_foreign_key "userparams", "users"
   add_foreign_key "users", "juniors"
 end
