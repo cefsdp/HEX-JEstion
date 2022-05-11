@@ -29,7 +29,7 @@ class JuniorsController < ApplicationController
       @user.save
       userparam = Userparam.create(user: @user)
       adherent = Adherent.create(user: @user, prenom: 'Admin', nom: 'EJC')
-      membre_request = MembreRequest.create(junior_id: junior.id, user_id: user.id, status: 'approved')
+      membre_request = MembreRequest.create(junior_id: @junior.id, user_id: user.id, status: 'approved')
       membre = Membre.create(membre_request_id: membre_request.id, admin: true)
 
       @configuration = JuniorConfiguration.create(junior_id: @junior.id)
