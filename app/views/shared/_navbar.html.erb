@@ -28,9 +28,9 @@
         <div class="<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
       </div>
       <%# Trésorerie %>
-      <div class='<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
-        <%= link_to junior_membres_path(current_user.junior_id) do %>Trésorerie<% end %>
-        <div class="<%= current_page?(junior_membres_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
+      <div class='<%= current_page?(junior_tresoreries_path(current_user.junior_id)) ? "active" : "" %> nav_link'>
+        <%= link_to junior_tresoreries_path(current_user.junior_id) do %>Trésorerie<% end %>
+        <div class="<%= current_page?(junior_tresoreries_path(current_user.junior_id)) ? "active" : "" %> inner">&nbsp;</div>
       </div>
       <%# Configuration %>
       <div class='<%= current_page?(edit_junior_junior_configuration_path(current_user.junior_id, current_user.junior.junior_configuration.id)) ? "active" : "" %> nav_link'>
@@ -76,6 +76,15 @@
           <div class='nav_item'>
             <%= link_to junior_membre_requests_path(current_user.junior.id, membre_request: { junior: current_user.junior_id, user: current_user.id }), method: 'post' do %>
               Devenir Membre
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class='line'>
+        <% if current_user.admin %>
+          <div class='nav_item'>
+            <%= link_to juniors_path do %>
+              Gestion Juniors
             <% end %>
           </div>
         <% end %>

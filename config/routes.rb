@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       get '/archives', to: 'junior_configurations#archives', as: 'archives'
     end
 
+    resources :tresoreries
+
     resources :user do
       resources :adherents do
         resources :document_adhesions

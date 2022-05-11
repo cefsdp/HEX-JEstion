@@ -1,16 +1,37 @@
 
-<div>
-    <%= link_to new_junior_path do %>
-        Créer une Nouvelle Junior
-    <% end %>
-</div>
+<div class="junior_title">
+  <div class="junior_logo">
+    <%= image_tag("HEX_BLEU.png", class: 'logo') %>
+  </div>
+  <div class="junior_name">
+    HEX-Agency
+  </div>
+</div>    
 
-<br> <br>
+<% # raise %>
 
-<div>
+<div class="lien_bleu"><%= link_to new_junior_path() do %>Nouvelle Junior<% end %></div>
+
+<div class="cards-profile">
     <% @juniors.each do |junior| %>
-        <%= link_to junior_path(junior) do %>
-            <%= junior.nom %> - <%= junior.codeje %>
-        <% end %>
+        <div class="card">
+            <div class="avatar"><%= !junior.junior_configuration.logo.attached? ? image_tag("logo_hex.png", class: 'avatar') : image_tag(junior.junior_configuration.logo.variant(resize_to_limit: [500, 500]), class: 'avatar') %></div>
+            <div class="contenu">
+                <div class="title">
+                <div><%= junior.nom %></div>
+                </div>
+                <div class="main">
+                <div></div>
+                    <div>Création : <%= junior.created_at %></div>
+                    <div>Renouvelé le : 00/00/0000</div>
+                    <div>A renouveler le : 00/00/0000</div>
+                <div></div>
+                </div>
+                <div class="comment">
+                    <div class="valid">Code JE : <%= junior.codeje %></div>
+                </div>
+            </div>
+        </div>
     <% end %>
 </div>
+

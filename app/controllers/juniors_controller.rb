@@ -27,7 +27,8 @@ class JuniorsController < ApplicationController
       @user = User.new(email: "admin@#{@junior.nom}.fr", password: "adminadmin", password_confirmation: "adminadmin",
                        junior_id: @junior.id, admin: false)
       @user.save
-      @configuration = Configuration.create(junior_id: @junior.id)
+      @configuration = JuniorConfiguration.create(junior_id: @junior.id)
+      @configuration.update(logo_params)
       flash[:success] = "Junior successfully created"
       redirect_to @junior
     else
@@ -81,7 +82,11 @@ class JuniorsController < ApplicationController
   private
 
   def junior_params
-    params.require(:junior).permit(:nom, :codeje, :logo)
+    params.require(:junior).permit(:nom, :codeje)
+  end
+
+  def logo_params
+    params.require(:junior).permit(:logo)
   end
 
   def data_chiffre_affaire_mensuel
