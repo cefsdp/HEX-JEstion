@@ -24,7 +24,7 @@ class JuniorsController < ApplicationController
     @junior = Junior.new(junior_params)
     authorize @junior
     if @junior.save
-      @user = User.new(email: "admin@#{@junior.nom}.fr", password: "adminadmin", password_confirmation: "adminadmin",
+      @user = User.new(email: "admin@#{@junior.nom.delete(' ').downcase}.fr", password: "adminadmin", password_confirmation: "adminadmin",
                        junior_id: @junior.id, admin: false)
       @user.save
       @configuration = JuniorConfiguration.create(junior_id: @junior.id)
