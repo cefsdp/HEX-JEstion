@@ -21,7 +21,7 @@ class AdherentPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.show_adherent
+            return true if permission.module_adherent
           end
         end
       else
@@ -47,7 +47,7 @@ class AdherentPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_adherent
+            return true if permission.module_adherent
           end
         end
       else

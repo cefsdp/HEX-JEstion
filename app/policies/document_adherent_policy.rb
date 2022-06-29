@@ -17,7 +17,7 @@ class DocumentAdherentPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_document_adherent
+            return true if permission.module_adherent
           end
         end
       else
@@ -39,7 +39,7 @@ class DocumentAdherentPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_document_adherent
+            return true if permission.module_adherent
           end
         end
       else

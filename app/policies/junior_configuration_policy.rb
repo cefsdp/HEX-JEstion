@@ -21,7 +21,7 @@ class JuniorConfigurationPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_junior_config
+            return true if permission.module_parametres
           end
         end
       else
@@ -43,7 +43,7 @@ class JuniorConfigurationPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.archive_junior_config
+            return true if permission.module_parametres
           end
         end
       else

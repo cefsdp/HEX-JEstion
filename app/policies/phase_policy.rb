@@ -21,7 +21,7 @@ class PhasePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_etude
+            return true if permission.module_etude
           end
         end
       else
@@ -43,7 +43,7 @@ class PhasePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_etude
+            return true if permission.module_etude
           end
         end
       else

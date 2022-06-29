@@ -17,7 +17,7 @@ class PostePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_poste
+            return true if permission.module_parametres
           end
         end
       else
@@ -39,7 +39,7 @@ class PostePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_poste
+            return true if permission.module_parametres
           end
         end
       else

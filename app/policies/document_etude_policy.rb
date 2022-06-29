@@ -17,7 +17,7 @@ class DocumentEtudePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_document_etude
+            return true if permission.module_etude
           end
         end
       else
@@ -39,7 +39,7 @@ class DocumentEtudePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_document_etude
+            return true if permission.module_etude
           end
         end
       else

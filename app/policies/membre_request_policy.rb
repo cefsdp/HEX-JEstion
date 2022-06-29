@@ -21,7 +21,7 @@ class MembreRequestPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.show_membre_request
+            return true if permission.module_membre
           end
         end
       else
@@ -73,7 +73,7 @@ class MembreRequestPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_membre_request
+            return true if permission.module_membre
           end
         end
       else
@@ -95,7 +95,7 @@ class MembreRequestPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.destroy_membre_request
+            return true if permission.module_membre
           end
         end
       else

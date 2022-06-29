@@ -36,7 +36,7 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_config_doc_adherent
+            return true if permission.module_parametres
           end
         end
       else
@@ -58,7 +58,7 @@ class ConfigDocAdherentPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_config_doc_adherent
+            return true if permission.module_parametres
           end
         end
       else

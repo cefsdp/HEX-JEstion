@@ -17,7 +17,7 @@ class ClientPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.show_client
+            return true if permission.module_client
           end
         end
       else
@@ -43,7 +43,7 @@ class ClientPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_client
+            return true if permission.module_client
           end
         end
       else
@@ -65,7 +65,7 @@ class ClientPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_client
+            return true if permission.module_client
           end
         end
       else

@@ -39,7 +39,7 @@ class PostulantPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_postulant
+            return true if permission.module_etude
           end
         end
       else

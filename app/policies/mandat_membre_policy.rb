@@ -17,7 +17,7 @@ class MandatMembrePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return false if permission.update_adherent
+            return false if permission.module_adherent
           end
         end
       else
@@ -39,7 +39,7 @@ class MandatMembrePolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_mandat_membre
+            return true if permission.module_membre
           end
         end
       else

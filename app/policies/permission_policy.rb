@@ -17,7 +17,7 @@ class PermissionPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.create_permission
+            return true if permission.module_parametres
           end
         end
       else
@@ -39,7 +39,7 @@ class PermissionPolicy < ApplicationPolicy
         else
           # Membre Junior
           @user.permissions.each do |permission|
-            return true if permission.update_permission
+            return true if permission.module_parametres
           end
         end
       else
