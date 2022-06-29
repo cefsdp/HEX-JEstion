@@ -1,7 +1,7 @@
 class ClientPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      @user.junior.clients
     end
   end
 
