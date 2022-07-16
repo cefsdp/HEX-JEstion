@@ -11,10 +11,11 @@ class DocumentGeneratorJob < ApplicationJob
     tempfile_type = treatment_info[:document_type]
     tempfile_url = treatment_info[:document_url]
     objects_data = preparing_data(objectdocument)
-    changes_to_do = getting_changes_to_do(type_doc, objects_data)
+    changes_to_do = getting_changes_to_do(type_doc, objects_data, objectdocument)
     tempfile_name = downloading_document_from_db(tempfile_url, tempfile_type)
     pages_to_change = getting_document_content(tempfile_name, tempfile_type)
     changing_document_content(pages_to_change, changes_to_do, tempfile_name, tempfile_type)
+    raise
     save_generated_document(objectdocument, tempfile_name, tempfile_type)
     File.delete("app/assets/docs/#{tempfile_name}.#{tempfile_type}")
   end
@@ -73,8 +74,9 @@ class DocumentGeneratorJob < ApplicationJob
 
   #=======================================================================================================================
 
-  def getting_changes_to_do(type_doc, corelated_objects_data)
+  def getting_changes_to_do(type_doc, corelated_objects_data, objectdocument)
     result = []
+    result += infos_document(objectdocument)
     case type_doc
     when "adhesion"
       result += infos_adherent(corelated_objects_data) unless infos_adherent(corelated_objects_data).nil?
@@ -106,6 +108,13 @@ class DocumentGeneratorJob < ApplicationJob
   def infos_adhesion(objects_data)
     adhesion = objects_data[:adhesion]
     data = [{ keyword: "HEXHEX", datum: " " }]
+    return data
+  end
+
+  def infos_document(objectdocument)
+    document = objectdocument
+    data = [{ keyword: "HEXReferenceDocumentHEX", datum: document.ref_doc },
+            { keyword: "HEXDateSignatureDocumentHEX", datum: document.date_signature }]
     return data
   end
 
@@ -148,6 +157,9 @@ class DocumentGeneratorJob < ApplicationJob
       charge_rh = etude.charge_rh.adherent.prenom + " " + etude.charge_rh.adherent.nom unless etude.charge_rh.nil?
       data.concat([{ keyword: "HEXPrestationEtudeHEX", datum: etude.prestation.nom }, { keyword: "HEXConfidentialiteEtudeHEX", datum: etude.confidentielle },
                    { keyword: "HEXChargeEtudeHEX", datum: charge_etude }, { keyword: "HEXChargeQualiteEtudeHEX", datum: charge_qualite },
+                   { keyword: "HEXEmailChargeEtudeHEX", datum: etude.charge_etude.user.email }, { keyword: "HEXTelephoneChargeEtudeHEX", datum: etude.charge_etude.adherent.telephone },
+                   { keyword: "HEXEmailChargeQualiteHEX", datum: etude.charge_qualite.user.email }, { keyword: "HEXTelephoneChargeQualiteHEX", datum: etude.charge_qualite.adherent.telephone },
+                   { keyword: "HEXEmailChargeRHHEX", datum: etude.charge_rh.user.email }, { keyword: "HEXTelephoneChargeRHHEX", datum: etude.charge_rh.adherent.telephone },
                    { keyword: "HEXChargeRHEtudeHEX", datum: charge_rh }, { keyword: "HEXStatutEtudeHEX", datum: etude.statut },
                    { keyword: "HEXDateDebutEtudeHEX", datum: etude.date_debut }, { keyword: "HEXReferenceEtudeHEX", datum: etude.ref_etude },
                    { keyword: "HEXDateSignatureHEX", datum: etude.date_signature }, { keyword: "HEXNomEtudeHEX", datum: etude.nom }])
@@ -236,7 +248,7 @@ class DocumentGeneratorJob < ApplicationJob
       file = zip.find_entry(zip_file)
       doc = Nokogiri::XML.parse(file.get_input_stream)
       changes_to_do.each do |change|
-        doc.xpath("//text()[.='#{change[:keyword]}']").each do |part|
+        doc.xpath("//*[contains(text(),'#{change[:keyword]}')]").each do |part|
           part.content = change[:datum]
         end
       end
