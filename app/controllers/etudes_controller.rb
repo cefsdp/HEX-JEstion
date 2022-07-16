@@ -92,9 +92,9 @@ class EtudesController < ApplicationController
       date = nil
       case etape.class.to_s
       when "Phase"
-        date = etape.date_debut
+        etape.date_debut.nil? ? date = etape.created_at : date = etape.date_debut
       when "DocumentEtude"
-        date = etape.date_signature
+        etape.date_signature.nil? ? date = etape.created_at : date = etape.date_signature
       end
       resultat << { date: date, etape: etape }
     end
