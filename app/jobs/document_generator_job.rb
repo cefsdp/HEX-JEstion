@@ -15,7 +15,6 @@ class DocumentGeneratorJob < ApplicationJob
     tempfile_name = downloading_document_from_db(tempfile_url, tempfile_type)
     pages_to_change = getting_document_content(tempfile_name, tempfile_type)
     changing_document_content(pages_to_change, changes_to_do, tempfile_name, tempfile_type)
-    raise
     save_generated_document(objectdocument, tempfile_name, tempfile_type)
     File.delete("app/assets/docs/#{tempfile_name}.#{tempfile_type}")
   end
